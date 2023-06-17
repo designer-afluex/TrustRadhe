@@ -1,0 +1,183 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PayoutReceipt</title>
+    <link type="text/css" rel="stylesheet" href="../../AssociatePanelcss/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        h3,th,td,p,span{
+            font-family: 'Roboto', sans-serif;
+        }
+        .border_box
+        {
+            border:1px solid #ddd;
+            box-shadow: 0px 0px 2px gray;
+           
+        }
+        .p-4{
+            padding:17px
+        }
+        .table
+        {
+            margin-bottom:0px;
+        }
+    </style>
+</head>
+<body>
+    <section class="border_box">
+        <div class="container border_box">
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Payout Receipt</h3>
+                </div>
+            </div>
+            <div class="row p-4">
+                <table style="width:100%" class="table">
+                    <tr>
+                        <td>
+                            Shri Radhekunj<br />
+                            @ViewBag.CompanyAddress<br />
+                            @ViewBag.Phone<br />
+                            @ViewBag.Email<br/>
+                            @ViewBag.Website
+                        </td>
+                        <td class="text-right">
+                            @*<img height="100" width="100" src="~/WebsiteCss/images/logo.png" style="width:90px;border-radius:100%;border:1px solid #1567b1" class="pull-right" />*@
+                            <img src="~/WebsiteCss/images/side_logo.png"  style="width:120px"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table style="width:100%" class="display nowrap table table-hover">
+                        <tr>
+                            <td style="width:20%"><b>Name :</b></td>
+                            <td style="width:30%"><b>@Model.DisplayName</b></td>
+                            <td style="width:20%"><b>Login ID :</b></td>
+                            <td style="width:30%"><b>@Model.LoginId</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>Closing Date :</b></td>
+                            <td><b>@Model.ClosingDate</b></td>
+                            <td><b>Payout No :</b></td>
+                            <td><b>@Model.PayoutNo</b></td>
+                        </tr>
+                        <tr>
+                            <td><b></b></td>
+                            <td><b></b></td>
+                            <td><b></b></td>
+                            <td><b></b></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Income</h3>
+                    <table style="width:100%" class="display nowrap table table-hover table-striped table-bordered">
+                        <thead style="background-color:forestgreen; color:white">
+                            <tr>
+                                <th style="width:10%">S No</th>
+                                <th style="width:60%">Description</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tr hidden="hidden">
+                            <td>1</td>
+                            <td>Direct Income</td>
+                            <td>@Model.DirectIncome</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Binary Income</td>
+                            @*<td>Business Volume matching Income</td>*@
+                            <td>@Model.BinaryIncome</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Direct Income</td>
+                            <td>@Model.LeadershipBonus</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Gross Income</td>
+                            <td>&#8377; @ViewBag.Income</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Deduction</h3>
+                    <table style="width:100%" class="display nowrap table table-hover table-striped table-bordered">
+                        <thead style="background-color:forestgreen; color:white">
+                            <tr>
+                                <th style="width:10%">S No</th>
+                                <th style="width:60%">Description</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>1</td>
+                            <td>TDS Amount (@ViewBag.TDSPercent)</td>
+                            <td>@Model.TDSAmount</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Admin Fee (5%)</td>
+                            <td>@Model.ProcessingFee</td>
+                        </tr>
+                        @*<tr>
+                            <td>3</td>
+                            <td>Product Wallet (5%)</td>
+                            <td>@Model.ProductWallet</td>
+                        </tr>*@
+                        <tr>
+                            <td></td>
+                            <td>Gross Deduction</td>
+                            <td>&#8377; @ViewBag.Deduction</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table style="width:100%" class="display nowrap table table-hover table-striped table-bordered">
+                        <thead style="background-color:forestgreen; color:white">
+                            <tr>
+                                <th style="width:10%"></th>
+                                <th style="width:60%">Gross Income - Gross Deduction</th>
+                                <th>Net Amount</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td></td>
+                            <td>@ViewBag.Income - @ViewBag.Deduction</td>
+                            <td>&#8377; @ViewBag.NetIncome</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <hr />
+                    <p>
+                        NOTE: This is an Electronic Generated Receipt.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+</html>

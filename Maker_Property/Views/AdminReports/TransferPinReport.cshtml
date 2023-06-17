@@ -1,0 +1,98 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "TransferPinReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Reports
+                </a>
+            </li>
+            <li class="active">
+                Pin Transfer Report
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("TransferPinReport", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Pin Transfer Report
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    From Login ID
+                                    @Html.TextBoxFor(m => m.FromLoginId, new { @class = "form-control", @placeholder = "From Login ID"})
+                                </div>
+                                <div class="col-md-4">
+                                    To Login ID
+                                    @Html.TextBoxFor(m => m.ToLoginID, new { @class = "form-control", @placeholder = "To Login ID" })
+                                </div>
+                                <div class="col-md-4">
+                                    <br />
+                                    <input type="submit" class="btn btn-info" value="Get Details" name="GetDetails" />
+                                </div>
+                            </div>
+
+                            <br />
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>EPin Number</th>
+                                        <th>From Login ID</th>
+                                        <th>From Name</th>
+                                        <th>To Login ID</th>
+                                        <th>To Name</th>
+                                        <th>Transfer Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lsttopupreport != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lsttopupreport)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.EPinNo</td>
+                                                    <td>@Item.FromLoginId</td>
+                                                    <td>@Item.ToLoginID</td>
+                                                    <td>@Item.ToName</td>
+                                                    <td>@Item.TransferDate</td>
+                                                </tr>
+                                                i++;
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+
+}

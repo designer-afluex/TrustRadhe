@@ -1,0 +1,228 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "KitMaster";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Kit  Master
+                </a>
+            </li>
+            <li class="active">
+                Product
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("KitMaster", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["Kit"]
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Product
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Product
+                                        @Html.DropDownListFor(m => m.MLMProductID, new SelectList(ViewBag.ddlMProduct, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>KitName  </label>
+                                        @Html.TextBoxFor(m => m.KitName, new { @class = "form-control", @placeholder = "KitName", @maxlength = "10" })
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-12 table-responsive">
+                                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Product Name</th>
+                                            <th>Size</th>
+                                            <th>UnitID </th>
+                                            <th>SGST</th>
+                                            <th>CGST </th>
+                                            <th>IGST </th>
+                                            <th>BV</th>
+                                            <th>DP </th>
+                                            <th>MRP </th>
+                                            <th>Quantity</th>
+                                            <th>TotalMRP</th>
+
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.lstFranchise != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.lstFranchise)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.ProductName <input type='hidden' value='@Item.ProductID' id='fprodid @i' name='fprodid @i'></td>
+                                                        <td>@Item.Size</td>
+                                                        <td>@Item.UnitName</td>
+                                                        <td>@Item.SGST</td>
+                                                        <td>@Item.CGST</td>
+                                                        <td>@Item.IGST</td>
+                                                        <td>@Item.BV</td>
+                                                        <td>@Item.DP</td>
+                                                        <td>@Item.MRP<input type='hidden' value='@Item.MRP' id='mrp @i' name='mrp @i'></td>
+                                                        <td hidden><span id="subtotal_@i">@Item.SubTotal</span>   </td>
+                                                        <td><input type='text' id="txtQty @i" value='@Item.Quantity' name="txtQty @i" class="form-control" onchange="getqty(this,@i)"></td>
+                                                        <td>@Item.TotalMRP<input type='text' id='tmrp @i' name='tmrp @i'></td>
+                                                        <td><input type="checkbox" id="checkBoxId_ @i" name="checkBoxId_ @i" class="chkclass" onchange="return gettotal(@i)" /></td>
+                                                    </tr>
+
+                                                    i++;
+                                                }
+                                                <input type='hidden' value='@i' id='hdrows' name='hdrows' />
+                                            }
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Total  </label>
+                                        @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @maxlength = "10" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>TotalAmount  </label>
+                                        @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", @placeholder = "TotalAmount", @maxlength = "10" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <br />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" name="Save" value="Save" onclick="return fvalidateform();" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+    <input type="hidden" id="txtquantity" />
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    function getqty(mrp, i) {
+
+        var mrpp =  document.getElementById('mrp ' + i).value;
+        var qty = document.getElementById('txtQty ' + i).value;
+
+
+        var totalmrp = ((Number)(mrpp) * (Number)(qty)).toString();
+        document.getElementById("tmrp " + i).value = totalmrp;
+
+
+    }
+
+    function gettotal(i)
+    {
+        if ((document.getElementById('checkBoxId_ ' +i ).checked))
+        {
+            var mrpp =  document.getElementById('mrp ' + i).value;
+            var qty = document.getElementById('txtQty ' + i).value;
+
+
+            var totalmrp = ((Number)(mrpp) * (Number)(qty)).toString();
+
+            var total=$('#Total').val();
+            if(total!="")
+            {
+                var finalamount=(Number)(totalmrp)+(Number)(total);
+                $('#Total').val(finalamount);
+                $('#TotalAmount').val(finalamount);
+            }
+            else
+            {
+                $('#Total').val(totalmrp);
+                $('#TotalAmount').val(totalmrp);
+               
+            }
+        }
+        else
+        {
+            var mrpp =  document.getElementById('mrp ' + i).value;
+            var qty = document.getElementById('txtQty ' + i).value;
+            var totalmrp = ((Number)(mrpp) * (Number)(qty)).toString();
+            var total=$('#Total').val();
+            var finalamount=(Number)(total)-(Number)(totalmrp);
+            $('#Total').val(finalamount);
+            $('#TotalAmount').val(finalamount);
+        }
+    }
+    
+    function fvalidateform() {
+
+        $(".errortext").removeClass("errortext");
+
+        if ($('#MLMProductID').val() == '0') {
+            $("#MLMProductID").addClass('errortext');
+            $('#MLMProductID').focus();
+
+            return false;
+        }
+        if ($('#KitName').val() == '') {
+            $("#KitName").addClass('errortext');
+            $('#KitName').focus();
+
+            return false;
+        }
+        if ($('#Total').val() == '') {
+            $("#Total").addClass('errortext');
+            $('#Total').focus();
+
+            return false;
+        }
+
+        if ($('#TotalAmount').val() == '') {
+            $("#TotalAmount").addClass('errortext');
+            $('#TotalAmount').focus();
+
+            return false;
+        }
+
+        return true;
+    }
+</script>

@@ -1,0 +1,34 @@
+﻿@model TrustRadhe.Models.Home
+@{
+    Layout = "~/Views/Shared/_WebisteLayout.cshtml";
+}
+
+<br/>
+   <br /> 
+   <br /> 
+<br /> 
+    <section class="custom-padding about-us">
+        <div class="container">
+
+            <div class="row text-center" style="border:solid 1px">
+                <div class="col-md-12 form-group">
+                    <br><br> <h2 style="color:#0fad00">Success</h2>
+
+                    <img src="../../images/success1.gif" style="height:150px" />
+                    <h3>Dear, @Session["DisplayName"]</h3>
+                    <p style="font-size:20px;color:#5C5C5C;text-align:center">
+                        Thank you for your registration. Now you are Maker Property Associate.Your Details are as Below:
+                        <br />
+                        <span class="border-box">Login ID: @Session["LoginId"]</span>
+                        <span class="border-box">Password:  @Session["Password"]</span>
+                    </p>
+                    <a href="/Home/Login" class="btn btn-info">     Back To Login     </a>
+                    <a href="/Home/Registration" class="btn btn-info">    Add New    </a>
+                    <br><br>
+                </div>
+            </div>
+
+        </div>
+    </section>
+  
+

@@ -1,0 +1,252 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "AssociateIncomeReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("AssociateIncomeReport", "AdminReports", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+
+    <div class="app-content">
+        <div class="side-app">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title"> Payout</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminDashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> Daily Income Report</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Income Details</h3>
+                            <div class="card-options">
+                                <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                <a href="#" class="card-options-fullscreen" data-bs-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">From Date</label>
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">To Date</label>
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Login Id</label>
+                                    @Html.TextBoxFor(m => m.ToLoginID, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Name</label>
+                                    @Html.TextBoxFor(m => m.ToName, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Status</label>
+                                    @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.PaidStatus, "Value", "Text"), new { @class = "select2 form-select form-control" })
+                                </div>
+                                <div class="col-lg-3 mt-5">
+                                    <input class="btn btn-primary" type="submit" value="Search" name="Search" id="btnSearch" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Date</th>
+                                        <th>LoginID</th>
+                                        <th> Name</th>
+                                        <th>Amount</th>
+                                        <th>Income Type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lsttopupreport != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lsttopupreport)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.TransactionDate</td>
+                                                    <td>@Item.ToLoginID</td>
+                                                    <td>@Item.ToName</td>
+                                                    <td>@Item.Amount</td>
+                                                    <td>@Item.IncomeType</td>
+                                                    <td>@Item.Status</td>
+
+                                                </tr>
+                                                i++;
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+
+                             </table>
+                            </div>
+                         </div>
+        
+                      </div>
+                    </div>
+
+                </div>
+                        </div>
+
+                        @*<div class="row">
+                            <div class="col-sm-12">
+
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <i class="clip-home-3"></i>
+                                        <a href="#">
+                                            Payout
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        Daily Income Report
+                                    </li>
+
+                                </ol>
+
+
+                            </div>
+                        </div>
+                        <br />
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Income Details
+
+
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="row">
+
+                                            <div class="col-md-12 table-responsive">
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        From Date
+                                                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        To Date
+                                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        Login ID
+                                                        @Html.TextBoxFor(m => m.ToLoginID, new { @class = "form-control" })
+                                                    </div>
+
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label> Name </label>
+                                                            @Html.TextBoxFor(m => m.ToName, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Status  </label>
+                                                            @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.PaidStatus, "Value", "Text"), new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <br />
+                                                        <input class="btn btn-success" type="submit" value="Search" name="Search" id="btnSearch" />
+                                                    </div>
+                                                </div>
+                                                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr No.</th>
+                                                            <th>Date</th>
+                                                            <th> LoginID</th>
+                                                            <th> Name</th>
+                                                            <th>Amount</th>
+                                                            <th>Income Type</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model != null)
+                                                        {
+                                                            if (Model.lsttopupreport != null)
+                                                            {
+                                                                int i = 1;
+                                                                foreach (var Item in Model.lsttopupreport)
+                                                                {
+                                                                    <tr class="text-left">
+                                                                        <td>@i</td>
+                                                                        <td>@Item.TransactionDate</td>
+                                                                        <td>@Item.ToLoginID</td>
+                                                                        <td>@Item.ToName</td>
+                                                                        <td>@Item.Amount</td>
+                                                                        <td>@Item.IncomeType</td>
+                                                                        <td>@Item.Status</td>
+
+                                                                    </tr>
+                                                                    i++;
+                                                                }
+
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- content-wrapper ends -->
+                            <!-- partial:../../partials/_footer.html -->
+                            <!-- partial -->
+                        </div>*@
+                        <!-- main-panel ends -->
+                        }
+
+                       <script src="../../vendor/jquery/jquery.min.js"></script>
+
+                        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+                        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+                        <script>
+
+                            $('#FromDate').datepicker({
+                                dateFormat: 'dd/mm/yy',
+                            });
+
+                            $('#ToDate').datepicker({
+                                dateFormat: 'dd/mm/yy',
+                            });
+
+                            function isNumberOrDecimal(evt) {
+                                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                                if (charCode != 46 && charCode > 31
+                                  && (charCode < 48 || charCode > 57))
+                                    return false;
+
+                                return true;
+                            }
+
+                        </script>

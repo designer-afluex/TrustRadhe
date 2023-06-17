@@ -1,0 +1,257 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Master
+                </a>
+            </li>
+            <li class="active">
+                Product
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("Product", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["FProduct"]
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Product
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Product Name
+                                        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" ,@placeholder= "Product Name" })
+                                        @Html.HiddenFor(m => m.ProductID)
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Product Code
+                                        @Html.TextBoxFor(m => m.ProductCode, new { @class = "form-control", @placeholder = "Product Code" })
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Size
+                                        @Html.TextBoxFor(m => m.Size, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "Size", @maxlength = "3" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        TradeIn
+                                        @Html.TextBoxFor(m => m.TradeIn, new { @class = "form-control" ,@onkeypress= "return isNumberKey(event);", @placeholder = "Trade In", @maxlength="5" })
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Unit
+                                        @Html.DropDownListFor(m => m.UnitID, new SelectList(ViewBag.ddlUnit, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>HSNCode  </label>
+                                        @Html.TextBoxFor(m => m.HSNCode, new { @class = "form-control", @placeholder = "HSN Code", @maxlength = "10" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        SGST
+                                        @Html.TextBoxFor(m => m.SGST, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "SGST", @maxlength = "2" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        CGST
+                                        @Html.TextBoxFor(m => m.CGST, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "CGST", @maxlength = "2" })
+                                    </div>
+                                </div>
+                              
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        IGST
+                                        @Html.TextBoxFor(m => m.IGST, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "IGST", @maxlength = "2" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>MRP  </label>
+                                        @Html.TextBoxFor(m => m.MRP, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "MRP", @maxlength = "5" ,@onchange="return FillDP(); " })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>DP  </label>
+                                        @Html.TextBoxFor(m => m.DP, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "DP", @maxlength = "5"  })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>BV</label>
+                                        @Html.TextBoxFor(m => m.BV, new { @class = "form-control", @onkeypress = "return isNumberKey(event);", @placeholder = "BV", @maxlength = "5"  })
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-3">
+                                    <br/>
+                                    <div class="form-group">
+                                        @if (Model != null)
+                                        {
+                                            <input type="submit" class="btn btn-success" name="Update" value="Update" onclick="return fvalidateform();" />
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" class="btn btn-success" name="Save" value="Save" onclick="return fvalidateform();" />
+                                        }
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    function FillDP()
+    {
+        var mrp = $("#MRP").val();
+        var dp = (Number)(mrp) - ((Number)(mrp) * 40 / 100)
+        $("#DP").val(dp);
+        $("#BV").val(dp);
+    }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    function fvalidateform() {
+
+        $(".errortext").removeClass("errortext");
+        
+        if ($('#ProductName').val() == '') {
+            $("#ProductName").addClass('errortext');
+            $('#ProductName').focus();
+         
+            return false;
+        }
+        if ($('#ProductCode').val() == '') {
+            $("#ProductCode").addClass('errortext');
+            $('#ProductCode').focus();
+
+            return false;
+        }
+        if ($('#Size').val() == '') {
+            $("#Size").addClass('errortext');
+            $('#Size').focus();
+         
+            return false;
+        }
+        if ($('#TradeIn').val() == '') {
+            $("#TradeIn").addClass('errortext');
+            $('#TradeIn').focus();
+
+            return false;
+        }
+        if ($('#UnitID').val() == '0') {
+            $("#UnitID").addClass('errortext');
+            $('#UnitID').focus();
+
+            return false;
+        }
+        if ($('#HSNCode').val() == '') {
+            $("#HSNCode").addClass('errortext');
+            $('#HSNCode').focus();
+
+            return false;
+        }
+      
+         
+        if ($('#SGST').val() == '') {
+            $("#SGST").addClass('errortext');
+            $('#SGST').focus();
+            
+            return false;
+        }
+        if ($('#CGST').val() == '') {
+            $("#CGST").addClass('errortext');
+            $('#CGST').focus();
+          
+            return false;
+        }
+        if ($('#IGST').val() == '') {
+            $("#IGST").addClass('errortext');
+            $('#IGST').focus();
+         
+            return false;
+        }
+      
+        if ($('#MRP').val() == '') {
+            $("#MRP").addClass('errortext');
+            $('#MRP').focus();
+          
+            return false;
+        }
+        if ($('#BV').val() == '') {
+            $("#BV").addClass('errortext');
+            $('#BV').focus();
+          
+            return false;
+        }
+
+        if ($('#DP').val() == '') {
+            $("#DP").addClass('errortext');
+            $('#DP').focus();
+           
+            return false;
+        }
+
+
+        return true;
+    }
+</script>
+
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>

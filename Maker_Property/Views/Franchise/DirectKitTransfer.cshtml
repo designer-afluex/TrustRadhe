@@ -1,0 +1,271 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "DirectKitTransfer";
+    Layout = "~/Views/Shared/_FranchisePanelLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Direct Kit Transfer
+                </a>
+            </li>
+            
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("DirectKitTransfer", "Franchise", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["TransferKit"]
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Direct Kit Transfer
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Franchise LoginID  </label>
+                                        @Html.TextBoxFor(m => m.LoginID, new { @class = "form-control", @placeholder = "Franchise Login ID", @maxlength = "10", @onchange = "return GetFranchiseName();" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>FranchiseName  </label>
+                                        @Html.TextBoxFor(m => m.FranchiseName, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.HiddenFor(m => m.PK_FranchiseID)
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        KitID
+                                        @Html.DropDownListFor(m => m.KitID, new SelectList(ViewBag.ddlKit, "Value", "Text"), new { @class = "form-control", @onchange = "return GetDetails(); " })
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Kit Amount  </label>
+                                        @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Kit Amount", @maxlength = "10", @onchange = "return GetAmt();", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Quantity  </label>
+                                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "Quantity", @maxlength = "10", @onchange = "return GetAmt();", @onkeypress = "return isNumberKey(event);" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>FinalAmount  </label>
+                                        @Html.TextBoxFor(m => m.FinalAmount, new { @class = "form-control", @placeholder = "TotalAmount", @maxlength = "10", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    Payment Mode <span style="color: red">*</span>
+                                    @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "form-control", @onchange = "getpaymentdetails();" })
+
+                                </div>
+                                <div class="col-md-3" id="bankname" style="display: none">
+                                    Bank Name <span style="color: red">*</span>
+                                    @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @placeholder = "Bank Name" })
+                                </div>
+                                <div class="col-md-3" id="chequeno" style="display: none">
+                                    Transaction No <span style="color: red">*</span>
+                                    @Html.TextBoxFor(m => m.DDChequeNo, new { @class = "form-control", @placeholder = "Transaction No" })
+                                </div>
+                                <div class="col-md-3" id="chequdate" style="display: none">
+                                    Transaction Date <span style="color: red">*</span>
+                                    @Html.TextBoxFor(m => m.DDChequeDate, new { @class = "form-control", @placeholder = "Transaction Date" })
+                                </div>
+                                <div class="col-md-3" id="bankbranch" style="display: none">
+                                    Branch <span style="color: red">*</span>
+                                    @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @placeholder = "Bank Branch" })
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="col-md-12 table-responsive">
+                                
+                                <div class="col-lg-3">
+                                    <br />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" name="Transfer" value="Transfer" onclick="return fvalidateform();" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+    <input type="hidden" id="txtquantity" />
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+
+<script>
+    $('#DDChequeDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+    function getpaymentdetails() {
+        debugger;
+        var paymentmode = ($("#PaymentMode option:selected").text());
+        if (paymentmode != "Cash") {
+            bankname.style.display = "block";
+            chequeno.style.display = "block";
+            chequdate.style.display = "block";
+            bankbranch.style.display = "block";
+        }
+        else {
+            bankname.style.display = "none";
+            chequeno.style.display = "none";
+            chequdate.style.display = "none";
+            bankbranch.style.display = "none";
+        }
+    }
+    function GetAmt()
+    {
+        var kitamt= $("#Total").val();
+        var qty = $("#Quantity").val();
+        var finamt = (Number)(kitamt) * (Number)(qty);
+
+        $("#FinalAmount").val(finamt);
+       
+
+
+    }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    function GetFranchiseName() {
+        //$("#divload").css({ 'display': '' });
+
+        var LoginID = $('#LoginID').val();
+        $.ajax({
+            url: '/Franchise/GetFranchiseName', type: 'post', dataType: 'json',
+            data: { 'LoginID': LoginID },
+            success: function (data) {
+                //$("#divload").css({ 'display': 'none' });
+                if (data.Result == "yes") {
+                    $("#FranchiseName").val(data.FranchiseName);
+                    $("#PK_FranchiseID").val(data.PK_FranchiseID);
+
+                }
+                else  {
+                    //$("#AssociateName").val('');
+                    //$("#AssociateName").addClass('errortext');
+                    //$("#AssociateID").addClass('errortext');
+                    //$('#AssociateID').focus();
+
+                    alert("Invalid ID");
+                    $('#FranchiseName').val('');
+                }
+            }
+
+        });
+    }
+    function GetDetails() {
+        //$("#divload").css({ 'display': '' });
+        var fid = $('#PK_FranchiseID').val();
+        var kitid = $('#KitID').val();
+        $.ajax({
+            url: '/Franchise/GetProductByKit', type: 'get', dataType: 'json',
+            data: { 'PK_FranchiseID': fid, 'KitID': kitid },
+            success: function (data) {
+                $("#Total").val(data.Total);
+                //$("#divload").css({ 'display': 'none' });
+               
+            }
+        });
+    }
+    function fvalidateform() {
+
+        $(".errortext").removeClass("errortext");
+
+
+        if ($('#LoginID').val() == '') {
+            $("#LoginID").addClass('errortext');
+            $('#LoginID').focus();
+
+            return false;
+        }
+        if ($('#KitID').val() == '0') {
+            $("#KitID").addClass('errortext');
+            $('#KitID').focus();
+
+            return false;
+        }
+        if ($('#Quantity').val() == '') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+
+            return false;
+        }
+
+        if ($('#FinalAmount').val() == '') {
+            $("#FinalAmount").addClass('errortext');
+            $('#FinalAmount').focus();
+
+            return false;
+        }
+
+        if ($('#PaymentMode').val() == '') {
+            $("#PaymentMode").addClass('errortext');
+            $('#PaymentMode').focus();
+            return false;
+        }
+
+
+        if ($('#PaymentMode').val() != 'Cash') {
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                return false;
+            }
+            if ($('#DDChequeNo').val() == '') {
+                $("#DDChequeNo").addClass('errortext');
+                $('#DDChequeNo').focus();
+                return false;
+            }
+            if ($('#DDChequeDate').val() == '') {
+                $("#DDChequeDate").addClass('errortext');
+                $('#DDChequeDate').focus();
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+

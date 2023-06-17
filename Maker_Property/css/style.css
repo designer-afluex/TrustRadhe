@@ -1,0 +1,30 @@
+.tax-invoice-main {
+    padding: 25px 0px;
+}
+
+.addres-details p {
+    line-height: 13px;
+    font-weight: 400;
+    font-size: 13px;
+}
+table.table.table-bordered.zestier {
+    margin-bottom: 0px;
+}
+.gstin p {
+    line-height: 10px;
+    font-size: 12px;
+}
+.cgst p {
+    margin-bottom: 0px;
+}
+tr.descript td {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 10px;
+}
+.condition p {
+    margin-bottom: 4px;
+}
+td.text-center.zestier {
+    padding: 0px;
+}

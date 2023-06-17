@@ -1,0 +1,212 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "TDSReportByLoginID";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("TDSReportByLoginID", "AdminReports", FormMethod.Post, new { @id = "form1" }))
+{
+
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title"> Reports</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminDashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> TDS Report By Login ID</li>
+                </ol>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">TDS Report By Login ID</h3>
+                        <div class="card-options">
+                            <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="#" class="card-options-fullscreen" data-bs-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                            <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">PAN Number</label>
+                                @Html.TextBoxFor(m => m.PAN, new { @class = "form-control", @placeholder = "PAN Number", @maxlength = "10" })
+
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">Login Id</label>
+                                @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @placeholder = "Login ID" })
+
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">From Date</label>
+                                @Html.TextBoxFor(m => m.PAN, new { @class = "form-control", @placeholder = "PAN Number", @maxlength = "10" })
+
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom01">To Date</label>
+                                @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To Date" })
+                            </div>
+                            <div class="col-md-3">
+                                <input type="submit" class="btn btn-primary" value="Get Details" name="GetDetails" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Login ID</th>
+                                    <th>Name</th>
+                                    <th>PAN Number</th>
+                                    <th>TDS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                if (Model.lsttopupreport != null)
+                                {
+                                int i = 1;
+                                foreach (var Item in Model.lsttopupreport)
+                                {
+                                <tr class="text-left">
+                                    <td>@i</td>
+                                    <td>@Item.LoginId</td>
+                                    <td>@Item.Name</td>
+                                    <td>@Item.PAN</td>
+                                    <td>@Item.TDSAmount</td>
+                                </tr>
+                                i++;
+                                }
+
+                                }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Reports
+                </a>
+            </li>
+            <li class="active">
+                TDS Report By Login ID
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                TDS Report By Login ID
+            </div>
+            <!-- /.panel-heading --
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 table-responsive">
+                        <div class="row">
+                            <div class="col-md-3">
+                                PAN Number
+                                @Html.TextBoxFor(m => m.PAN, new { @class = "form-control", @placeholder = "PAN Number", @maxlength = "10" })
+                            </div>
+                            <div class="col-md-3">
+                                Login ID
+                                @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @placeholder = "Login ID" })
+                            </div>
+                            <div class="col-md-3">
+                                From Date
+                                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date" })
+                            </div>
+                            <div class="col-md-3">
+                                To Date
+                                @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To Date" })
+                            </div>
+                            <div class="col-md-3">
+                                <br />
+                                @*<input type="submit" class="btn btn-info" value="Get Details" name="GetDetails" />*@
+                            </div>
+                        </div>
+
+                        <br />
+                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Login ID</th>
+                                    <th>Name</th>
+                                    <th>PAN Number</th>
+                                    <th>TDS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                if (Model.lsttopupreport != null)
+                                {
+                                int i = 1;
+                                foreach (var Item in Model.lsttopupreport)
+                                {
+                                <tr class="text-left">
+                                    <td>@i</td>
+                                    <td>@Item.LoginId</td>
+                                    <td>@Item.Name</td>
+                                    <td>@Item.PAN</td>
+                                    <td>@Item.TDSAmount</td>
+                                </tr>
+                                i++;
+                                }
+
+                                }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+                        }
+
+<script src="../vendor/jquery/jquery.min.js"></script>
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+</script>

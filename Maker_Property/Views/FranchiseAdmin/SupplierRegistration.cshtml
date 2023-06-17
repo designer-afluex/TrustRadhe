@@ -1,0 +1,204 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "SupplierRegistration";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Supplier
+                </a>
+            </li>
+            <li class="active">
+                Registration 
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("SupplierRegistration", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["Supplier"]
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Add Supplier
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Supplier Name <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control",@placeholder="Supplier Name" })
+                                        @Html.HiddenFor(m => m.SupplierID)
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        GSTNo <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.GSTNo, new { @class = "form-control", @placeholder = "GSTNo" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Mobile No <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.Contact, new { @class = "form-control" ,@Maxlenght="10", @onkeypress = "return isNumberKey(event);", @placeholder = "Mobile No" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        Email <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , @placeholder = "Email" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        Address <span style="color:red">*</span>
+                                        @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                               
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        PinCode <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.PinCode, new { @class = "form-control" , @onchange = "return getstatecity();", @placeholder = "Pincode" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        State <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.State, new { @class = "form-control" ,@readonly= "readonly", @placeholder = "State" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        City <span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", @readonly = "readonly", @placeholder = "City" })
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                              
+
+                                <div class="col-md-12 form-group">
+                                    @if (Model != null)
+                                    {
+                                        <input type="submit" class="btn btn-success pull-right" name="Update" value="Update" onclick="return validateform();" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" class="btn btn-success pull-right" name="Save" value="Save" onclick="return validateform();" />
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    function validateform() {
+        $(".errortext").removeClass("errortext");
+
+
+        if ($('#SupplierName').val() == '') {
+            $("#SupplierName").addClass('errortext');
+            $('#SupplierName').focus();
+            return false;
+        }
+        if ($('#GSTNo').val() == '') {
+            $("#GSTNo").addClass('errortext');
+            $('#GSTNo').focus();
+            return false;
+        }
+        if ($('#Contact').val() == '') {
+            $("#Contact").addClass('errortext');
+            $('#Contact').focus();
+            return false;
+        }
+        if ($('#Email').val() == '') {
+            $("#Email").addClass('errortext');
+            $('#Email').focus();
+            return false;
+        }
+        if ($('#Address').val() == '') {
+            $("#Address").addClass('errortext');
+            $('#Address').focus();
+            return false;
+        }
+        if ($('#PinCode').val() == '') {
+            $("#PinCode").addClass('errortext');
+            $('#PinCode').focus();
+            return false;
+        }
+        return true;
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    
+    function getstatecity() {
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: "/Home/GetStateCity",
+            Type: "Get",
+            DataType: "JSON",
+            data: { PinCode: $("#PinCode").val() },
+            success: function (data) {
+                if (data.Result == "1") {
+                    $("#State").val(data.State);
+                    $("#City").val(data.City);
+                }
+                else {
+                    $("#State").val('');
+                    $("#City").val('');
+                    $("#PinCode").val('');
+                    $("#PinCode").addClass('errortext');
+                    $('#PinCode').focus();
+                    alert(data.Result);
+
+                }
+
+
+            }
+
+        });
+    }
+</script>

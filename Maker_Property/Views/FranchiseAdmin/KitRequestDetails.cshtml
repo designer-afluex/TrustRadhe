@@ -1,0 +1,178 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "KitRequestDetails";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("KitRequestDetails", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    if (TempData["KRequestApprovedA"] != null)
+    {
+        <div class="@TempData["Class"]">
+            @TempData["KRequestApprovedA"]
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            Requested Qty
+            @Html.TextBoxFor(m => m.ApprovedQuantity, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-group">
+                Quantity &nbsp;<span style="color:red">*</span>
+                @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "Quantity", @onchange = "return validateQty(this);", @onkeypress = "return isNumberKey(event);" })
+                @Html.HiddenFor(m => m.RequestID)
+                @Html.HiddenFor(m => m.KitID)
+                @Html.HiddenFor(m => m.LoginID)
+                <input type="hidden" id="hdqty" />
+                <input type="hidden" id="hdreqqty" />
+                <input type="hidden" id="hdkitid" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Batch Name</th>
+                    <th>Stock</th>
+                    <th>Quantity </th>
+                </tr>
+            </thead>
+            <tbody id="tblData">
+                @if (Model != null)
+                {
+                    if (Model.lstRequest != null)
+                    {
+                        var i = 0;
+                        foreach (var item in Model.lstRequest)
+                        {
+                            <tr>
+                                <td>
+                                    @item.ProductName
+                                    <input type="hidden" id="hdProductID_@i" name="hdProductID_@i" value="@item.ProductID" />
+                                </td>
+                                <td>
+                                    @Html.DropDownList("ddlBatchNo_" + i, new SelectList(ViewBag.ddlBatch, "Value", "Text"), new { @class = "form-control", @onchange= "return checkStock(this);" })
+                                </td>
+                                <td>
+                                    @*@item.StockID*@
+                                    <span id="spStockBatchWise_@i"></span>
+                                </td>
+                                <td>
+                                    <span id="spQty_@i">@item.Quantity</span>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                        <input type="hidden" name="hdRows" id="hdRows" value="@i" />
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="col-md-9">
+            <div class="form-group">
+                <p style="color:red;font-size:large">NOTE : It is mandatory to select all records to Approve request.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="submit" class="btn btn-sm btn-success" name="btnApprove" value="Approve" onclick="return validateForm();" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    function validateForm() {
+        if ($('#Quantity').val() == '') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+            return false;
+        }
+        if ($('#Quantity').val() == '0') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+            return false;
+        }
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function validateQty(apprqty) {
+        var qty = apprqty.value;
+        var rqty = $("#ApprovedQuantity").val();
+        if ((Number)(qty) > (Number)(rqty)) {
+            alert("Approved Quantity cannot be greater than requested quantity");
+            apprqty.value = "";
+            return false;
+        }
+        else {
+            var rowCount = document.getElementById('hdRows').value;
+
+            for (var i = 0; i <= (Number)(rowCount) ; i++)
+            {
+                document.getElementById('spQty_' + i).innerText = qty;
+            }
+        }
+    }
+
+    function checkStock(ddlBatch) {
+        var selectedDDLid = ddlBatch.id;
+        var rowIndex = 0;
+        if ((Number)(selectedDDLid.length) < 13) {
+            rowIndex = selectedDDLid.substring(selectedDDLid.length - 1, selectedDDLid.length);
+        }
+        else if ((Number)(selectedDDLid.length) < 15) {
+            rowIndex = selectedDDLid.substring(selectedDDLid.length - 2, selectedDDLid.length);
+        }
+        else {
+            rowIndex = selectedDDLid.substring(selectedDDLid.length - 3, selectedDDLid.length);
+        }
+        
+        //alert("Selected row : " + rowIndex);
+
+        var bno = ddlBatch.value;
+        var pid = document.getElementById('hdProductID_' + rowIndex).value;
+        var rqty = $('#ApprovedQuantity').val();
+        //alert("PID : " + pid);
+
+        $.ajax({
+            url: '/FranchiseAdmin/GetProductStockByBatch',
+            type: 'get',
+            dataType: 'json',
+            data: { 'bno': bno, 'pid': pid, 'rqty': rqty },
+            success: function (data) {
+                
+                if (data.Result == "1") {
+                    document.getElementById('spStockBatchWise_' + rowIndex).innerText = data.Status;
+                    document.getElementById('spStockBatchWise_' + rowIndex).style.color = "green";
+                }
+                else if (data.Result == "0") {
+                    document.getElementById('spStockBatchWise_' + rowIndex).innerText = data.Status;
+                    document.getElementById('spStockBatchWise_' + rowIndex).style.color = "red";
+                    ddlBatch.value = "0";
+                }
+            }
+        });
+    }
+
+</script>

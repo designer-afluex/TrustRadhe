@@ -1,0 +1,151 @@
+﻿@model TrustRadhe.Models.Home
+
+@{
+    ViewBag.Title = "ProductServies";
+    Layout = "~/Views/Shared/_WebisteLayout.cshtml";
+}
+<title>@ViewBag.Title</title>
+
+<!--Page Title-->
+<section class="page-title" style="background-image:url(../WebsiteCss/images/background/5.jpg)">
+    <div class="auto-container">
+        <div class="clearfix">
+            <div class="pull-left">
+                <div class="title">Make Way Reality Pvt. Ltd</div>
+                <h2>Product & Services</h2>
+            </div>
+            <div class="pull-right">
+                <ul class="page-breadcrumb">
+                    <li><a href="index.html">home</a></li>
+                    <li>Product & Services</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+<!-- Sidebar Page Container -->
+<div class="sidebar-page-container">
+    <div class="auto-container">
+        <div class="row clearfix">
+
+            <!--Content Side-->
+            <div class="content-side col-lg-8 col-md-12 col-sm-12">
+                <div class="service-detail">
+                    <div class="inner-box">
+                        <div class="image">
+                            <img src="../WebsiteCss/images/resource/service-10.jpg" alt="" />
+                        </div>
+                        <div class="lower-content">
+                            <h2>Overview</h2>
+                            <div class="text">
+                                <p>
+                                    Our Trading helps clients run and transform their front, middle and
+                                    back-office trading operations. We provide buy-side, sell-side and market
+                                    infrastructure firms with a full-service offering, including systems
+                                    integration and technology consulting services, to assist in delivering high
+                                    performance trading and settlement capabilities across all asset classes.
+                                    This includes strategy, architecture design, operating model work, process
+                                    improvement, systems building and trading package integration as well as
+                                    application management, application outsourcing and business process
+                                    outsourcing.
+                                </p>
+                                <h3>Market Strategy</h3>
+                                <p>
+                                    Lab that keep us at the forefront of innovation. Our Trading helps clients
+                                    run and transform their front, middle and back-office trading operations. We
+                                    provide buy-side, sell-side and market infrastructure firms with a
+                                    full-service offering, including systems integration and technology
+                                    consulting Our Trading helps clients run and transform their front, middle
+                                    and back-office trading operations.
+                                </p>
+                                <div class="two-column">
+                                    <div class="row clearfix">
+                                        <!-- Column -->
+                                        <div class="column col-lg-6 col-md-6 col-sm-12">
+                                            <h3>Charts Groth</h3>
+                                            <p>
+                                                consist of a series of percentile curves that illustrate the
+                                                distribution of selected body measurements in children.
+                                                Pediatric growth charts have been used by pediatricians, nurses,
+                                                and parents to track the growth of infants, children, and
+                                                adolescents in the United States since 1977.
+                                            </p>
+                                        </div>
+                                        <!-- Column -->
+                                        <div class="column col-lg-6 col-md-6 col-sm-12">
+                                            <div class="chart-image">
+                                                <img src="../WebsiteCss/images/resource/chart.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Sidebar Side-->
+            <div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+                <aside class="sidebar">
+                    <div class="sidebar-inner">
+
+                        <!-- Contact Widget -->
+                        <div class="sidebar-widget contact-widget">
+                            <div class="widget-content"
+                                 style="background-image:url(../WebsiteCss/images/background/pattern-12.png)">
+                                <div class="icon flaticon-phone-call"></div>
+                                <div class="text">Got any Questions? <br> Call Us Today</div>
+                                <div class="number">+91 7275 065834</div>
+                                <div class="email">support@afluex.in</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </aside>
+            </div>
+            @*<div class="form-column col-lg-8 col-md-12 col-sm-12">
+                <div class="inner-column">
+                    <p style="color:red">
+
+                        @Session["MessageSend"]
+                    </p>
+                    <!-- Contact Form -->
+                    <div class="contact-form">
+
+                        <div class="row clearfix">
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <div class="form-group">
+                                        @*<img src="@Model.ProfilePicture" height="190" width="250" />
+                                        Image <span style="color: red">*</span>
+                                        <input type="file" name="postedFile" id="Image" />
+                                    </div>
+                             
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @Placeholder = " Product Name" })
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                @Html.TextAreaFor(m => m.ProductDetails, new { @class = "form-control", @Placeholder = " Product Details",@cols="4",@rows="4" })
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <input class="btn btn-success btn-sm" type="submit" onclick="return validateform();" value="Send Message" id="SendMessage" name="SendMessage" />
+
+
+                            </div>
+
+                        </div>
+
+                        <!--End Contact Form -->
+                    </div>
+
+                </div>
+            </div>*@
+
+        </div>
+    </div>
+</div>

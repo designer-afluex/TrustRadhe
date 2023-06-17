@@ -1,0 +1,88 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "UserProductReward";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+@using (Html.BeginForm("UserProductReward", "User", FormMethod.Post, new { @id = "form1" }))
+{
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-header-title">
+                        <h4 class="m-b-10">User Product Rewards</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p style="color:red">@TempData["Rewardmsg"]</p>
+                            <div class="card">
+
+                                <div class="card-block">
+
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>S No.</th>
+                                                   
+                                                    <th>Reward</th>
+                                                    <th>Pair</th>
+                                                    
+                                                    <th>Qualify Date</th>
+                                                    <th>Status</th>
+                                                  
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.lsttopupreport != null)
+                                                    {
+                                                        int i = 1;
+                                                        foreach (var Item in Model.lsttopupreport)
+                                                        {
+                                                            <tr class="text-left">
+                                                                <td>@i</td>
+                                                               
+                                                                <td>
+                                                                    <img src="@Item.RewardImage" height="100" width="100" />
+                                                                    <br />@Item.RewardName
+                                                                </td>
+                                                                <td>@Item.Remarks</td>
+                                                               
+                                                                <td>@Item.QualifyDate</td>
+                                                                <td><label class="@Item.Contact">@Item.Status</label></td>
+                                                               
+                                                            </tr>
+                                                            i++;
+                                                        }
+                                                    }
+                                                }
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+

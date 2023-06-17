@@ -1,0 +1,227 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Franchise
+                </a>
+            </li>
+            <li class="active">
+              Product
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("Product", "Franchise", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["FProduct"] 
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Product
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                   Product Name
+                                    @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control"})
+                                </div>
+                                <div class="col-lg-3">
+                                   Size
+                                    @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    Quantity
+                                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control" })
+                                </div>
+                                
+                                <div class="col-lg-3">
+                                    Unit
+                                    @Html.DropDownListFor(m => m.UnitID, new SelectList(ViewBag.ddlUnit, "Value", "Text"), new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    SGST
+                                    @Html.TextBoxFor(m => m.SGST, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    CGST
+                                    @Html.TextBoxFor(m => m.CGST, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    IGST
+                                    @Html.TextBoxFor(m => m.IGST, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>MRP  </label>
+                                        @Html.TextBoxFor(m => m.MRP, new { @class = "form-control"})
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>BV</label>
+                                        @Html.TextBoxFor(m => m.BV, new { @class = "form-control"  })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>DP  </label>
+                                        @Html.TextBoxFor(m => m.DP, new { @class = "form-control"  })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>HSNCode  </label>
+                                        @Html.TextBoxFor(m => m.HSNCode, new { @class = "form-control"  })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <br />
+                                    <input class="btn btn-success" type="submit" value="Save" name="Save" id="Save" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+
+}
+
+<script>
+    function validateform() {
+         
+
+        $(".errortext").removeClass("errortext");
+
+        if ($('#BranchID').val() == '0') {
+            $("#BranchID").addClass('errortext');
+            $('#BranchID').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#CustomerLoginID').val() == '') {
+            $("#CustomerLoginID").addClass('errortext');
+            $('#CustomerLoginID').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#AssociateLoginID').val() == '') {
+            $("#AssociateLoginID").addClass('errortext');
+            $('#AssociateLoginID').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+
+        if ($('#SiteID').val() == '0') {
+            $("#SiteID").addClass('errortext');
+            $('#SiteID').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+        PlotArea
+        if ($('#PlotArea').val() == '') {
+            $("#PlotArea").addClass('errortext');
+            $('#PlotArea').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#GroundFloorArea').val() == '') {
+            $("#GroundFloorArea").addClass('errortext');
+            $('#GroundFloorArea').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#FirstFloorArea').val() == '') {
+            $("#FirstFloorArea").addClass('errortext');
+            $('#FirstFloorArea').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#BuildupArea').val() == '') {
+            $("#BuildupArea").addClass('errortext');
+            $('#BuildupArea').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+        if ($('#Rate').val() == '') {
+            $("#Rate").addClass('errortext');
+            $('#Rate').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+        if ($('#PaymentPlanID').val() == '0') {
+            $("#PaymentPlanID").addClass('errortext');
+            $('#PaymentPlanID').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+        if ($('#BookingDate').val() == '') {
+            $("#BookingDate").addClass('errortext');
+            $('#BookingDate').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+
+        if ($('#PayAmount').val() == '') {
+            $("#PayAmount").addClass('errortext');
+            $('#PayAmount').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+        if ($('#PaymentDate').val() == '') {
+            $("#PaymentDate").addClass('errortext');
+            $('#PaymentDate').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+        if ($('#PaymentMode').val() == '0') {
+            $("#PaymentMode").addClass('errortext');
+            $('#PaymentMode').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+
+       
+
+        return true;
+    }
+</script>
+
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>

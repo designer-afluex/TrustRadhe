@@ -1,0 +1,81 @@
+﻿@model TrustRadhe.Models.Wallet
+
+@{
+    ViewBag.Title = "PayoutRequestList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  <div class="row">
+        <div class="col-lg-12">
+            <h4 class="page-header">
+               
+                 <a href="/Wallet/PayoutRequest" style="margin-top: -1%;" class="btn btn-primary pull-right">Payout Request</a>
+            </h4>
+           
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Payout Request
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                     <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Requested Date</th>
+                               
+                                <th>Amount</th>
+                                
+                                <th>Status</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.lstPayoutrequest != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.lstPayoutrequest)
+                                    {
+                                <tr class="text-left">
+                                    <td>@i</td>
+
+                                    <td>@Item.AddedOn</td>
+                                   
+                                    <td>@Item.Amount</td>
+                                    
+                                    <td>@Item.Status</td>
+
+                                </tr>
+                                        i++;
+                                    }
+                                    
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+<script src="../vendor/jquery/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+

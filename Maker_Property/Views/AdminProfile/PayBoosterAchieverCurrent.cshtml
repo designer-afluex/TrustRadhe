@@ -1,0 +1,202 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "PayBoosterAchieverCurrent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Booster
+                </a>
+            </li>
+            <li class="active">
+                Pay Booster
+            </li>
+        </ol>
+    </div>
+</div>
+
+<br />
+@using (Html.BeginForm("PayBoosterAchieverCurrent", "AdminProfile", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color: red">
+        @TempData["BoosterPay"]
+    </p>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Pay Booster
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    LoginId
+                                    @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @placeholder = "Login Id" })
+                                </div>
+                                <div class="col-md-1">
+                                    Downline
+                                    @Html.CheckBoxFor(m => m.IsDownline)
+                                </div>
+                                <div class="col-md-2" id="divLeg" style="display: none">
+                                    Leg
+                                    @Html.DropDownListFor(m => m.Leg, new SelectList(ViewBag.ddlLeg, "Value", "Text"), new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-3">
+                                    From Date
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date" })
+                                </div>
+                                <div class="col-md-3">
+                                    To Date
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To Date" })
+                                </div>
+                                <div class="col-md-12">
+                                    <br />
+                                    @*<input type="submit" class="btn btn-info" value="Get Details" name="GetDetails" />*@
+                                    <input type="submit" class="btn btn-success" value="Export To Excel" name="Export" />
+                                    <input type="submit" id="btnSearch" class="btn btn-success pull-left" name="GetDetails" value="Search" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    <table id="booster" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr No.</th>
+                                                <th>Login Id</th>
+                                                <th>Name</th>
+                                                <th>Account No</th>
+                                                <th>Bank Name</th>
+                                                <th>IFSC Code</th>
+                                                <th>Maturity Date</th>
+                                                <th>Amount</th>
+                                                <th>Description</th>
+                                                <th>Transaction No</th>
+                                                <th>Transaction Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><b>Total</b></th>
+                                                <th>@ViewBag.Total</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+
+                                                if (Model.lstassociate != null)
+                                                {
+                                                    int i = 1;
+                                                    foreach (var Item in Model.lstassociate)
+                                                    {
+                                                        <tr class="text-left">
+                                                            <td>@i</td>
+                                                            <td>@Item.LoginId</td>
+                                                            <td>@Item.Name</td>
+                                                            <td>@Item.MemberAccNo</td>
+                                                            <td>@Item.BankName</td>
+                                                            <td>@Item.IFSCCode</td>
+                                                            <td>@Item.MaturityDate</td>
+                                                            <td>
+                                                                @Item.Amount
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" id="Pk_PaidBoosterId_ @i" name="Pk_PaidBoosterId_ @i" value="@Item.Pk_PaidBoosterId" />
+                                                                <input type="text" class="form-control" id="txtdecription_ @i" name="txtdecription_ @i" value="@Item.Description" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="txttranno_ @i" name="txttranno_ @i" value="@Item.TransactionNo" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" class="form-control" id="txttransdate" name="txttransdate_ @i" value="@Item.TransactionDate" />
+                                                            </td>
+
+                                                        </tr>
+                                                        i++;
+                                                    }
+                                                    <input type="hidden" id="hdRows2" name="hdRows2" value="@i" />
+                                                }
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="Save" name="Save" class="btn btn-success" value="Pay Booster" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- main-panel ends -->
+
+
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+
+        if ($("#IsDownline").is(':checked')) {
+            $("#divLeg").show();
+        }
+
+        //$('#IsDownline').prop('checked', true);
+        $('#IsDownline').change(function () {
+            if (this.checked) {
+                $("#divLeg").show();
+                //alert('Show');
+            }
+            else {
+                $("#divLeg").hide();
+            }
+
+        });
+    });
+
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true
+    });
+</script>
+

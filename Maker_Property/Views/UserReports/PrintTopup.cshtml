@@ -1,0 +1,217 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Tax Invoice</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/scripts/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="../../AssociatePanelcss/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="tax-invoice-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered zestier">
+                            <thead>
+                                <tr>
+                                    <th style="width: 18%;"><img src="~/WebsiteCss/images/logo.png" class="img-fluid" alt="logo"> </th>
+                                    <th style="width: 40%;    vertical-align: inherit;">
+                                        <div class="addres-details text-center">
+                                            <p class="text-center"><strong style="font-size:xx-large">@ViewBag.CompanyName</strong></p>
+                                            <p>@ViewBag.CompanyAddress</p>
+                                            @*<p>@ViewBag.City1 (@ViewBag.State1) -@ViewBag.Pin1</p>*@
+                                            <p><strong>E-mail :</strong> @ViewBag.EmailID</p>
+                                            <p><strong>Contact No.:</strong> @ViewBag.ContactNo</p>
+                                            <p><strong>Website :</strong> @ViewBag.Website</p>
+                                        </div>
+                                    </th>
+                                    @*<th>
+                                            <div class="addres-details">
+                                                <p>Bank Details</p>
+                                                <p>Bank Name: </p>
+                                                <p>A/c No.:</p>
+                                                <p>IFS Code:</p>
+                                                <p>Branch</p>
+                                            </div>
+                                        </th>*@
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-bordered zestier">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="gstin">
+                                            <p><strong>GSTIN :</strong> @ViewBag.GSTNO</p>
+                                            <p><strong>Invoice Serial Number :</strong> @ViewBag.OrderNo</p>
+                                            <p><strong>Invoice Date :</strong> @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                                            @*<p><strong>Distributer ID :</strong> 809596808</p>*@
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="gstin">
+                                            To, <br />
+                                            @ViewBag.Name (@ViewBag.Loginid)<br />
+                                            @ViewBag.AssociateAddress
+                                            @*<p><strong>Name :</strong> @ViewBag.Name</p>
+                                                <p><strong>Address :</strong> @ViewBag.AssociateAddress</p>*@
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered zestier">
+                            <tbody>
+                                <tr>
+                                    <td>SNo</td>
+
+                                    <td colspan="4">Product Name</td>
+                                    <td colspan="4">HSN Code</td>
+                                    @*<td colspan="2">Batch No</td>*@
+                                    <td>SGST</td>
+                                    <td>CGST</td>
+                                    <td>IGST</td>
+                                    <td colspan="2">Qty</td>
+                                </tr>
+                                @if (Model != null)
+            {
+                if (Model.lsttopupreport != null)
+                {
+                    int i = 1;
+                    foreach (var Item in Model.lsttopupreport)
+                    {
+                                    <tr>
+                                        <td>
+                                            @i
+                                        </td>
+                                        <td colspan="4">@Item.ProductName</td>
+                                        <td colspan="4">@Item.HSNCode</td>
+                                        @*<td colspan="2">@Item.BatchNo</td>*@
+                                        <td>@Item.SGST</td>
+                                        <td>@Item.CGST</td>
+                                        <td>0</td>
+                                        <td colspan="2">@Item.Quantity</td>
+                                    </tr>
+                                        i++;
+                                    }
+                                }
+                            }
+                                <tr>
+                                    <td colspan="14">
+                                        Remarks :
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9"></td>
+                                    <td colspan="3">Total</td>
+                                    <td colspan="2">@ViewBag.TotalFinalAmount</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="6" colspan="5">
+                                        Tax Summary<br />
+
+                                    </td>
+                                    <td colspan="4"></td>
+                                    <td colspan="3">Less Discount</td>
+                                    <td colspan="2">0.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td colspan="3">Total Sale Value before Tax</td>
+                                    <td colspan="2">@ViewBag.ValueBeforeTax</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td colspan="3">Added Tax</td>
+                                    <td colspan="2">@ViewBag.TaxAdded</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td colspan="3">Total Value after Tax</td>
+                                    <td colspan="2">@ViewBag.TotalFinalAmount</td>
+                                </tr>
+                                @*<tr>
+                                        <td colspan="4"></td>
+                                        <td colspan="3">Total Value before Round Off</td>
+                                        <td colspan="2">4324.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td colspan="3">Round Off</td>
+                                        <td colspan="2">0.00</td>
+                                    </tr>*@
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td colspan="3">
+                                        Grand Total :
+                                    </td>
+                                    <td colspan="2">
+                                        @ViewBag.TotalFinalAmount
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="14" style="text-align:right">
+                                        Total Value (in Words) : @ViewBag.TotalFinalAmountWords
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <table class="table table-bordered zestier">
+                            <tbody>
+                                <tr class="descript">
+                                    <td rowspan="2">
+                                        <div class="condition">
+                                            Terms & Conditions :
+                                            <ul>
+                                                <li>All disputes will be subject to Lucknow jurisdiction</li>
+                                                <li>Listed above have been received in order and in saleable condition.</li>
+                                                <li>Payment must be made by Cash/ Demand Draft only in favour of Dream Crusher</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td rowspan="1" class="text-center zestier"><strong>For @ViewBag.CompanyName</strong></td>
+                                </tr>
+                                <tr class="descript">
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr class="descript">
+                                    <td class="text-center"><strong>Signature of Recipiet</strong></td>
+                                    <td class="text-center"><strong>Authorised Signature</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+﻿@model TrustRadhe.Models.Profile
+@{
+    ViewBag.Title = "PayoutReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("PayoutReport", "UserReports", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <!-- PAGE-HEADER -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Payout</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User/AssociateDashBoard">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Payout Report</li>
+            </ol>
+        </div>
+    </div>
+    <!-- PAGE-HEADER END -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                       
+                        <!-- /.panel-heading -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    Payout No
+                                    @Html.TextBoxFor(m => m.PayoutNo, new { @class = "form-control", @onclick = "return isNumberOrDecimal(event);" })
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>From Date  </label>
+                                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>To Date  </label>
+                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mt-5">
+                                    <input class="btn btn-primary" type="submit" value="Search" name="Search" id="btnSearch" />
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Login ID</th>
+                                        <th>Name</th>
+                                        <th>Payout No</th>
+                                        <th>Closing Date</th>
+                                        <th hidden="hidden">Direct Income</th>
+                                        <th>Matching Income</th>
+                                        <th>Direct Income</th>
+                                        <th>Gross Amount</th>
+                                        <th>TDS Amount</th>
+
+                                        <th>Admin Charges</th>
+                                        <th hidden="hidden">Product Wallet</th>
+                                        <th>NET Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstPayoutDetail != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstPayoutDetail)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.LoginId</td>
+                                                    <td>@Item.DisplayName</td>
+                                                    <td>@Item.PayoutNo</td>
+                                                    <td>@Item.ClosingDate</td>
+                                                    <td hidden="hidden">@Item.DirectIncome</td>
+                                                    <td>@Item.BinaryIncome</td>
+                                                    <td>@Item.LeadershipBonus</td>
+                                                    <td>@Item.GrossAmount</td>
+                                                    <td>@Item.TDSAmount</td>
+
+                                                    <td>@Item.ProcessingFee</td>
+                                                    <td hidden="hidden">@Item.ProductWallet</td>
+                                                    <td>@Item.NetAmount</td>
+                                                    <td>
+                                                        <a href="/UserReports/PayoutReceipt?lid=@Item.EncryptLoginID&pno=@Item.EncryptPayoutNo" class="btn btn-sm btn-primary" target="_blank">Print</a>
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            }
+
+
+            <script>
+                $(document).ready(function () {
+                    $('#dataTables-example').DataTable({
+                        responsive: true
+                    });
+                });
+            </script>
+
+            <script src="../../vendor/jquery/jquery.min.js"></script>
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+            <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+            <script>
+
+                $('#FromDate').datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                });
+                $('#ToDate').datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                });
+
+                function isNumberOrDecimal(evt) {
+                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                    if (charCode != 46 && charCode > 31
+                      && (charCode < 48 || charCode > 57))
+                        return false;
+
+                    return true;
+                }
+
+            </script>

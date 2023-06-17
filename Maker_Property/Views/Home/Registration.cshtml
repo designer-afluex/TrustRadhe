@@ -1,0 +1,506 @@
+﻿@model TrustRadhe.Models.Home
+@{
+    Layout = null;
+}
+<title>@ViewBag.Title</title>
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport"/>
+    <title>Registration</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="../assets/css/app.min.css"/>
+    <link rel="stylesheet" href="../assets/bundles/bootstrap-social/bootstrap-social.css"/>
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href="../assets/css/components.css"/>
+    <!-- Custom style CSS -->
+    <link href="~/WebsiteCss/images/radhekunj_logo.png" type="img/x-icon" rel="shortcut icon"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+</head>
+<body class="p-4">
+    <div class="loader" id="divload"></div>
+    <div class="row clearfix">
+        <!--Column-->
+        <div class="col-lg-10 col-md-7 col-sm-12 offset-1">
+            <div class="registration-page card">
+                <div class="card-header text-center">
+                    <h4>Registration</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+
+                        <div class="row clearfix">
+                            <!--Form Group-->
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label>Sponsor Id<sup style="color:red;font-size: 21px;">*</sup></label>
+                                @Html.TextBoxFor(m => m.SponsorId, new { @class = "form-control", @Placeholder = "Refer By", @onchange = "getsponsordetails(this);" })
+                                @Html.ValidationMessageFor(m => m.LoginId)
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label>Sponsor Name</label>
+                                @Html.TextBoxFor(m => m.SponsorName, new { @class = "form-control", @Disabled = "true" })
+                            </div>
+                            <div class="form-group col-md-12 col-sm-12">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label text-black" for="inlineRadio1"> Leg </label>
+                                    &nbsp;&nbsp;<input type="radio" value="Left" @ViewBag.LeftChecked id="left" name="Leg" />&nbsp;
+                                    <label class="form-check-label text-black" for="inlineRadio1"> Left </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" value="Right" id="right" name="Leg" @ViewBag.RightChecked />&nbsp;
+                                    <label class="form-check-label text-black" for="inlineRadio2">Right</label>
+                                </div>
+                            </div>
+                            @*<div class="form-group col-md-6 col-sm-12">
+                    <label>Under Place Id<sup style="color:red;font-size: 21px;">*</sup></label>
+                    @Html.TextBoxFor(m => m.UnderPlaceId, new { @class = "form-control", @Placeholder = "Under Place Id", @onchange = "getsponsordetails1(this);" })
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label>Under Place Name</label>
+                    @Html.TextBoxFor(m => m.UnderPlaceName, new { @class = "form-control", @Placeholder = "Name" })
+                </div>*@
+
+                            <!--Form Group-->
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>First Name<sup style="color:red;font-size: 21px;">*</sup></label>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @Placeholder = "First Name" })
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Last Name</label>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @Placeholder = "Last Name" })
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Email Id</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Placeholder = "Email id" })
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Mobile No.<sup style="color:red;font-size: 21px;">*</sup></label>
+                                @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @Placeholder = "Mobile No", @Maxlength = "10", @onkeypress = "return isNumberKey(event);", @onchange = "getmobileno(this);" })
+                                @Html.ValidationMessageFor(m => m.MobileNo)
+                            </div>
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Date of Birth<sup style="color:red;font-size: 21px;">*</sup></label>
+                                @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", @placeholder = "Date of Birth", @readonly = "readonly" })
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Gender</label>
+                                @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.ddlgender, "Value", "Text"), new { @class = "form-control" })
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Pancard</label>
+                                @Html.TextBoxFor(m => m.PanCard, new { @class = "form-control", @Placeholder = "Pan Card", @Maxlength = "10", @onchange = "return validatepan(event);" })
+                            </div>
+                            <div class="form-group col-md-3 col-sm-12">
+                                <label>Adhar No<sup style="color:red;font-size: 21px;">*</sup></label>
+                                @Html.TextBoxFor(m => m.AdharNo, new { @class = "form-control", @Placeholder = "Adhar No", @Maxlength = "12", @onkeypress = "return isNumberKey(event);" })
+                                @Html.ValidationMessageFor(m => m.AdharNo)
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-12 col-sm-12">
+                                <label>Address<sup style="color:red;font-size: 21px;"> *</sup></label>
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @Placeholder = "Address" })
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-4 col-sm-12">
+                                <label>Pincode<sup style="color:red;font-size: 21px;">*</sup></label>
+                                @Html.TextBoxFor(m => m.PinCode, new { @class = "form-control", @Placeholder = "PinCode", @onchange = "return getstatecity();" })
+                                @Html.ValidationMessageFor(m => m.PinCode)
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-4 col-sm-12">
+                                <label>State</label>
+                                @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State", @Disabled = "disabled" })
+                            </div>
+                            <!--Form Group-->
+                            <div class="form-group col-md-4 col-sm-12">
+                                <label>City</label>
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control", @Placeholder = "City", @Disabled = "disabled" })
+                            </div>
+                            <div class="row" style="margin-left:5px;margin-right:300px;margin-bottom:14px;margin-top:14px">
+                                <div class="col-md-12">
+                                    <input type="checkbox" id="condition" />  &nbsp;I read carefully and accept all terms & conditions.
+                                    @* @Html.CheckBoxFor(m => m.condition, new { @class = "form-control"}) &nbsp;<label></label>*@
+                                </div>
+                            </div>
+                            <!--Form Group-->
+                            <p id="note" style="display:none">
+                                Note :- To Complete the Registration process please follow below steps.<br />
+                                Step 1 - Fill all the required information and click on <b>Confirm</b> button to verify all entered data are correct.<br />
+                                Step 2 - Click on <b>Regsiter</b> button to complete the registration process.
+                            </p>
+                            <div class="form-group col-md-6 col-sm-12">
+                                <div class="pull-left">
+                                    <div class="form-group no-margin">
+                                        <input type="button" id="Confirm" onclick="return confirmregistration();" class="btn btn-primary btn-lg theme-white" name="Confirm" value="Confirm" />
+                                        <input type="button" id="Register" onclick="return saveregistration();" class="btn btn-primary" style="display: none" name="Register" value="Register" />
+                                        <input type="button" id="Edit" onclick="editregistration();" style="display: none" class="btn btn-primary" name="Edit" value="Edit" />
+                                        <a href="/Home/Login" class="btn btn-primary btn-lg">Sign In</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--Column-->
+                <!--Column--
+                <div class="column col-lg-5 col-md-5 col-sm-12">
+                    @*<img src="https://preview.colorlib.com/theme/bootstrap/login-form-02/images/bg_1.jpg.webp" class="img-fluid"/>*@
+                    <img src="~/WebsiteCss/images/registrationc.png" class="img-fluid" />
+                </div>
+                <!--Column-->
+            </div>
+            
+        </div>
+        <!--End Checkout Details-->
+
+    </div>
+
+    <!--End CheckOut Page-->
+    <!--Clients Section-->
+
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    @*<script src=" ../assets/js/app.min.js"></script>*@
+    <!-- JS Libraies -->
+    <script src="../assets/bundles/echart/echarts.js"></script>
+
+    <script src="../assets/bundles/chartjs/chart.min.js"></script>
+    <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="../assets/js/page/index.js"></script>
+    <!-- Template JS File -->
+    <script src="../assets/js/scripts.js"></script>
+    <script src="../assets/bundles/jquery.sparkline.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</body>
+<script>
+
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+
+    function getsponsordetails(obj) {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: '/Home/GetSponserDetails',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'ReferBy': $(obj).val() },
+            success: function (response) {
+                if (response.Result == "Yes") {
+                    $("#divload").css({ 'display': 'none' });
+                    $('#SponsorName').val(response.DisplayName);
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    $("#SponsorId").addClass('errortext');
+                    $('#SponsorName').val('');
+                    $('#SponsorId').val('');
+                    $('#SponsorId').focus();
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+    function getmobileno(obj) {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+
+        $.ajax({
+            url: '/Home/GetMobileNo',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'ReferBy': $(obj).val() },
+            success: function (response) {
+                if (response.Result == "Yes") {
+                    $("#divload").css({ 'display': 'none' });
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    $("#MobileNo").addClass('errortext');
+                    $('#MobileNo').val('');
+                    $('#MobileNo').focus();
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+    $('#DOB').datepicker({
+        //yearRange: "-100:+0",
+        dateFormat: 'dd/mm/yy',  
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-60:+0",
+        //onSelect: function (dateText) {
+        //    $sD = new Date(dateText);
+        //    $("#DOB").datepicker('option', 'maxDate', min);
+        //}
+    });
+
+
+    function validatepan(event) {
+        $(".errortext").removeClass("errortext");
+        var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+        var txtpan = $('#PanCard').val();
+        if (txtpan.length == 10) {
+            if (txtpan.match(regExp)) {
+
+            }
+            else {
+                $("#PanCard").addClass('errortext');
+                $('#PanCard').focus();
+                $('#PanCard').val('');
+                alert('Please enter valid PanNo');
+
+            }
+        }
+        else {
+            $("#PanCard").addClass('errortext');
+            $('#PanCard').focus();
+            $('#PanCard').val('');
+            alert('Please enter 10 digits for a valid PAN number');
+
+        }
+    }
+    function getstatecity() {
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: "/Home/GetStateCity",
+            Type: "Get",
+            DataType: "JSON",
+            data: { PinCode: $("#PinCode").val() },
+            success: function (data) {
+                if (data.Result == "1") {
+                    $("#State").val(data.State);
+                    $("#City").val(data.City);
+                }
+                else {
+                    $("#State").val('');
+                    $("#City").val('');
+                    $("#PinCode").val('');
+                    $("#PinCode").addClass('errortext');
+                    $('#PinCode').focus();
+                    alert(data.Result);
+
+                }
+
+
+            }
+
+        });
+    }
+    function confirmregistration() {
+
+        if ($('#DOB').val() != null) {
+
+            var today = new Date();
+            var nowyear = today.getFullYear();
+            var nowmonth = today.getMonth();
+            var nowday = today.getDate();
+            var b = $('#DOB').val();
+
+
+
+            var birth = new Date(b);
+
+            var birthyear = birth.getFullYear();
+            var birthmonth = birth.getMonth();
+            var birthday = birth.getDate();
+
+            var age = nowyear - birthyear;
+            if (age < 18) {
+                alert("Age must be more than 18 Years.")
+                return false;
+            }
+        }
+
+
+        $(".errortext").removeClass("errortext");
+        if ($('#SponsorId').val() == '') {
+            $("#SponsorId").addClass('errortext');
+            $('#SponsorId').focus();
+            return false;
+        }
+        if ($('#FirstName').val() == '') {
+            $("#FirstName").addClass('errortext');
+            $('#FirstName').focus();
+            return false;
+        }
+        if ($('#MobileNo').val() == '') {
+            $("#MobileNo").addClass('errortext');
+            $('#MobileNo').focus();
+            return false;
+        }
+        if ($('#DOB').val() == '') {
+            $("#DOB").addClass('errortext');
+            $('#DOB').focus();
+            return false;
+        }
+        if ($('#AdharNo').val() == '') {
+            $("#AdharNo").addClass('errortext');
+            $('#AdharNo').focus();
+            return false;
+        }
+        if ($('#Address').val() == '') {
+            $("#Address").addClass('errortext');
+            $('#Address').focus();
+            return false;
+        }
+        if ($('#PinCode').val() == '') {
+            $("#PinCode").addClass('errortext');
+            $('#PinCode').focus();
+            return false;
+        }
+
+        $('#condition').click(function () {
+            if ($(this).prop("checked")) {
+                //$('input:checkbox[name=checkBoxId_]').attr('checked', true);
+                $('.chkclass').prop("checked", true);
+            } else {
+                //$('input:checkbox[name=checkBoxId_]').attr('checked', false);
+                $('.chkclass').prop("checked", false);
+            }
+        });
+        if ($('#condition').prop('checked')) {
+            $('#condition').val(1);
+        } else {
+            alert('Please accept the condition')
+            return false;
+        }
+        $('#note').show();
+
+
+        $("#PaymentMethod").attr("disabled", "disabled");
+        $("#Commitment").attr("disabled", "disabled");
+        $("#MobileNo").attr("disabled", "disabled");
+        $("#FirstName").attr("disabled", "disabled");
+        $("#SponsorId").attr("disabled", "disabled");
+        $("#Email").attr("disabled", "disabled");
+        $("#LastName").attr("disabled", "disabled");
+        $("#Gender").attr("disabled", "disabled");
+        $("#PanCard").attr("disabled", "disabled");
+        $("#Address").attr("disabled", "disabled");
+        $("#DOB").attr("disabled", "disabled");
+        $("#PinCode").attr("disabled", "disabled");
+        $("#AdharNo").attr("disabled", "disabled");
+        $("#UnderPlaceId").attr("disabled", "disabled");
+        $('#Confirm').hide();
+        $('#Edit').show();
+        $('#Register').show();
+    }
+
+    function editregistration() {
+        $('#note').hide();
+
+        $("#PaymentMethod").attr("disabled", false);
+        $("#Commitment").attr("disabled", false);
+        $("#MobileNo").attr("disabled", false);
+        $("#FirstName").attr("disabled", false);
+        $("#SponsorId").attr("disabled", false);
+        $("#Email").attr("disabled", false);
+        $("#LastName").attr("disabled", false);
+        $("#Gender").attr("disabled", false);
+        $("#PanCard").attr("disabled", false);
+        $("#Address").attr("disabled", false);
+        $("#DOB").attr("disabled", false);
+        $("#PinCode").attr("disabled", false);
+        $("#AdharNo").attr("disabled", false);
+        $("#UnderPlaceId").attr("disabled", false);
+        $('#Confirm').show();
+        $('#Edit').hide();
+        $('#Register').hide();
+
+    }
+
+   
+    function getsponsordetails1(obj) {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+
+
+        var Leg = "";
+        if ($('#left').prop('checked')) {
+            Leg = "L";
+        }
+        else {
+            Leg = "R";
+        }
+        $.ajax({
+            url: '/Home/GetSponserDetails1',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'ReferBy': $(obj).val(), Leg: Leg, },
+            success: function (response) {
+                if (response.Result == "Yes") {
+                    $("#divload").css({ 'display': 'none' });
+                    $('#UnderPlaceName').val(response.DisplayName);
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    $("#UnderPlaceId").addClass('errortext');
+                    $('#UnderPlaceName').val('');
+                    $('#UnderPlaceId').val('');
+                    $('#UnderPlaceId').focus();
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+
+
+    function saveregistration() {
+        $("#divload").css({ 'display': '' });
+        var Leg = "";
+        if ($('#left').prop('checked')) {
+            Leg = "L";
+        }
+        else {
+            Leg = "R";
+        }
+        $.ajax({
+            url: "/Home/RegistrationAction",
+            Type: "Get",
+            DataType: "JSON",
+            data: { SponsorId: $("#SponsorId").val(), FirstName: $("#FirstName").val(), LastName: $("#LastName").val(), Email: $("#Email").val(), MobileNo: $("#MobileNo").val(), PanCard: $("#PanCard").val(), Address: $("#Address").val(), Gender: $("#Gender").val(), OTP: $("#OTP").val(), PinCode: $("#PinCode").val(), Leg: Leg, DOB: $("#DOB").val(), AdharNo: $("#AdharNo").val() ,
+                UnderPlaceId: $("#UnderPlaceId").val()},
+            success: function (data) {
+                if (data.Response == "1") {
+                    window.location.href = '@Url.Action("ConfirmRegistration", "Home")';
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    alert(data.Response);
+                }
+            }
+
+        });
+    }
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+</script>
+<style>
+    .errortext {
+        border: 2px solid red !important;
+        background-color: #c18888 !important;
+    }
+</style>
+

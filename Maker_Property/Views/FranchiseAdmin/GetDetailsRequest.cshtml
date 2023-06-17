@@ -1,0 +1,128 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "GetDetailsRequest";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Transaction
+                </a>
+            </li>
+            <li class="active">
+                Request Details
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Request List
+            </div>
+
+            <div class="panel-body">
+                @if (TempData["RequestApproved"] != null)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="@TempData["Class"]">
+                                @TempData["RequestApproved"]
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-12 table-responsive">
+                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Product Name</th>
+                                    <th>Request Qty</th>
+                                    <th>TotalAmount</th>
+                                    <th>Batch No</th>
+                                    <th>Approve Qty</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    if (Model.lstFranchise != null)
+                                    {
+                                        int i = 1;
+                                        foreach (var Item in Model.lstFranchise)
+                                        {
+                                            <tr class="text-left">
+                                                <td>@i</td>
+                                                <td>@Item.ProductName</td>
+                                                <td>@Item.Quantity</td>
+                                                <td>@Item.TotalAmount</td>
+                                                <td>
+                                                    @Html.DropDownList("ddlBatchNo_" + i, new SelectList(ViewBag.ddlBatch, "Value", "Text"), new { @class = "form-control" })
+                                                    @*@Html.DropDownListFor(m => m.BatchID, new SelectList(ViewBag.ddlBatch, "Value", "Text"), new { @class = "form-control", @onchange = "return GetVal(this);" })*@
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="approveqty_@i" name="approveqty_@i" value="@Item.Quantity" onchange="return validateApproveQty(this,'@Item.Quantity','@i');" onkeypress="return isNumberKey(event);" />
+                                                </td>
+                                                <td>
+                                                    <input type="button" class="btn btn-sm btn-success" value="Approve" onclick="return approverequest('@Item.RequestID','@i');" />
+                                                </td>
+                                            </tr>
+
+                                            i++;
+                                        }
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function validateApproveQty(approvedQty, requestQty, rowNumber) {
+        if ((Number)(approvedQty.value) > (Number)(requestQty)) {
+            document.getElementById('approveqty_' + rowNumber).value = requestQty;
+            alert("Approved Quantity cannot be greater than Requested Quantity.");
+        }
+    }
+
+    function approverequest(RequestID, index) {
+        //alert(document.getElementById('ddlBatchNo_' + index).value);
+
+        $.ajax({
+            url: '/FranchiseAdmin/ApproveRequest', type: 'post', dataType: 'json',
+            data: { 'requestID': RequestID, 'approveQty': document.getElementById('approveqty_' + index).value, 'batch': document.getElementById('ddlBatchNo_' + index).value },
+            success: function (data) {
+
+                if (data.Result == "1") {
+                    window.location.reload();
+                }
+                else {
+                    alert(data.Result);
+                }
+            }
+        });
+
+    }
+</script>

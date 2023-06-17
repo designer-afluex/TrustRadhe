@@ -1,0 +1,131 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "PaidPayoutDetails";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("PaidPayoutDetails", "UserReports", FormMethod.Post, new { @id = "form1" }))
+{
+      <!-- PAGE-HEADER -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Payout</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User/AssociateDashBoard">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Paid Payout Details</li>
+            </ol>
+        </div>
+    </div>
+    <!-- PAGE-HEADER END -->
+
+            <div class="row">
+                <div class="card">
+                    <!-- /.panel-heading -->
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-3 form-group">
+                                    <label> From Date</label>
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @readonly = "readonly" })
+
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <label> To Date </label>
+                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 mt-5">
+                                        <input type="submit" class="btn btn-primary" name="btnDetails" id="btnDetails" value="Get Details" />
+                                    </div>
+
+                            </div>
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Login Id</th>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Payment Date</th>
+                                    <th>Transaction Date</th>
+                                    <th>Transaction No</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    if (Model.PaidPayoutlist != null)
+                                    {
+                                        int i = 1;
+                                        foreach (var Item in Model.PaidPayoutlist)
+                                        {
+                                            <tr class="text-left">
+                                                <td>
+                                                    @i
+
+                                                </td>
+                                                <td>@Item.LoginId</td>
+                                                <td>@Item.Name</td>
+                                                <td>@Item.Amount</td>
+                                                <td>@Item.Description</td>
+                                                <td>@Item.PaymentDate</td>
+                                                <td>@Item.TransactionDate</td>
+                                                <td>@Item.TransactionNo</td>
+
+                                            </tr>
+                                            i++;
+                                        }
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            }
+
+
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script src="../..//WebsiteCss/js/jquery.min.js"></script>
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+            <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+            <script>
+                $('#FromDate').datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                });
+
+                $('#ToDate').datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                });
+
+            </script>
+
+
+
+
+
+

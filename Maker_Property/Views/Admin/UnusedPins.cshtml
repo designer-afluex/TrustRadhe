@@ -1,0 +1,135 @@
+﻿@model TrustRadhe.Models.Wallet
+
+@{
+    ViewBag.Title = "UnusedPins";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Pin Management
+                </a>
+            </li>
+            <li class="active">
+                Unused Pins
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("UnusedPins", "Admin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Unused Pins
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Owner ID </label>
+                                @Html.TextBoxFor(m => m.OwnerID, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Owner Name </label>
+                                @Html.TextBoxFor(m => m.OwnerName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>ePinNo </label>
+                                @Html.TextBoxFor(m => m.ePinNo, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Package  </label>
+                                @Html.DropDownListFor(m => m.Package, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "form-control", @onchange = "FillAmount();" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <br />
+                                <input type="submit" id="btnSearch" class="btn btn-success pull-left" name="Search" value="Search" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>E-Pin No</th>
+                                <th>Package</th>
+                                <th>Owner</th>
+                                <th>Created Date</th>
+                                <th>Registered To</th>
+                                <th>Status</th>
+                                <th>Top Up</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.lstunusedpins != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.lstunusedpins)
+                                    {
+                                        <tr class="text-left">
+                                            <td>@i</td>
+
+                                            <td>@Item.ePinNo</td>
+                                            <td>@Item.Package</td>
+
+                                            <td>
+
+                                                @Item.DisplayName
+
+                                            </td>
+                                            <td>@Item.AddedOn</td>
+                                            <td>
+                                                @Item.RegisteredTo
+                                            </td>
+                                            <td>@Item.Status</td>
+                                            <td>
+                                                @if (Item.Status == "Unused")
+                                                {
+                                                    <a class="btn btn-info btn-sm" href="/Admin/TopUpByPin?pin=@Item.ePinNo">Topup</a>
+                                                    <a class="btn btn-info btn-sm" href="/Admin/TransferPin?Epin=@Item.ePinNo">Transfer Pin</a>
+                                                }
+                                            </td>
+
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+

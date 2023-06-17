@@ -1,0 +1,106 @@
+﻿@model TrustRadhe.Models.Home
+
+@{
+    ViewBag.Title = "SetEarnerValue";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Payout
+                </a>
+            </li>
+            <li class="active">
+                Set Earner Value
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+@using (Html.BeginForm("SetEarnerValue", "Home", FormMethod.Post, new { @id = "form1" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Set Earner Value
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    Earner Value
+                                    @Html.TextBoxFor(m => m.EarnerValue, new { @class = "form-control", @placeholder = "Enter Value", @onkeypress = "return isNumberKey(event);", })
+                                </div>
+                                <div class="col-md-3">
+                                    From Date
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-3">
+                                    Earner Value
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To Date", @readonly = "readonly" })
+                                </div>
+
+                                <div class="col-md-3">
+                                    <br />
+                                    <input type="submit" class="btn btn-success" value="Update" name="Update" />
+                                    <p style="color:red">@TempData["SetEarnerValue"]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+
+}
+
+<script src="../vendor/jquery/jquery.min.js"></script>
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-60:+0",
+    });
+
+
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-60:+0",
+    });
+
+
+    $('#TransactionDate').datepicker({
+        dateFormat: 'yy-mm-dd',
+    });
+</script>
+
+
+

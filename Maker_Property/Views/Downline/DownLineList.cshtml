@@ -1,0 +1,142 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "DownLineList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("DownLineList", "Downline", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+     <!-- PAGE-HEADER -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Team</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User/AssociateDashBoard">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">DownLine List</li>
+            </ol>
+        </div>
+    </div>
+    <!-- PAGE-HEADER END -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <!-- /.panel-heading -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>  Name </label>
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>From Date  </label>
+                                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>To Date  </label>
+                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Leg </label>
+                                        @Html.DropDownListFor(m => m.Leg, new SelectList(ViewBag.ddlleg, "Value", "Text"), new { @class = "select2 form-select form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.ddlStatus, "Value", "Text"), new { @class = "select2 form-select form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 mt-5">
+                                    <input type="submit" id="btnSearch" class="btn btn-primary" name="Search" value="Search" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Login Id</th>
+                                        <th>Name</th>
+                                        <th>Leg</th>
+                                        <th>Joining Date</th>
+                                        <th>Package</th>
+                                        <th hidden="hidden">Activation Date</th>
+                                        <th hidden="hidden">Mobile No</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstassociate != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstassociate)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+
+                                                    <td>@Item.LoginId</td>
+                                                    <td>@Item.Name</td>
+                                                    <td>@Item.Leg</td>
+                                                    <td>@Item.JoiningDate</td>
+                                                    <td>@Item.Package</td>
+                                                    <td hidden="hidden">@Item.PermanentDate</td>
+                                                    <td hidden="hidden">@Item.Mobile</td>
+
+                                                    <td>@Item.Status</td>
+
+                                                </tr>
+                                                i++;
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            }
+            <script src="../vendor/jquery/jquery.min.js"></script>
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+            <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+            <script>
+
+                $('#FromDate').datepicker({
+                    dateFormat: 'M d, yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                });
+                $('#ToDate').datepicker({
+                    dateFormat: 'M d, yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $('#dataTables-example').DataTable({
+                        responsive: true
+                    });
+                });
+            </script>

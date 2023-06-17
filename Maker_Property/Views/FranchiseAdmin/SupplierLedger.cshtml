@@ -1,0 +1,139 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "SupplierLedger";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Reports
+                </a>
+            </li>
+            <li class="active">
+                Supplier Ledger
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+@using (Html.BeginForm("SupplierLedger", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Supplier Ledger
+                    @*  <a href="/FranchiseAdmin/Registration" class="btn btn-sm btn-primary link pull-right">Add New Product</a>*@
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <label for="inputEmail4" class="col-form-label">From Date </label>
+                            @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control ", @placeholder = "Search by FromDate" })
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="inputEmail4" class="col-form-label">To Date</label>
+                            @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control ", @placeholder = "Search by ToDate" })
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="inputEmail4" class="col-form-label">Supplier<span style="color:red;">*</span> </label>
+
+                            @Html.DropDownListFor(m => m.SupplierID, new SelectList(ViewBag.ddlSupplier, "Value", "Text"), new { @class = "form-control"  })
+                        </div>
+                        <div class="col-lg-3">
+                            <br />
+
+                            <input type="submit" id="btnSearch" name="Search" value="Search" class="btn btn-primary " onclick="return validateform();" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>TransactionDate</th>
+                                        <th>Supplier Name </th>      
+                                        <th>Credit</th>
+                                        <th>Debit</th>
+                                        <th>Balance </th>
+                                        <th>Description</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstFranchise != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstFranchise)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.TransactionDate</td>
+                                                    <td>@Item.SupplierName</td>
+                                                    <td>@Item.Credit</td>
+                                                    <td>@Item.Debit</td>
+                                                    <td>@Item.Balance</td>
+                                                  <td>@Item.Narration</td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+$('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+});
+$('#ToDate').datepicker({
+    dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    changeYear: true,
+});
+
+function validateform() {
+    $(".errortext").removeClass("errortext");
+    
+     
+    if ($('#SupplierID').val() == '0') {
+        $("#SupplierID").addClass('errortext');
+        $('#SupplierID').focus();
+        return false;
+    }
+    
+
+    return true;
+}
+
+
+</script>
+

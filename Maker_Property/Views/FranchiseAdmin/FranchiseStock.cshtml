@@ -1,0 +1,150 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "FranchiseStock";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Admin
+                </a>
+            </li>
+            <li class="active">
+                Franchise Stock
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Franchise Stock
+              @*  <a href="/Admin/FranchiseList" class="btn btn-sm btn-primary link pull-right">Franchise List</a>*@
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                @using (Html.BeginForm("SaveFranchiseStock", "FranchiseAdmin", FormMethod.Post, new { @id = "signupForm" }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            @if (TempData["Stock"] != null)
+                            {
+                                <div >
+                                    @TempData["Stock"]
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Select Product <span style="color: red">*</span>
+                            @Html.DropDownListFor(m => m.ProductID, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Select Action <span style="color: red">*</span>
+                            @Html.DropDownListFor(m => m.Action, new SelectList(ViewBag.ddlAction, "Value", "Text"), new { @class = "form-control" })
+                        </div>
+                        <br />
+                        @if (Model != null)
+                        {
+                            if (Model.lstFranchise != null)
+                            {
+                                <div class="col-md-12 table-responsive">
+                                    <table id="example" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr No.</th>
+                                                <th>Franchise Type</th>
+                                                <th>Firm Name</th>
+                                                <th>Franchise Name</th>
+                                                <th>Contact</th>
+                                                <th>GSTNo</th>
+                                                <th>Stock Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                if (Model.lstFranchise != null)
+                                                {
+                                                    int i = 1;
+                                                    foreach (var Item in Model.lstFranchise)
+                                                    {
+                                                        <tr class="text-left">
+                                                            <td>@i</td>
+                                                            <td>@Item.FranchiseType</td>
+                                                            <td>@Item.FirmName</td>
+                                                            <td>@Item.FranchiseName</td>
+                                                            <td>@Item.Contact</td>
+                                                            <td>@Item.GSTNo</td>
+                                                            <td>
+                                                                <input type="hidden" name="hdFranchiseID_@i" value="@Item.PK_FranchiseID" />
+                                                                <input type="text" name="txtStockQty_@i" onkeypress="return isNumberKey(event);" />
+                                                            </td>
+                                                        </tr>
+
+                                                        i++;
+                                                    }
+                                                    <input type="hidden" name="hdRowCount" value="@i" />
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="submit" class="btn btn-success pull-right" name="btnRegister" value="Save Stock" onclick="return validateForm();" />
+                                </div>
+                            }
+                        }
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+
+    function validateForm() {
+        $(".errortext").removeClass("errortext");
+        if ($('#ProductID').val() == '0') {
+            $("#ProductID").addClass('errortext');
+            $('#ProductID').focus();
+            return false;
+        }
+        if ($('#Action').val() == '0') {
+            $("#Action").addClass('errortext');
+            $('#Action').focus();
+            return false;
+        }
+
+    }
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>
+<style>
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>

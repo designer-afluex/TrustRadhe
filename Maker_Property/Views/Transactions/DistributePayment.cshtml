@@ -1,0 +1,266 @@
+﻿@model TrustRadhe.Models.Transactions
+@{
+    ViewBag.Title = "DistributePayment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("DistiributePayemntToMembers", "Transactions", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <div class="app-content">
+        <div class="side-app">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">  Income Statement</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminDashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> Distribute Payment</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <p style="color:red">
+                                @TempData["DistributePayment"]
+                            </p>
+                            <h3 class="card-title"> Distribute Payment</h3>
+                            <div class="card-options">
+                                <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                <a href="#" class="card-options-fullscreen" data-bs-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom01">Last Closing Date :</label>
+                                    @Html.DisplayFor(m => m.LastClosingDate)
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom01">Last Payout No :</label>
+                                   @Html.DisplayFor(m => m.PayoutNo)
+                                </div>
+                                <div class="col-lg-3">
+                                    <input class="btn btn-success" onclick="return validateform()" type="submit" value="Distribute Payment" />
+                                    <input type="submit" class="btn btn-success" value="Export To Excel" name="Export" formtarget="_blank" />
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>LoginID</th>
+                                            <th>Name</th>
+                                            <th>Harmony </th>
+                                            <th>Direct Income</th>
+                                            <th>Direct Leadership Bonus</th>
+                                            <th>Gross Amount</th>
+                                            <th>TDS Amount</th>
+                                            <th>Processing</th>
+                                            <th>Net Amount</th>
+                                        </tr>
+                                        </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.lstassociate != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.lstassociate)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.LoginID</td>
+                                                        <td>@Item.FirstName</td>
+                                                        <td>@Item.BinaryIncome</td>
+                                                        <td>@Item.DirectIncome</td>
+                                                        <td>@Item.LeadershipBonus</td>
+                                                        <td>@Item.GrossIncome</td>
+                                                        <td>@Item.TDS</td>
+                                                        <td>@Item.Processing</td>
+                                                        <td>@Item.NetIncome</td>
+                                                    </tr>
+                                                    i++;
+                                                }
+
+                                            }
+                                        }
+                                    </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                                </div>
+
+                            @*<div class="row">
+                                <div class="col-sm-12">
+
+                                    <ol class="breadcrumb">
+                                        <li>
+                                            <i class="clip-home-3"></i>
+                                            <a href="#">
+                                                Income Statement
+                                            </a>
+                                        </li>
+                                        <li class="active">
+                                            Distribute Payment
+                                        </li>
+
+                                    </ol>
+
+
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Distribute Payment
+
+
+                                        </div>
+                                        <!-- /.panel-heading -->
+                                        <div class="panel-body">
+                                            <div class="row">
+
+                                                <p style="color:red">
+                                                    @TempData["DistributePayment"]
+                                                </p>
+                                                <div class="col-md-12 table-responsive">
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label>Last Closing Date : </label>
+                                                                @Html.DisplayFor(m => m.LastClosingDate)
+                                                                <br />
+                                                                <label>Last Payout No : </label>
+                                                                @Html.DisplayFor(m => m.PayoutNo)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label>Closing Date<span style="color:red">*</span></label>
+                                                                @Html.TextBoxFor(m => m.ClosingDate, new { @class = "form-control", @placeholder = "Closing Date" })
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-3">
+                                                            <br />
+                                                            <input class="btn btn-success" onclick="return validateform()" type="submit" value="Distribute Payment" />
+                                                            <input type="submit" class="btn btn-success" value="Export To Excel" name="Export" formtarget="_blank" />
+                                                        </div>
+                                                    </div>
+                                                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sr No.</th>
+                                                                <th>LoginID</th>
+                                                                <th>Name</th>
+                                                                <th>Harmony </th>
+                                                                <th>Direct Income</th>
+                                                                <th>Direct Leadership Bonus</th>
+                                                                <th>Gross Amount</th>
+                                                                <th>TDS Amount</th>
+                                                                <th>Processing</th>
+                                                                <th>Net Amount</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model != null)
+                                                            {
+                                                                if (Model.lstassociate != null)
+                                                                {
+                                                                    int i = 1;
+                                                                    foreach (var Item in Model.lstassociate)
+                                                                    {
+                                                                        <tr class="text-left">
+                                                                            <td>@i</td>
+                                                                            <td>@Item.LoginID</td>
+                                                                            <td>@Item.FirstName</td>
+                                                                            <td>@Item.BinaryIncome</td>
+                                                                            <td>@Item.DirectIncome</td>
+                                                                            <td>@Item.LeadershipBonus</td>
+                                                                            <td>@Item.GrossIncome</td>
+                                                                            <td>@Item.TDS</td>
+                                                                            <td>@Item.Processing</td>
+                                                                            <td>@Item.NetIncome</td>
+                                                                        </tr>
+                                                                        i++;
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- content-wrapper ends -->
+                                <!-- partial:../../partials/_footer.html -->
+                                <!-- partial -->
+                            </div>*@
+                            <!-- main-panel ends -->
+                            }
+                            <script src="../vendor/jquery/jquery.min.js"></script>
+
+                            <script>
+                                $(document).ready(function () {
+                                    $('#dataTables-example').DataTable({
+                                        responsive: true
+                                    });
+                                });
+                            </script>
+
+                            <script src="../..//WebsiteCss/js/jquery.min.js"></script>
+
+                            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+                            <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+                            <script>
+
+                                $('#ClosingDate').datepicker({
+                                    dateFormat: 'dd/mm/yy',
+                                });
+
+                                function isNumberKey(evt) {
+                                    var charCode = (evt.which) ? evt.which : event.keyCode;
+                                    if (charCode != 46 && charCode > 31
+                                      && (charCode < 48 || charCode > 57))
+                                        return false;
+
+                                    return true;
+                                }
+
+                                function validateform() {
+                                    $(".errortext").removeClass("errortext");
+                                    if ($('#ClosingDate').val() == '') {
+                                        $("#ClosingDate").addClass('errortext');
+                                        $('#ClosingDate').focus();
+                                        return false;
+                                    }
+                                }
+                            </script>
+                            <style>
+                                .errortext {
+                                    border: 1px solid red !important;
+                                    background-color: #fff0f0 !important;
+                                }
+                            </style>

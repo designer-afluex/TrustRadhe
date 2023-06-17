@@ -1,0 +1,277 @@
+﻿@model TrustRadhe.Models.Franchise
+@{
+    ViewBag.Title = "FranchiseRegistration";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Franchise
+                </a>
+            </li>
+            <li class="active">
+                Franchise Registration
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Franchise Registration
+                @*  <a href="/FranchiseAdmin/FranchiseList" class="btn btn-sm btn-primary link pull-right">Franchise List</a>*@
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                @using (Html.BeginForm("FranchiseRegistration", "FranchiseAdmin", FormMethod.Post, new { @id = "signupForm" }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="@TempData["Class"]">
+                                @TempData["Franchise"]
+                            </div>
+                        </div>
+                        @if (Model != null)
+                        {
+                            <div class="col-md-6 form-group">
+                                Spill ID <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.ReferBy, new { @class = "form-control", @Placeholder = "Spill Login ID", @onchange = "return getsponsordetails();", @readonly = "readonly" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6 form-group">
+                                Spill ID <span style="color: red">*</span>
+                                @Html.TextBoxFor(m => m.ReferBy, new { @class = "form-control", @Placeholder = "Spill Login ID", @onchange = "return getsponsordetails();" })
+                            </div>
+                        }
+
+                        <div class="col-md-6 form-group">
+                            Spill ID <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @Placeholder = "Spill Name", @readonly = "readonly" })
+                        </div>
+                        @if (Model != null)
+                        {
+                            <div class="col-md-6 form-group">
+                                Franchise Type <span style="color: red">*</span>
+                                @Html.DropDownListFor(m => m.FranchiseType, new SelectList(ViewBag.ddlFranchiseType, "Value", "Text"), new { @class = "form-control", @disabled = "disabled" })
+                                @Html.HiddenFor(m => m.PK_FranchiseID)
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6 form-group">
+                                Franchise Type <span style="color: red">*</span>
+                                @Html.DropDownListFor(m => m.FranchiseType, new SelectList(ViewBag.ddlFranchiseType, "Value", "Text"), new { @class = "form-control" })
+                                @Html.HiddenFor(m => m.PK_FranchiseID)
+                            </div>
+                        }
+                        <div class="col-md-6 form-group">
+                            Firm Name <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.FirmName, new { @class = "form-control", @Placeholder = "Firm Name" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Contact Person Name <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.FranchiseName, new { @class = "form-control", @Placeholder = "Contact Person" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Mobile No <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.Contact, new { @class = "form-control", @Placeholder = "Mobile Number", @Maxlength = "10", @onkeypress = "return isNumberKey(event);" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Email
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Placeholder = "Email" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            GSTNo <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.GSTNo, new { @class = "form-control", @Placeholder = "GST Number", @style = "text-transform:uppercase" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Pan Card <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.PAN, new { @class = "form-control", @Placeholder = "Pan Card", @Maxlength = "10", @onchange = "return validatePan(event);", @style = "text-transform:uppercase" })
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Adhar Number <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.AdharNo, new { @class = "form-control", @Placeholder = "Adhar Number", @Maxlength = "12", @onkeypress = "return isNumberKey(event);" })
+                        </div>
+                        <div class="col-md-12 form-group">
+                            Address <span style="color: red">*</span>
+                            @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @Placeholder = "Address" })
+                        </div>
+                        <div class="col-md-4 form-group">
+                            Pincode <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.PinCode, new { @class = "form-control", @Placeholder = "PinCode", @onchange = "return getstatecity();" })
+                        </div>
+                        <div class="col-md-4 form-group">
+                            State
+                            @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State", @Disabled = "disabled" })
+                        </div>
+                        <div class="col-md-4 form-group">
+                            City
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control", @Placeholder = "City", @Disabled = "disabled" })
+                        </div>
+                        <div class="col-md-12 form-group">
+                            @if (Model != null)
+                            {
+                                <input type="submit" class="btn btn-success pull-right" name="btnUpdate" value="Update" onclick="return validateForm();" />
+                            }
+                            else
+                            {
+                                <input type="submit" class="btn btn-success pull-right" name="btnRegister" value="Register Now" onclick="return validateForm();" />
+                            }
+                        </div>
+                        <br />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+
+    function validateForm() {
+        $(".errortext").removeClass("errortext");
+        if ($('#ReferBy').val() == '') {
+            $("#ReferBy").addClass('errortext');
+            $('#ReferBy').focus();
+            return false;
+        }
+        if ($('#FranchiseType').val() == '0') {
+            $("#FranchiseType").addClass('errortext');
+            $('#FranchiseType').focus();
+            return false;
+        }
+        if ($('#FirmName').val() == '') {
+            $("#FirmName").addClass('errortext');
+            $('#FirmName').focus();
+            return false;
+        }
+        if ($('#FranchiseName').val() == '') {
+            $("#FranchiseName").addClass('errortext');
+            $('#FranchiseName').focus();
+            return false;
+        }
+        if ($('#Contact').val() == '') {
+            $("#Contact").addClass('errortext');
+            $('#Contact').focus();
+            return false;
+        }
+        if ($('#GSTNo').val() == '') {
+            $("#GSTNo").addClass('errortext');
+            $('#GSTNo').focus();
+            return false;
+        }
+        if ($('#PAN').val() == '') {
+            $("#PAN").addClass('errortext');
+            $('#PAN').focus();
+            return false;
+        }
+        if ($('#AdharNo').val() == '') {
+            $("#AdharNo").addClass('errortext');
+            $('#AdharNo').focus();
+            return false;
+        }
+        if ($('#Address').val() == '') {
+            $("#Address").addClass('errortext');
+            $('#Address').focus();
+            return false;
+        }
+        if ($('#PinCode').val() == '') {
+            $("#PinCode").addClass('errortext');
+            $('#PinCode').focus();
+            return false;
+        }
+    }
+
+    function getsponsordetails() {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: '/FranchiseAdmin/GetSponserDetails',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'ReferBy': $('#ReferBy').val() },
+            success: function (response) {
+                if (response.Result == "Yes") {
+                    $("#divload").css({ 'display': 'none' });
+                    $('#DisplayName').val(response.DisplayName);
+                }
+                else {
+                    $("#divload").css({ 'display': 'none' });
+                    $("#ReferBy").addClass('errortext');
+                    $('#DisplayName').val('');
+                    $('#ReferBy').val('');
+                    $('#ReferBy').focus();
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+
+    function validatePan() {
+        var panVal = $('#PAN').val();
+        var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+
+        if (regpan.test(panVal)) {
+            $("#PAN").removeClass('errortext');
+        } else {
+            alert("Invalid PAN Number");
+            $("#PAN").val('');
+            $("#PAN").focus();
+            $("#PAN").addClass('errortext');
+        }
+    }
+
+    function getstatecity() {
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: "/Home/GetStateCity",
+            Type: "Get",
+            DataType: "JSON",
+            data: { PinCode: $("#PinCode").val() },
+            success: function (data) {
+                if (data.Result == "1") {
+                    $("#State").val(data.State);
+                    $("#City").val(data.City);
+                }
+                else {
+                    $("#State").val('');
+                    $("#City").val('');
+                    $("#PinCode").val('');
+                    $("#PinCode").addClass('errortext');
+                    $('#PinCode').focus();
+                    alert(data.Result);
+
+                }
+
+
+            }
+
+        });
+    }
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>
+<style>
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>

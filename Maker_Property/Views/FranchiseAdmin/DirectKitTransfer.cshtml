@@ -1,0 +1,257 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "DirectKitTransfer";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Kit
+                </a>
+            </li>
+            <li class="active">
+                Direct Kit Transfer
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("DirectKitTransfer", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["TransferKit"]
+    </p>
+    <iframe src="~/DirectKitTransfer.aspx" style="width:100%; height:800px"></iframe>
+    <!-- main-panel ends -->
+    <input type="hidden" id="txtquantity" />
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+
+<script>
+
+    $('#DDChequeDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+
+    function getpaymentdetails() {
+        debugger;
+        var paymentmode = ($("#PaymentMode option:selected").text());
+        if (paymentmode != "Cash") {
+            bankname.style.display = "block";
+            chequeno.style.display = "block";
+            chequdate.style.display = "block";
+            bankbranch.style.display = "block";
+        }
+        else {
+            bankname.style.display = "none";
+            chequeno.style.display = "none";
+            chequdate.style.display = "none";
+            bankbranch.style.display = "none";
+        }
+    }
+
+    function GetAmt() {
+        if ($("#Quantity").val() != "") {
+
+            var kitamt = $("#Total").val();
+            var qty = $("#Quantity").val();
+            var finamt = (Number)(kitamt) * (Number)(qty);
+
+            $("#FinalAmount").val(finamt);
+            var tr = [];
+
+            $.ajax({
+                url: '/FranchiseAdmin/CheckStock', type: 'get', dataType: 'json',
+                data: { 'Quantity': qty, 'KitID': $("#KitID").val(), 'BatchID': $('#BatchID').find(":selected").text() },
+                success: function (data) {
+                    var j = 1;
+                    $('#tblData').empty();
+                    for (var i = 0; i < data.lstFranchise.length; i++) {
+                        tr.push('<tr>');
+
+                        tr.push("<td>" + data.lstFranchise[i].ProductName + "</td>");
+                        tr.push("<td>" + data.lstFranchise[i].StockID + "</td>");
+                        tr.push("<td>" + data.lstFranchise[i].Quantity + "</td>");
+                        tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].StockID + "' id='StockID " + i + "' name='StockID " + i + "'></td>");
+                        tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Quantity + "' id='Quantity " + i + "' name='Quantity " + i + "'></td>");
+                        tr.push('</tr>');
+                        j++;
+
+                    }
+                    tr.push('<tr style="display:none">');
+                    tr.push("<td><input type='hidden' value='" + j + "' id='hdRows' name='hdRows'></td>");
+                    tr.push('</tr>');
+                    $('#tblData').append($(tr.join('')));
+                    ////$("#divload").css({ 'display': 'none' });
+                    //$('#tblData').find("tr:not(:first)").remove();
+                    //if (data.lstFranchise.length > 0) {
+                    //    for (var i = 0; i < data.lstFranchise.length; i++) {
+
+                    //        $("#tblData").append('<tr><td id="ProductName' + i + ' " >' + data.lstFranchise[i].ProductName +
+                    //        '</td><td name="StockID" id="StockID' + i + ' "  >' + data.lstFranchise[i].StockID +
+                    //        '</td><td name="Quantity" id="Quantity' + i + ' " >' + data.lstFranchise[i].Quantity +
+                    //        '</td></tr>')
+                    //    }
+
+                    //    '<tr><td><input type="hidden" name="hdRows" id="hdRows' + ' value=' + i + '/></td></tr>';
+                    //}
+                }
+            });
+
+        }
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function GetFranchiseName() {
+        //$("#divload").css({ 'display': '' });
+
+        var LoginID = $('#LoginID').val();
+        $.ajax({
+            url: '/FranchiseAdmin/GetFranchiseName', type: 'post', dataType: 'json',
+            data: { 'LoginID': LoginID },
+            success: function (data) {
+                //$("#divload").css({ 'display': 'none' });
+                if (data.Result == "yes") {
+                    $("#FranchiseName").val(data.FranchiseName);
+                    $("#PK_FranchiseID").val(data.PK_FranchiseID);
+
+                }
+                else {
+                    $("#FranchiseName").val('');
+                    $("#PK_FranchiseID").val('');
+
+                    alert("Invalid Franchise ID");
+                }
+            }
+
+        });
+    }
+
+    function GetDetails() {
+        //$("#divload").css({ 'display': '' });
+        var fid = $('#PK_FranchiseID').val();
+        var kitid = $('#KitID').val();
+        var tr = [];
+        var BatchID = $('#BatchID').find(":selected").text();
+        $.ajax({
+            url: '/FranchiseAdmin/GetProductByKit', type: 'get', dataType: 'json',
+            data: { 'PK_FranchiseID': fid, 'KitID': kitid, 'BatchID': BatchID },
+            success: function (data) {
+                var j = 1;
+                GetAmt();
+                $("#Total").val(data.Total);
+                $('#tblData').empty();
+                for (var i = 0; i < data.lstFranchise.length; i++) {
+                    tr.push('<tr>');
+
+                    tr.push("<td>" + data.lstFranchise[i].ProductName + "</td>");
+                    tr.push("<td>@@Html.DropDownList('ddlBatch_'" + j + ", new SelectList(ViewBag.ddlBatch, 'Value', 'Text'), new { @@class = 'form-control', @@onchange = 'return GetAmt();' })</td>");
+                    tr.push("<td>" + data.lstFranchise[i].StockID + "</td>");
+                    tr.push("<td>" + data.lstFranchise[i].Quantity + "</td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].StockID + "' id='StockID " + i + "' name='StockID " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Quantity + "' id='Quantity " + i + "' name='Quantity " + i + "'></td>");
+                    tr.push('</tr>');
+                    j++;
+
+                }
+                tr.push('<tr style="display:none">');
+                tr.push("<td><input type='hidden' value='" + j + "' id='hdRows' name='hdRows'></td>");
+                tr.push('</tr>');
+                $('#tblData').append($(tr.join('')));
+                
+                //$('#tblData').find("tr:not(:first)").remove();
+                //if (data.lstFranchise.length > 0) {
+                //    for (var i = 0; i < data.lstFranchise.length; i++) {
+
+                //        $("#tblData").append('<tr><td id="ProductName' + i + ' " >' + data.lstFranchise[i].ProductName +
+                //        '</td><td id="StockID' + i + ' "  >' + data.lstFranchise[i].StockID +
+                //        '</td><td id="Quantity' + i + ' " >' + data.lstFranchise[i].Quantity +
+
+                //        '</td></tr>')
+                //    }
+                //}
+            }
+        });
+    }
+
+    function fvalidateform() {
+
+        $(".errortext").removeClass("errortext");
+
+
+        if ($('#LoginID').val() == '') {
+            $("#LoginID").addClass('errortext');
+            $('#LoginID').focus();
+
+            return false;
+        }
+        if ($('#KitID').val() == '0') {
+            $("#KitID").addClass('errortext');
+            $('#KitID').focus();
+
+            return false;
+        }
+        if ($('#Quantity').val() == '') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+
+            return false;
+        }
+
+        if ($('#FinalAmount').val() == '') {
+            $("#FinalAmount").addClass('errortext');
+            $('#FinalAmount').focus();
+
+            return false;
+        }
+
+        if ($('#PaymentMode').val() == '') {
+            $("#PaymentMode").addClass('errortext');
+            $('#PaymentMode').focus();
+            return false;
+        }
+
+
+        if ($('#PaymentMode').val() != 'Cash') {
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                return false;
+            }
+            if ($('#DDChequeNo').val() == '') {
+                $("#DDChequeNo").addClass('errortext');
+                $('#DDChequeNo').focus();
+                return false;
+            }
+            if ($('#DDChequeDate').val() == '') {
+                $("#DDChequeDate").addClass('errortext');
+                $('#DDChequeDate').focus();
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+</script>

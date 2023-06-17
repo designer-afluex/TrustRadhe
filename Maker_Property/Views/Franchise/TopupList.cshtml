@@ -1,0 +1,88 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "TopupList";
+    Layout = "~/Views/Shared/_FranchisePanelLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Topup
+                </a>
+            </li>
+            <li class="active">
+                List
+            </li>
+        </ol>
+    </div>
+</div>
+
+<br />
+@using (Html.BeginForm("KitStatusList", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Topup List
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Name</th>
+                                        <th>Upgradation Date</th>
+                                        <th>Product Name</th>
+                                        <th>Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lsttopupreport != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lsttopupreport)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.Name</td>
+                                                    <td>@Item.UpgradtionDate</td>
+                                                    <td>@Item.ProductName</td>
+                                                    <td>@Item.Amount</td>
+                                                    <td>
+                                                        <a href="/Franchise/PrintTopup?invid=@Item.FK_InvestmentID" target="_blank" class="btn btn-sm btn-primary">Print</a>
+                                                    </td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+
+
+

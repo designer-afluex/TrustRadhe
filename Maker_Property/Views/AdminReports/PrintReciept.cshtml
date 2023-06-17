@@ -1,0 +1,133 @@
+﻿@model TrustRadhe.Models.Reports
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+   
+</head>
+<body>
+    <br />
+    <br />
+   
+    <br />
+     <br />
+    <div style="width: 80%; margin-left: 10%;">
+        <div style="width: 100%; height: 70px">
+        </div>
+        <div style="width: 100%; padding-bottom: 0; padding-top: 0">
+            <div style="width: 2%; float: left">&nbsp;</div>
+            <div style="width: 18%; float: left">@Session["LoginId"]</div>
+            <div style="width: 60%; float: left; text-align: center">&nbsp;</div>
+            <div style="width: 5%; float: left">&nbsp;</div>
+            <div style="width: 15%; float: left; text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Session["Date"]</div>
+        </div>
+        <br />
+        <br />
+        <div style="width: 100%">
+            <div style="width: 35%; float: left">&nbsp;</div>
+            <div style="width: 65%; float: left">@Session["Name"]</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <br />
+            <div style="width: 15%; float: left">&nbsp;</div>
+            <div style="width: 85%; float: left">@Session["GaurdianName"]</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <br />
+            <div style="width: 1%; float: left">&nbsp;</div>
+            <div style="width: 99%; float: left">@Session["Address"]</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <br />
+            <div style="width: 80%; float: left">&nbsp;</div>
+            <div style="width: 20%; float: left">&nbsp; @Session["Amount"]/-</div>
+        </div>
+        <br />
+        <br />
+        <div style="width: 100%">
+            <div style="width: 10%; float: left">&nbsp;</div>
+            <div style="width: 90%; float: left">@Session["AmountInWords"]</div>
+        </div>
+        <br />
+        <br />
+        <div style="width: 100%">
+            <div style="width: 5%; float: left">&nbsp;</div>
+            <div style="width: 95%; float: left">@Session["Against"]</div>
+        </div>
+        <br />
+        <div style="width: 100%; text-align: right">
+            &nbsp;
+        </div>
+    </div>
+
+    <div style="height: 220px">
+        &nbsp;
+    </div>
+      <br />
+    
+   
+    <br />
+    <br />
+    <div style="width: 80%; margin-left: 10%;">
+        <div style="width: 100%; height: 70px">
+        </div>
+        <div style="width: 100%; padding-bottom: 0; padding-top: 0">
+            <div style="width: 2%; float: left">&nbsp;</div>
+            <div style="width: 18%; float: left;padding-top: 4px;">@Session["LoginId"]</div>
+            <div style="width: 60%; float: left; text-align: center">&nbsp;</div>
+            <div style="width: 5%; float: left">&nbsp;</div>
+            <div style="width: 15%; float: left; text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Session["Date"]</div>
+        </div>
+        <br />
+        <br />
+        <div style="width: 100%">
+            <div style="width: 35%; float: left">&nbsp;</div>
+            <div style="width: 65%; float: left;padding-top: 4px;">@Session["Name"]</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <br />
+            <div style="width: 15%; float: left">&nbsp;</div>
+            <div style="width: 85%; float: left;padding-top: 4px;">@Session["GaurdianName"]</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <br />
+            <div style="width: 1%; float: left">&nbsp;</div>
+            <div style="width: 99%; float: left;padding-top: 2px;">@Session["Address"]</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <br />
+            <div style="width: 80%; float: left">&nbsp;</div>
+            <div style="width: 20%; float: left">&nbsp; @Session["Amount"]/-</div>
+        </div>
+        <br />
+        <br />
+        <div style="width: 100%">
+            <div style="width: 10%; float: left">&nbsp;</div>
+            <div style="width: 90%; float: left;    padding-top: 1px;">@Session["AmountInWords"]</div>
+        </div>
+        <br />
+        <br />
+        <div style="width: 100%">
+            <div style="width: 5%; float: left">&nbsp;</div>
+            <div style="width: 95%; float: left;padding-top: 1px;">@Session["Against"]</div>
+        </div>
+        <br />
+        <div style="width: 100%; text-align: right">
+            &nbsp;
+        </div>
+    </div>
+
+
+</body>
+</html>

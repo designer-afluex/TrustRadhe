@@ -1,0 +1,150 @@
+﻿@model TrustRadhe.Models.Transactions
+@{
+    ViewBag.Title = "EwalletDeduction";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <br />
+        @*<h4 class="page-header">Ewallet Deduction</h4>*@
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- /.row -->
+@using (Html.BeginForm("DeductEwallet", "Transactions", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <span style="color: red">
+        @TempData["ewallet"]
+    </span>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ewallet Deduction
+                </div>
+                <div class="panel-body">
+                    <fieldset>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Login ID <span style="color:red">*</span></label>
+                                    @Html.TextBoxFor(m => m.LoginID, new { @id = "txtLoginID",@placeholder="LoginId", @class = "form-control", @onchange = "getMemberDetails(this);" })
+                                    @Html.ValidationMessageFor(m => m.LoginID)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Member Name</label>
+                                    @Html.TextBoxFor(m => m.MemberName, new { @id = "txtMemberName", @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(m => m.MemberName)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Amount <span style="color:red">*</span></label>
+                                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control",@placeholder="Amount",@onkeypress = "return isNumberKey(event);"  })
+                                    @Html.ValidationMessageFor(m => m.Amount)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Transaction Type <span style="color:red">*</span></label>
+                                    @Html.DropDownListFor(m => m.TransactionAction, new SelectList(ViewBag.ddlTransactionType, "Value", "Text"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.TransactionAction)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="submit" id="btnDeductEwallet" class="btn btn-success pull-right" name="btnDeductEwallet" value="Update" onclick="return validate();" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+         
+}
+<style>
+    .errortext
+        {
+            border: 1px solid red !important;
+            background-color: #fff0f0 !important;
+        }
+</style>
+<script>
+    function validate() {
+        $(".errortext").removeClass("errortext");
+        if ($('#txtLoginID').val() == '') {
+            $("#txtLoginID").addClass('errortext');
+            $('#txtLoginID').focus();
+            return false;
+        }
+        if ($('#Amount').val() == '') {
+            $("#Amount").addClass('errortext');
+            $('#Amount').focus();
+            return false;
+        }
+        if ($('#TransactionAction').val() == '0') {
+            $("#TransactionAction").addClass('errortext');
+            $('#TransactionAction').focus();
+            return false;
+        }
+    }
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function getMemberDetails(obj) {
+
+        $.ajax({
+            url: '/Transactions/GetMemberDetails',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { 'LoginID': $(obj).val() },
+            success: function (response) {
+                if (response.Result == "Yes") {
+
+                    $('#txtMemberName').val(response.DisplayName);
+                }
+                else {
+
+                    $('#txtLoginID').val('');
+                    $('#txtMemberName').val('');
+                    alert(response.Result);
+                }
+            }
+        })
+    }
+</script>

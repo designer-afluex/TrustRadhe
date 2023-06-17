@@ -1,0 +1,90 @@
+﻿@model TrustRadhe.Models.Home
+
+@{
+    ViewBag.Title = "HighestEarnerClub";
+    Layout = "~/Views/Shared/_WebisteLayout.cshtml";
+}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../WebsiteCss/css/bootstrap.min-1.css">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../WebsiteCss/css/style-2.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Dream Crusher Reward</title>
+</head>
+<section class="page-title" style="background-image:url(../WebsiteCss/images/background/5.jpg)">
+    <div class="auto-container">
+        <div class="clearfix">
+            <div class="pull-left">
+                <div class="title">Make Way Reality Pvt. Ltd</div>
+                <h2>Highest Earner Club</h2>
+            </div>
+            <div class="pull-right">
+                <ul class="page-breadcrumb">
+                    <li><a href="index.html">home</a></li>
+                    <li>Highest Earner Club</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Page Title-->
+
+
+@if (Model != null)
+{
+    if (Model.listhighestearner != null)
+    {
+        int i = 1;
+        foreach (var Item in Model.listhighestearner)
+        {
+
+
+            <br />
+            <div class="dream-reward">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="backrewar">
+                                <img src="../WebsiteCss/images/vector.png">
+                            </div>
+                            <div class="reward text-center">
+                                <div class="head">
+                                    <h3>@i</h3>
+                                </div>
+                                @if (Item.ProfilePic == "")
+                                {
+
+                                    <img src="../WebsiteCss/images/usericon.jpg"  class="img-fluid rounded-circle" alt="reward" style="height:200px; width:200px;">
+                                }
+                                else
+                                {
+
+                                    <img src="@Item.ProfilePic"  class="img-fluid rounded-circle" alt="reward" style="height:200px; width:200px;" >
+                                }
+                                <div class="reward-title text-white">
+                                    <h2>@Item.Name</h2>
+
+                                    <h2><i class="fa fa-inr" aria-hidden="true"></i> @Item.GrossAmount</h2>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            i++;
+        }
+
+    }
+}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="../WebsiteCss/js/bootstrap.min-1.js"></script>

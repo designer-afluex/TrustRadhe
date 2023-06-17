@@ -1,0 +1,113 @@
+﻿@model TrustRadhe.Models.PurchaseOrder
+
+@{
+    ViewBag.Title = "PurchaseOrderView";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Admin
+                </a>
+            </li>
+            <li class="active">
+                View Purchase Order
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("PurchaseOrderView", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Purchase Order Details
+                    <a href="/FranchiseAdmin/PurchaseOrderList" class="btn btn-sm btn-primary link pull-right">Back To List</a> 
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+
+                            <div class="row">
+                                <div class="col-md-12 table-responsive" id="Supplierhide">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label"><b>Supplier Name :</b> </label>
+                                            <label> @ViewBag.Name    </label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label"><b>Mobile No :</b></label>
+                                            <label> @ViewBag.Mobile    </label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label"><b>Order Number :</b></label>
+                                            <label> @ViewBag.OrderNo    </label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label"><b>Order Date:</b></label>
+                                            <label> @ViewBag.PurchaseDate    </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><b>Sr No.</b></th>
+                                        <th><b>Batch No</b></th>
+                                        <th><b>Product Name</b></th>
+                                        <th><b>MRP</b></th>
+                                        <th><b>Purchase Quantity</b></th>
+                                        <th><b>IGST</b></th>
+                                        <th><b>CGST</b></th>
+                                        <th><b>SGST</b></th>
+                                        <th><b>Tax</b></th>
+                                        <th>Final Amount</th>                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstFranchise != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstFranchise)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.BatchNo</td>
+                                                    <td>@Item.ProductName</td>
+                                                    <td>@Item.MRP</td>
+                                                    <td>@Item.Quantity</td>                                                    
+                                                    <td>@Item.IGST</td>
+                                                    <td>@Item.CGST</td>
+                                                    <td>@Item.SGST</td>
+                                                    <td>@Item.TaxableAmount</td>
+                                                    <td>@Item.FinalAmount</td>
+
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

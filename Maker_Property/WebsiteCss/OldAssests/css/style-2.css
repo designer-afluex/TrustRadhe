@@ -1,0 +1,81 @@
+.reward {
+  border: 5px solid #952032;
+  border-radius: 20px;
+  width: 40%;
+  margin: 0 auto;
+  padding: 30px 0px;
+  background: rgb(255,241,159);
+  background: linear-gradient(90deg, rgba(255,241,159,1) 0%, rgba(125,100,46,1) 0%, rgba(225,166,48,1) 100%);
+}
+.reward img {
+  border: 5px solid #fff;
+  margin: 40px 0px;
+}
+.head h3 {
+  border-radius: 20px;
+  width: 9%;
+  margin: 0 auto;
+  padding: 3px 0px;
+  background-color: #fff;
+}
+.backrewar {
+  position: relative;
+}
+.backrewar img {
+  position: absolute;
+  left: 350px;
+  top: 20px;
+  max-width: 110px;
+}
+
+
+
+@media (min-width: 320px) and (max-width: 568px){
+  .reward {
+    border: 5px solid #952032;
+    border-radius: 20px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 0px;
+    background: rgb(255,241,159);
+    background: linear-gradient(90deg, rgba(255,241,159,1) 0%, rgba(125,100,46,1) 0%, rgba(225,166,48,1) 100%);
+}
+.head h3 {
+  border-radius: 20px;
+  width: 14%;
+  margin: 0 auto;
+  padding: 3px 0px;
+  background-color: #fff;
+}
+.backrewar img {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  max-width: 100px;
+}
+}
+
+@media (min-width: 768px) and (max-width: 1024px){
+  .reward {
+    border: 5px solid #952032;
+    border-radius: 20px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 0px;
+    background: rgb(255,241,159);
+    background: linear-gradient(90deg, rgba(255,241,159,1) 0%, rgba(125,100,46,1) 0%, rgba(225,166,48,1) 100%);
+}
+.head h3 {
+  border-radius: 20px;
+  width: 7%;
+  margin: 0 auto;
+  padding: 3px 0px;
+  background-color: #fff;
+}
+.backrewar img {
+  position: absolute;
+  left: 25px;
+  top: 20px;
+  max-width: 100px;
+}
+}

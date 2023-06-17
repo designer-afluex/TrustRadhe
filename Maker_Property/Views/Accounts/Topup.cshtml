@@ -1,0 +1,404 @@
+﻿@model TrustRadhe.Models.Wallet
+@{
+    ViewBag.Title = "Topup";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("TopUpByAdmin", "Accounts", FormMethod.Post, new { @id = "form1" }))
+{
+    <div class="app-content">
+        <div class="side-app">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title"> Accounts</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminDashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Top Up</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span style="color: red">@TempData["Topup"] </span>
+                            <h3 class="card-title">Topup</h3>
+                            <div class="card-options">
+                                <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                <a href="#" class="card-options-fullscreen" data-bs-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Login Id <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @Placeholder = "Login Id", @onchange = "getmembername(this);" })
+                                    <br />
+                                    <span id="txtname" style="color: blue"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Package <span style="color: red">*</span></label>
+                                    @Html.DropDownListFor(m => m.Package, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "select2 form-select form-control" })
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Amount <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @placeholder = "Topup Amount", @onkeypress = "return isNumberKey(event);" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Topup Date <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.TopUpDate, new { @class = "form-control", @Placeholder = "TopUp Date", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Description <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @Placeholder = "Description" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Plot No. <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.PlotNumber, new { @class = "form-control", @Placeholder = "Plot Number" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Payment Mode <span style="color: red">*</span></label>
+                                    @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "select2 form-select form-control", @data_size = "7", @data_style = "select-with-transition", @onchange = "getpaymentdetails();" })
+                                    @Html.ValidationMessageFor(m => m.PaymentMode)
+                                </div>
+                                <div class="col-md-4 mb-3" id="chequeno" style="display: none">
+                                    <label for="validationCustom01">Transaction No. <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.DDChequeNo, new { @class = "form-control", @placeholder = "Transaction No" })
+                                </div>
+                                <div class="col-md-4 mb-3" id="chequdate" style="display: none">
+                                    <label for="validationCustom01">Transaction Date <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.DDChequeDate, new { @class = "form-control", @placeholder = "Transaction Date", @readonly = true })
+                                </div>
+                                <div class="col-md-4 mb-3" id="bankname" style="display: none">
+                                    <label for="validationCustom01">Bank Name <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @placeholder = "Bank Name" })
+                                </div>
+                                <div class="col-md-4 mb-3" id="bankbranch" style="display: none">
+                                    <label for="validationCustom01">Branch <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @placeholder = "Bank Branch" })
+                                </div>
+                                <div class="col-md-4 mt-5">
+                                    <input class="btn btn-primary" onclick="return validateform()" type="submit" value="Top Up" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="clip-home-3"></i>
+                        <a href="#">
+                            Accounts
+                        </a>
+                    </li>
+                    <li class="active">
+                        Top Up
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <br />*@
+
+
+
+    @*<span style="color: red">@TempData["Topup"] </span> *@
+    @*<div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Topup
+                    </div>
+                     /.panel-heading
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Login Id <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @/*Placeholder*/ = "Login Id", @/*onchange*/ = "getmembername(this);" })*/
+                                        <br />
+                                        <span id="txtname" style="color: blue"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Package <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.DropDownListFor(m => m.Package, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "form-control" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Amount <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @/*placeholder*/ = "Topup Amount", @/*onkeypress*/ = "return isNumberKey(event);" })*/
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Topup Date <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.TopUpDate, new { @class = "form-control", @/*Placeholder*/ = "TopUp Date", @/*readonly*/ = "readonly" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Description </label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.Description, new { @class = "form-control", @/*Placeholder*/ = "Description" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="display:none" id="divPlotNumber">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Plot Number <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.PlotNumber, new { @class = "form-control", @/*Placeholder*/ = "Plot Number" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Payment Mode<span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "form-control", @/*data_size*/ = "7", @/*data_style*/ = "select-with-transition", @/*onchange*/ = "getpaymentdetails();" })*/
+                                        @/*Html.ValidationMessageFor(m => m.PaymentMode)*/
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" id="chequeno" style="display: none">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Transaction No<span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.DDChequeNo, new { @class = "form-control", @/*placeholder*/ = "Transaction No" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" id="chequdate" style="display: none">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label"> Transaction Date <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.DDChequeDate, new { @class = "form-control", @/*placeholder*/ = "Transaction Date", @/*readonly*/ = true })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" id="bankname" style="display: none">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Bank Name<span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @/*placeholder*/ = "Bank Name" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" id="bankbranch" style="display: none">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Branch<span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @/*placeholder*/ = "Bank Branch" })*/
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <input class="btn btn-success pull-right" onclick="return validateform()" type="submit" value="Top Up" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+}
+
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>
+
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    $('#TopUpDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    $('#DDChequeDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function FillAmount() {
+        //$("#Fk_CityId").empty();
+        var Productid = "";
+
+        Productid = $('#Package').val();
+        if (Productid == "4") {
+
+            $("#divPlotNumber").show();
+            $("#Amount").val('');
+            $("#Amount").attr("disabled", false);
+        }
+        else {
+            $("#divPlotNumber").hide();
+            $("#Amount").attr("disabled", "disabled");
+        }
+
+        $.ajax({
+            url: "/Accounts/FillAmount",
+            Type: "Get",
+            DataType: "JSON",
+            data: { Productid: Productid },
+            success: function (data) {
+                debugger;
+                $('#Amount').val(data.Amount);
+            }
+
+        });
+    }
+    function getpaymentdetails() {
+        debugger;
+        var paymentmode = ($("#PaymentMode option:selected").text());
+        if (paymentmode == "Cash") {
+            bankname.style.display = "none";
+            chequeno.style.display = "none";
+            chequdate.style.display = "none";
+            bankbranch.style.display = "none";
+        }
+        else if (paymentmode == "UPI") {
+            bankname.style.display = "none";
+            chequdate.style.display = "block";
+            bankbranch.style.display = "none";
+            chequeno.style.display = "block";
+        }
+        else {
+            bankname.style.display = "block";
+            chequeno.style.display = "block";
+            chequdate.style.display = "block";
+            bankbranch.style.display = "block";
+        }
+    }
+
+    function validateform() {
+        $(".errortext").removeClass("errortext");
+        if ($('#LoginId').val() == '') {
+            $("#LoginId").addClass('errortext');
+            $('#LoginId').focus();
+            return false;
+        }
+        if ($('#Package').val() == '0') {
+            $("#Package").addClass('errortext');
+            $('#Package').focus();
+            return false;
+        }
+
+        if ($('#Package').val() == "4") {
+            if ($('#PlotNumber').val() == '') {
+                $("#PlotNumber").addClass('errortext');
+                $('#PlotNumber').focus();
+                return false;
+            }
+        }
+
+        if ($('#Amount').val() == '') {
+            $("#Amount").addClass('errortext');
+            $('#Amount').focus();
+            return false;
+        }
+        if ($('#TopUpDate').val() == '') {
+            $("#TopUpDate").addClass('errortext');
+            $('#TopUpDate').focus();
+            return false;
+        }
+        if (($("#PaymentMode option:selected").text()) != 'Cash' && ($("#PaymentMode option:selected").text()) != 'UPI') {
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                return false;
+            }
+            if ($('#DDChequeNo').val() == '') {
+                $("#DDChequeNo").addClass('errortext');
+                $('#DDChequeNo').focus();
+                return false;
+            }
+            if ($('#DDChequeDate').val() == '') {
+                $("#DDChequeDate").addClass('errortext');
+                $('#DDChequeDate').focus();
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                return false;
+            }
+        }
+        return true;
+
+    }
+    function getmembername() {
+        debugger;
+        var LoginId = $('#LoginId').val();
+        $.ajax({
+            url: '/Accounts/GetMemberName',
+            type: "GET",
+            dataType: "JSON",
+            data: { LoginId: LoginId },
+            success: function (data) {
+                debugger;
+                if (data.Result == "Yes") {
+                    $('#txtname').html(data.DisplayName);
+
+                    divname.style.display = "block";
+                } else {
+                    alert("Invalid Login ID");
+                    $("#LoginId").addClass('errortext');
+                    $('#txtname').html("");
+                    $('#LoginId').val("");
+                    $('#LoginId').focus();
+                }
+            }
+        });
+    }
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>
+

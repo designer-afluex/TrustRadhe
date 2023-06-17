@@ -1,0 +1,145 @@
+﻿@model TrustRadhe.Models.SaleOrder
+
+@{
+    ViewBag.Title = "SaleOrderList";
+    Layout = "~/Views/Shared/_FranchisePanelLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Sale
+                </a>
+            </li>
+            <li class="active">
+                Sale List
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("SaleOrderList", "Franchise", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Sale List
+                    @*  <a href="/FranchiseAdmin/Registration" class="btn btn-sm btn-primary link pull-right">Add New Product</a>*@
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive" id="Supplierhide">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label for="inputEmail4" class="col-form-label">Login ID </label>
+
+                                    @Html.TextBoxFor(m => m.LoginID, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="inputEmail4" class="col-form-label">PaymentMode</label>
+                                    @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "form-control", @onchange = "return GetSupplierDetails();" })
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="inputEmail4" class="col-form-label">Sale Order Number</label>
+                                    @Html.TextBoxFor(m => m.SaleOrderNumber, new { @class = "form-control" })
+
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label for="inputEmail4" class="col-form-label">From Date</label>
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @readonly = "readonly" })
+
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label for="inputEmail4" class="col-form-label">To Date</label>
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @readonly = "readonly" })
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <br />
+                                    <input type="submit" name="Search" id="Search" value="Search" class="btn btn-primary" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Associate</th>
+                                        <th>Sale Date</th>
+                                        <th>Order Number</th>
+                                        <th>Payment Mode </th>
+                                        <th>Bank Details</th>
+                                        <th>Paid Amount</th>
+                                        <th>Balance </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstFranchise != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstFranchise)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.ReferBy (@Item.DisplayName)</td>
+                                                    <td>@Item.SaleDate</td>
+                                                    <td>@Item.SaleOrderNumber</td>
+                                                    <td>@Item.PaymentMode</td>
+                                                    <td>@Item.BankName</td>
+                                                    <td>@Item.PaidAmount</td>
+                                                    <td>@Item.Balance</td>
+                                                    <td>
+                                                        <a href="/Franchise/SaleOrderView?SaleID=@Item.EncryptKey" class="btn btn-sm btn-primary">View </a>
+                                                        <a href="/Franchise/SaleReceipt?SaleID=@Item.EncryptKey" class="btn btn-sm btn-primary">Print </a>
+                                                    </td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+</script>

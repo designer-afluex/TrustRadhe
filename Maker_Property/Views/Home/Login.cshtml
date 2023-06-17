@@ -1,0 +1,128 @@
+﻿@model TrustRadhe.Models.Home
+
+@{
+    Layout = null;
+}
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Trust Radhe</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="../assets/css/app.min.css">
+    <link rel="stylesheet" href="../assets/bundles/bootstrap-social/bootstrap-social.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <!-- Custom style CSS -->
+    <link href="~/WebsiteCss/images/radhekunj_logo.png" type="img/x-icon" rel="shortcut icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"/>
+</head>
+
+<body clas="background-image-body">
+    <div class="loader"></div>
+    <div class="d-lg-flex half">
+        <div class="bg order-1 order-md-2" style="background-image: url('/WebsiteCss/images/login_bg.png');"></div>
+        <div class="contents order-2 order-md-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-7">
+                        <center><img src="~/WebsiteCss/images/radhekunj_logo.png" style="height:8rem" class="img-fluid" alt="Trust radhe logo" /></center>
+                        <h4 class="mb-5 mt-2 text-center">Login to <strong>Admin Panel</strong></h4>
+                       @using (Html.BeginForm("LoginAction", "Home", FormMethod.Post, new { @id = "signupForm" }))
+                       {
+                            <div class="form-group first">
+                                <label for="username">Login Id</label>
+                                @Html.TextBoxFor(m => m.LoginId, new { @Placeholder = "Login Id", @class = "form-control", @required = "required" })
+                            </div>
+                            <div class="form-group last mb-3">
+                                <label for="password">Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @Placeholder = "Password", @class = "form-control", @required = "required" })
+                            </div>
+                           
+                            <button type="submit" class="btn btn-lg btn-block btn-primary mt-5" name="Login">
+                                Login
+                            </button>
+                            <div class="mt-4 text-center">
+                                <span>Don't have an account yet ?<a href="/Home/Registration"> Sign Up</a></span>
+                            </div>
+                       }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    @*<div id="app">
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                        <div class="login-brand login-brand-color">
+                            @*<img alt="image" src="~/WebsiteCss/images/footer_logo.png" />*@
+                                
+                            @*Make Way Reality*
+                        </div>
+                        @using (Html.BeginForm("LoginAction", "Home", FormMethod.Post, new { @id = "signupForm" }))
+                        {
+                            <div class="card card-auth">
+                                <div class="card-header card-header-auth">
+                                    <h4>Login</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img alt="image" src="~/WebsiteCss/images/SRK_Logo.png" style="width:50%" />
+                                    <div class="form-group">
+                                        <div class="d-block">
+                                            <label for="password" class="control-label">Login Id</label>
+                                        </div>
+                                        @Html.TextBoxFor(m => m.LoginId, new { @Placeholder = "Login Id", @class = "form-control", @required = "required" })
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="d-block">
+                                            <label for="password" class="control-label">Password</label>
+                                            @*<div class="float-right">
+                                                    <a href="auth-forgot-password.html" class="text-small">
+                                                        Forgot Password?
+                                                    </a>
+                                                </div>*
+                                        </div>
+                                        @Html.PasswordFor(m => m.Password, new { @Placeholder = "Password", @class = "form-control", @required = "required" })
+
+
+                                    </div>
+                                    @*<div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                                                <label class="custom-control-label" for="remember-me">Remember Me</label>
+                                            </div>
+                                        </div>*
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-block btn-auth-color" tabindex="4" name="Login">
+                                            Login
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group pull-right">
+                                        <a href="/Home/Registration" class="btn btn-primary btn-lg">Sign Up</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>*@
+    <!-- General JS Scripts -->
+
+    <script src="../assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <!-- Page Specific JS File -->
+    <!-- Template JS File -->
+    <script src="../assets/js/scripts.js"></script>
+
+</body>
+</html>

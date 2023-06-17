@@ -1,0 +1,196 @@
+﻿@model TrustRadhe.Models.SaleOrder
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Sale Receipt</title>
+    <style>
+        table {
+            font-size: 12px;
+            font-family: Calibri;
+        }
+
+            table td {
+                padding: 3px 5px;
+            }
+
+        p {
+            margin: 4px 0;
+        }
+
+        .dark-border td {
+            font-size: 14px;
+        }
+
+        .light-border td {
+            border-bottom: 1px solid #000;
+            font-size: 14px;
+            border-right: 1px solid #000;
+        }
+
+            .light-border td:last-child {
+                border-right: none;
+            }
+    </style>
+</head>
+
+<body>
+    <form action="https://www.graycinherbal.com/PrintPurchaseTaxInnvoice/PrintSaleTaxInnvoice" id="form1" method="post">
+        <table style="width: 100%; border: 1px solid #000;" cellpadding="0" cellspacing="0" border="1">
+            <tbody>
+                <tr>
+                    <td colspan="7" valign="top" align="left">
+                        <h2 style="margin: 0;">@ViewBag.CompanyName</h2>
+
+                        <p><strong>@ViewBag.CompanyAddress </strong></p>
+                        <p><strong>Phone : @ViewBag.LandLine</strong> </p>
+
+                    </td>
+                    <td colspan="3" valign="top" align="right" style="padding: 10px">
+                        <img src="../../DharaWorld/images/d-logo.png" alt="" height="80px" width="80px">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left">Seller's PAN : <span>#####</span></td>
+                    <td colspan="3" align="left">Original for Recipient | Duplicate for Supplier | Triplicate for Transporter</td>
+                    <td colspan="3" align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left">
+                        <p>Seller's GSTIN : <span>######</span></p>
+                        <p>Seller's State : @ViewBag.State1</p>
+                    </td>
+                    <td colspan="3" align="left"><span style="text-align: center; width: 200px; display: block; text-transform: uppercase; font-weight: bold; border: 1px solid #000; padding: 10px 15px;">SALE INVOICE</span></td>
+                    <td colspan="3" align="left">
+                        <p>&nbsp;</p>
+                        <p><strong>Seller's Code :####</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="border-top: 1px solid #000; border-right: 1px solid #000;">
+                        <p style="text-decoration: underline;"><strong>Buyer's Information</strong></p>
+
+                    </td>
+                    <td colspan="6" style="border-top: 1px solid #000;">
+                        <p style="text-decoration: underline;"><strong>Invoice Information</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="border-right: 1px solid #000;">
+                        <p><strong>@ViewBag.Name (@ViewBag.Loginid)</strong></p>
+                    </td>
+                    <td colspan="2" style="">
+                        <p>Order No. </p>
+                    </td>
+                    <td colspan="3" style="">
+                        <p><strong>@ViewBag.OrderNo</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" rowspan="2" valign="top" style="border-right: 1px solid #000;">
+                        <p>@ViewBag.AssociateAddress</p>
+                    </td>
+                    <td colspan="2" style="">
+                        <p>Invoice Date </p>
+                    </td>
+                    <td colspan="3" style="">
+                        <p><strong>@ViewBag.PurchaseDate</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="">
+                        <p>Place Of Supply </p>
+                    </td>
+                    <td colspan="3" style="">
+                        <p><strong>@ViewBag.State1</strong></p>
+                    </td>
+                </tr>
+
+                <tr class="dark-border">
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>S.No.</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000; width: 25%;" colspan="2"><strong>Item Description</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>MRP</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>DP</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>HSN/Code</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>Qty.</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>Tax Amount</strong></td>
+                    <td align="center" style="border-top: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000;"><strong>Final Amount </strong></td>
+
+                </tr>
+
+                @if (Model != null)
+            {
+                if (Model.lstFranchise != null)
+                {
+                    int i = 1;
+                    foreach (var Item in Model.lstFranchise)
+                    {
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td colspan="2">@Item.ProductName</td>
+                                <td>@Item.MRP</td>
+                                <td>@Item.DP</td>
+                                <td>@Item.HSNCode</td>
+                                <td>@Item.Quantity</td>
+                                <td>@Item.TaxableAmount</td>
+                                <td>@Item.FinalAmount</td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                }
+
+                <tr>
+                    <td colspan="7">
+                        <p><strong>Total = @ViewBag.TotalFinalAmount</strong></p>
+                        <p><strong>In Words = </strong>@ViewBag.TotalFinalAmountWords</p>
+                    </td>
+
+                    <td colspan="3">
+                        <table style="width: 100%; border: 1px solid #000;" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #000; border-right: 1px solid #000;"><strong>TOTAL</strong></td>
+                                    <td style="border-bottom: 1px solid #000;"><strong>@ViewBag.TotalFinalAmount</strong></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="5" valign="top" style="border-top: 1px solid #000;">
+                        <ul style="list-style: decimal; font-size: 8px; padding: 0 0 0 10px; margin: 0;">
+                            <li>All disputes will be subject to Lucknow jurisdiction</li>
+                            <li>Listed above have been received in order and in saleable condition.</li>
+                            <li>Payment must be made by Cash/ Demand Draft only in favour of Dream Crusher</li>
+                            <li>Products can be exchanged/returned within 30 days from the date of purchase .</li>
+                        </ul>
+                    </td>
+                    <td colspan="5" style="border-top: 1px solid #000;">
+                        <p style="text-transform: uppercase;"><strong>@ViewBag.CompanyName</strong></p>
+                        <br>
+                        <br>
+                        <p>Authorised Signatory</p>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </form>
+
+
+
+</body>
+</html>
+

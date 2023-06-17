@@ -1,0 +1,118 @@
+﻿@model TrustRadhe.Models.Wallet
+
+@{
+    ViewBag.Title = "PayoutRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("SavePayoutRequest", "Wallet", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    
+<div class="row">
+    <div class="col-lg-12">
+        <br />
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Payout Request
+                <br />
+                <p style="color:red">@TempData["Payoutwallet"] </p>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="col-md-6">
+                    Balance <span style="color: red">*</span> 
+                    @Html.TextBoxFor(m => m.PayoutBalance, new { @class = "form-control",@Readonly="true" })
+                    
+                </div>
+                <div class="col-md-6">
+                    Login Id <span style="color: red">*</span> <span id="txtname" style="color:blue" class="pull-right"></span>
+                    @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control", @Placeholder = "Login Id", @onchange = "getmembername(this);",@Readonly="true" })
+                    @Html.ValidationMessageFor(m => m.LoginId)
+                </div>
+                <div class="col-md-6">
+                    Amount <span style="color: red">*</span>
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @Placeholder = "Amount",@onkeypress="return isNumberKey(event);" })
+                    @Html.ValidationMessageFor(m => m.Amount)
+                </div>
+                
+                
+                 <div class="col-md-6">
+                     <br />
+                   <input class="btn btn-success" onclick="return validateform()" type="submit" value="Payout Request" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+
+<script>
+  
+   
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+   
+    function validateform() {
+        $(".errortext").removeClass("errortext");
+        if ($('#PayoutBalance').val() == '') {
+            $("#PayoutBalance").addClass('errortext');
+            $('#PayoutBalance').focus();
+            return false;
+        }
+        if ($('#LoginId').val() == '') {
+            $("#LoginId").addClass('errortext');
+            $('#LoginId').focus();
+            return false;
+        }
+        if ($('#Amount').val() == '') {
+            $("#Amount").addClass('errortext');
+            $('#Amount').focus();
+            return false;
+        }
+        
+        return true;
+
+    }
+    function getmembername() {
+        debugger;
+        var LoginId = $('#LoginId').val();
+        $.ajax({
+            url: '/Wallet/GetMemberName',
+            type: "GET",
+            dataType: "JSON",
+            data: { LoginId: LoginId },
+            success: function (data) {
+                debugger;
+                if (data.Result == "Yes") {
+                    $('#txtname').html(data.DisplayName);
+                  
+                    divname.style.display = "block";
+                } else {
+                    alert("Invalid Sponser Id");
+                    $('#txtname').html("");
+                    $('#LoginId').val("");
+                   
+                }
+            }
+        });
+    }
+</script>
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>

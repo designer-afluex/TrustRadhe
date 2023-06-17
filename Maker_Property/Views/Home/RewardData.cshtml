@@ -1,0 +1,200 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reward Achievement</title>
+    <!-- Stylesheets -->
+    <link href="../../Websitecss/css/bootstrap.css" rel="stylesheet">
+    <link href="../../Websitecss/css/style.css" rel="stylesheet">
+    <link href="../../Websitecss/css/responsive.css" rel="stylesheet">
+
+    <link href="../../Websitecss/css/color-switcher-design.css" rel="stylesheet">
+
+    <link id="theme-color-file" href="../../Websitecss/css/color-themes/default-theme.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="../../Websitecss/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="../../Websitecss/images/favicon.png" type="image/x-icon">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<body>
+    <div class="landing-page-scroll" style="display: block;">
+        <a href="/Home/Index">
+            <h6 class="text-white">Continue to website</h6>
+        </a>
+    </div>
+    <div class="page-wrapper">
+        <!-- Preloader -->
+        <div class="main-reward" style="background-image: url(../../Websitecss/images/background.gif);background-repeat:no-repeat;background-size:cover">
+            <div class="reward-bg">
+                <div class="auto-container">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="reward-title-heading text-center">
+                                <h2>Product Reward Achievers </h2>
+                            </div>
+                            <div class="space1"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/ExeBag.jpg" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Exe Bag</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/Mobile.jpg" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Android Mobile</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/Tab.png" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Tab</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/laptop.jpg" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Laptop</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12" style="height: 500px;overflow-y: scroll;">
+                                    <div class="reward-main-list">
+                                        <div class="reward-details111">
+                                            @if (Model != null)
+                                            {
+                                                if (Model.lsttopupreport != null)
+                                                {
+                                                    foreach (var item in Model.lsttopupreport)
+                                                    {
+                                                        <div class="row reward-details">
+                                                            <div class="col-md-4 col-lg-4">
+                                                                <div class="reward-list-details">
+                                                                    <img src="@item.RewardImage" class="rounded-circle" alt="reward1" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8 col-lg-8">
+                                                                <div class="reward-name text-white">
+                                                                    <h5>@item.Name</h5>
+                                                                    <h5>@item.LoginId</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                            
+                                         
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/bike.jpg" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Bike</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/bullet.jpg" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Bullet</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/alto.jpg" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Alto</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="reward1 text-center text-white">
+                                        <img src="../../ProductRewardImages/dezire.png" class="rounded-circle rew1" alt="reward1" />
+                                        <h5 class="text-white">Dezire</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Main Footer -->
+        <footer class="main-footer alternate" style="background-image: url(../../Websitecss/images/background/5.jpg);">
+            <!--Footer Bottom-->
+            <div class="footer-bottom">
+                <div class="auto-container">
+                    <div class="inner-container clearfix">
+                        <div class="social-links">
+                            <ul class="social-icon-two1">
+                                <li>
+                                    Design & Developed by
+                                    <a href="https://www.afluex.com/" target="_blank">Afluex Multiservices LLP</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="copyright-text">
+                            <p>
+                                Copyright © 2019 Dreamcrushers ‐ All Rights Reserved
+                                <a href="http://Dreamcrushers.in/" target="_blank"></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Main Footer -->
+
+    </div>
+
+    <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-circle-o-up"></span></div>
+    <script src="../../Websitecss/js/jquery.js"></script>
+    <script src="../../Websitecss/js/popper.min.js"></script>
+    <script src="../../Websitecss/js/bootstrap.min.js"></script>
+    <script src="../../Websitecss/js/jquery.fancybox.js"></script>
+    <script src="../../Websitecss/js/owl.js"></script>
+    <script src="../../Websitecss/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../../Websitecss/js/wow.js"></script>
+    <script src="../../Websitecss/js/appear.js"></script>
+    <script src="../../Websitecss/js/mixitup.js"></script>
+    <script src="../../Websitecss/js/script.js"></script>
+    <!-- Color Setting -->
+    <script src="js/color-settings.js"></script>
+</body>
+</html>

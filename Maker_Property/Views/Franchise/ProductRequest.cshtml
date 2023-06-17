@@ -1,0 +1,439 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "ProductRequest";
+    Layout = "~/Views/Shared/_FranchisePanelLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Request
+                </a>
+            </li>
+            <li class="active">
+                New Request
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Product Request
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                @using (Html.BeginForm("ProductRequest", "Franchise", FormMethod.Post, new { @id = "signupForm",enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        @if (TempData["Request"] != null)
+                        {
+                            <div class="col-md-12">
+                                <div class="@TempData["Class"]">
+                                    @TempData["Request"]
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-md-12 table-responsive" id="Supplierhide">
+                                    <div class="row">
+                                        @*<div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">Request From<span style="color:red">*</span></label>
+                                            @Html.DropDownListFor(m => m.SupplierID, new SelectList(ViewBag.ddlUpperFranchise, "Value", "Text"), new { @class = "form-control" })
+                                        </div>*@    
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">Product<span style="color:red">*</span></label>
+                                            @Html.DropDownListFor(m => m.ProductID, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "form-control", @onchange = "return getProductDetails();" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">MRP</label>
+                                            @Html.TextBoxFor(m => m.MRP, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">BV</label>
+                                            @Html.TextBoxFor(m => m.BV, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">IGST</label>
+                                            @Html.TextBoxFor(m => m.IGST, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">CGST</label>
+                                            @Html.TextBoxFor(m => m.CGST, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">SGST</label>
+                                            @Html.TextBoxFor(m => m.SGST, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">Tax Amount</label>
+                                            @Html.TextBoxFor(m => m.TaxableAmount, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">Final Amount</label>
+                                            @Html.TextBoxFor(m => m.FinalAmount, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="inputEmail4" class="col-form-label">Request Quantity<span style="color:red">*</span></label>
+                                            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @Onchange = "return AddQuantity();", @onkeypress = "return isNumberKey(event)" })
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <br />
+                                            <input type="button" name="btnAdd" id="btnAdd" class="btn btn-success pull-left" value="Add Item" onclick="return AddItemProduct();" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="row" id="tablehideshow">
+                                <div class="col-md-12 table-responsive">
+                                 
+                                        <table width="100%" border="1" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr No.</th>
+                                                    <th>Product</th>
+                                                    <th>MRP</th>
+                                                   
+                                                    <th>IGST</th>
+                                                    <th>CGST</th>
+                                                    <th>SGST</th>
+                                                    <th>Purchase Quantity</th>
+                                                    <th>Taxable Amount</th>
+                                                    <th>Final Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblProductRequest"></tbody>
+                                        </table>
+
+                                   
+
+                                    
+                                        <div class="col-md-12 table-responsive" id="Supplierhide">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label for="inputEmail4" class="col-form-label">Final Amount</label>
+                                                        @Html.TextBoxFor(n => n.TotalAmount, new { @class = "form-control", @Placeholder = "Final Amount", @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label for="inputEmail4" class="col-form-label">Paid</label>
+                                                        @Html.TextBoxFor(n => n.PaidAmount, new { @class = "form-control", @Placeholder = "Paid", @onchange = "Getbalance();", @readonly = "readonly", @onkeypress = "return isNumberKey(event)" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label for="inputEmail4" class="col-form-label">Payment Mode</label>
+                                                        @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "form-control", @onchange = "return getpaymentdetails();" })
+                                                    </div>
+                                                </div>
+                                               <div class="col-lg-3">
+                                                   <br/>
+                                                       <div class="form-group">
+                                                           <input type="file" name="fileProfilePicture" id="Image" />
+                                                       </div>
+                                                   
+                                               </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3" id="bankname" style="display: none">
+                                                    Bank Name <span style="color: red">*</span>
+                                                    @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @placeholder = "Bank Name" })
+                                                </div>
+                                                <div class="col-md-3" id="chequeno" style="display: none">
+                                                    Transaction No <span style="color: red">*</span>
+                                                    @Html.TextBoxFor(m => m.TransactionNo, new { @class = "form-control", @placeholder = "Transaction No" })
+                                                </div>
+                                                <div class="col-md-3" id="chequdate" style="display: none">
+                                                    Transaction Date <span style="color: red">*</span>
+                                                    @Html.TextBoxFor(m => m.TransactionDate, new { @class = "form-control", @placeholder = "Transaction Date" })
+                                                </div>
+                                                <div class="col-md-3" id="bankbranch" style="display: none">
+                                                    Branch <span style="color: red">*</span>
+                                                    @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @placeholder = "Bank Branch" })
+                                                    <br />
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                   
+
+                                   
+                                        <div class="col-md-12">
+                                            <input type="submit" id="btnRequest" name="btnRequest" value="Submit Request" onclick="return checkFormData();" class="btn btn-success pull-right" />
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>
+
+<script>
+    window.onload = function () {
+        //document.getElementById('Supplierhide').style.display = 'none';
+        document.getElementById('tablehideshow').style.display = 'none';
+        $('#PaymentMode').val("Cash");
+
+    };
+    $('#TransactionDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+
+    function getpaymentdetails() {
+        var paymentmode = ($("#PaymentMode option:selected").text());
+        if (paymentmode != "Cash") {
+            bankname.style.display = "block";
+            chequeno.style.display = "block";
+            chequdate.style.display = "block";
+            bankbranch.style.display = "block";
+        }
+        else {
+            bankname.style.display = "none";
+            chequeno.style.display = "none";
+            chequdate.style.display = "none";
+            bankbranch.style.display = "none";
+        }
+    }
+
+    function getProductDetails() {
+
+
+        var value3 = $('#ProductID').val();
+
+        $.ajax({
+            url: '/Franchise/GetProductdetails', type: 'post', dataType: 'json',
+            data: { 'ProductID': value3 }, success: function (data) {
+                $('#Quantity').val('');
+                $('#TotalAmount').val('');
+                if (data.Response == "1") {
+                    $('#MRP').val(data.MRP);
+                    $('#BV').val(data.BV);
+                    $('#IGST').val(data.IGST);
+                    $('#CGST').val(data.CGST);
+                    $('#SGST').val(data.SGST);
+                    $('#FinalAmount').val(data.FinalAmount);
+                    $('#TaxableAmount').val(data.TaxableAmount);
+                    $('#Quantity').val('1');
+
+                }
+                else {
+                    alert("Invalid Product");
+                    $('#MRP').val('');
+                    $('#BV').val('');
+                    $('#IGST').val('');
+                    $('#CGST').val('');
+                    $('#SGST').val('');
+                    $('#Quantity').val('');
+                }
+            }
+        });
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function checkFormData() {
+        $(".errortext").removeClass("errortext");
+        if ($('#SupplierID').val() == '0') {
+            $("#SupplierID").addClass('errortext');
+            $('#SupplierID').focus();
+            return false;
+        }
+        if ($('#PaymentMode').val() != 'Cash') {
+            if ($('#BankName').val() == '') {
+                $("#BankName").addClass('errortext');
+                $('#BankName').focus();
+                return false;
+            }
+            if ($('#TransactionNo').val() == '') {
+                $("#TransactionNo").addClass('errortext');
+                $('#TransactionNo').focus();
+                return false;
+            }
+            if ($('#TransactionDate').val() == '') {
+                $("#TransactionDate").addClass('errortext');
+                $('#TransactionDate').focus();
+                return false;
+            }
+            if ($('#BankBranch').val() == '') {
+                $("#BankBranch").addClass('errortext');
+                $('#BankBranch').focus();
+                return false;
+            }
+        }
+        else {
+            $('#TransactionNo').val('');
+            $('#BankName').val('');
+            $('#TransactionDate').val('');
+            $('#BankBranch').val('');
+        }
+        return true;
+    }
+
+    function AddQuantity() {
+
+        var MRP = $('#MRP').val();
+        var QTY = $('#Quantity').val();
+        var totalAmount = 0;
+        var taxamount = 0;
+        totalAmount = Number(MRP) * Number(QTY);
+        taxamount = (((Number)(totalAmount)) - ((Number)(totalAmount) * 100 / (Number)(100 + (Number)($('#CGST').val()) + (Number)($('#SGST').val())))).toFixed(2);
+        $('#FinalAmount').val(totalAmount);
+        $('#TaxableAmount').val(taxamount);
+
+    }
+
+    function Getbalance() {
+        var Paid = $('#PaidAmount').val();
+
+        var FinalAmount = $('#TotalFinalAmount').val();
+        if ((Number)(Paid) > (Number)(FinalAmount)) {
+            alert('Paid Value Should be less than or equal to final amount');
+            $('#PaidAmount').val("");
+            $('#Balance').val("");
+        }
+        else {
+            var balance = (Number)(FinalAmount) - (Number)(Paid)
+
+            $('#Balance').val(balance);
+        }
+    }
+
+    function AddItemProduct() {
+        $(".errortext").removeClass("errortext");
+
+        if ($('#ProductID').val() == '0') {
+            $("#ProductID").addClass('errortext');
+            $('#ProductID').focus();
+            return false;
+        }
+        if ($('#Quantity').val() == '') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+            return false;
+        }
+
+        var productid = $('#ProductID').val();
+        var Product = $('#ProductID').find(":selected").text();
+        var MRP = $('#MRP').val();
+        var IGST = $('#IGST').val();
+        var CGST = $('#CGST').val();
+        var SGST = $('#SGST').val();
+        var Quantity = $('#Quantity').val();
+        var TaxableAmount = $('#TaxableAmount').val();
+        var FinalAmount = $('#FinalAmount').val();
+
+        var tr = [];
+        var j = 1;
+        $.ajax({
+            url: '/Franchise/BindPurchaseItemList', type: 'post', dataType: 'json',
+            data: {
+                'ProductID': productid, 'Product': Product, 'MRP': MRP, 'IGST': IGST,
+                'CGST': CGST, 'SGST': SGST, 'Quantity': Quantity, 'TaxableAmount': TaxableAmount, 'FinalAmount': FinalAmount
+            },
+            success: function (data) {
+                $('#tablehideshow').show();
+                $('#tblProductRequest').empty();
+                var totaligst = 0;
+                var totalcgst = 0;
+                var totalsgst = 0;
+                var totalfinalamount = 0;
+                var totalsum = 0;
+                var paidamount = 0;
+                var paidbalance = 0;
+                var balance = 0;
+                var totalperc = 0;
+                for (var i = 0; i < data.lstFranchise.length; i++) {
+                    tr.push('<tr>');
+                    tr.push("<td>" + j + "</td>");
+                    tr.push("<td><label  >" + data.lstFranchise[i].ProductName + " </label></td>");
+                    tr.push("<td><label> " + data.lstFranchise[i].MRP + "</label></td>");
+                  
+                    tr.push("<td><label > " + data.lstFranchise[i].IGST + "</label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].CGST + "</label></td>");
+                    tr.push("<td><label> " + data.lstFranchise[i].SGST + "</label></td>");
+                    //tr.push("<td><label id='stxtQuantity_ " + i + "' name='stxtQuantity_ " + i + "'> " + data.lstSizeTemp[i].PurchaseStock + " </label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].Quantity + " </label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].TaxableAmount + " </label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].FinalAmount + " </label></td>");
+
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].ProductID + "' id='txtproductID_ " + i + "' name='txtproductID_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Product + "' id='txtproduct_ " + i + "' name='txtproduct_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].MRP + "' id='txtMrp_ " + i + "' name='txtMrp_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].IGST + "' id='txtIGST_ " + i + "' name='txtIGST_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].CGST + "' id='txtCGST_ " + i + "' name='txtCGST_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].SGST + "' id='txtSGST_ " + i + "' name='txtSGST_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Quantity + "' id='txtPurchaseQty_ " + i + "' name='txtPurchaseQty_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].TaxableAmount + "' id='txtTaxableAmount_ " + i + "' name='txtTaxableAmount_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].FinalAmount + "' id='txtFinalAmount_ " + i + "' name='txtFinalAmount_ " + i + "'></td>");
+
+                    tr.push('</tr>');
+                    debugger;
+
+
+                    totalfinalamount = (Number)(data.lstFranchise[i].FinalAmount) + (Number)(totalfinalamount);
+                    //totalsum = (Number)(totalamount) + ((Number)(totalamount) * (Number)(totalperc) / 100);
+                    //paidamount = (Number)($('#Paid').val());
+
+                    $('#TotalAmount').val(totalfinalamount);
+                    $('#PaidAmount').val(totalfinalamount);
+
+                    j++;
+
+                }
+                tr.push('<tr style="display:none">');
+                tr.push("<td><input type='hidden' value='" + j + "' id='hdrows' name='hdrows'></td>");
+                tr.push('</tr>');
+                $('#tblProductRequest').append($(tr.join('')));
+
+            }
+
+        });
+
+    }
+
+    function checkpaid() {
+        $(".errortext").removeClass("errortext");
+        if ($('#Paid').val() == '') {
+            $("#Paid").addClass('errortext');
+            $('#Paid').focus();
+            return false;
+        }
+    }
+
+</script>

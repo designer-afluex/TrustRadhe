@@ -1,0 +1,431 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "AddKit";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                      Master
+                </a>
+            </li>
+            <li class="active">
+                Kit Master
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("AddKit", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <p style="color:red">
+        @TempData["Kit"]
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Kit Master
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                      MLM  Product <span style="color:red">*</span>
+                                        @Html.DropDownListFor(m => m.MLMProductID, new SelectList(ViewBag.ddlMProduct, "Value", "Text"), new { @class = "form-control" ,@onchange="return GetMLMPROdPrice();"})
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>KitName <span style="color:red">*</span> </label>
+                                        @Html.TextBoxFor(m => m.KitName, new { @class = "form-control", @placeholder = "KitName", @maxlength = "50" })
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row" >
+                                <div class="panel-heading">
+                                    Product Details
+                                </div>
+                               <br/>
+                                 
+                                    @*<div class="form-group">
+                                        Batch<span style="color:red">*</span>
+                                        @Html.DropDownListFor(m => m.BatchID, new SelectList(ViewBag.ddlBatch, "Value", "Text"), new { @class = "form-control"  })
+                                    </div>*@
+                                
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        Product<span style="color:red">*</span>
+                                        @Html.DropDownListFor(m => m.ProductID, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "form-control", @onchange = "return GetproductDetails();" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>MRP  </label>
+                                        @Html.TextBoxFor(m => m.MRP, new { @class = "form-control", @placeholder = "MRP", @maxlength = "10", @readonly= "readonly" })
+                                        @Html.HiddenFor(m => m.DP)
+                                        @Html.HiddenFor(m => m.BV)
+                                        @Html.HiddenFor(m => m.Size)
+                                        @Html.HiddenFor(m => m.ProductName)
+                                        @Html.HiddenFor(m => m.SGST)
+                                        @Html.HiddenFor(m => m.CGST)
+                                        @Html.HiddenFor(m => m.IGST)
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>Quantity <span style="color:red">*</span> </label>
+                                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "Quantity", @maxlength = "5", @onchange = "return  getqty();",@onkeypress= "return isNumberKey(event);" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>TotalMRP  </label>
+                                        @Html.TextBoxFor(m => m.TotalMRP, new { @class = "form-control", @placeholder = "TotalMRP", @maxlength = "10", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <br/>
+                                    <input type="button" name="Additem" id="Additem" class="btn btn-success pull-left" value="Add Item" onclick="return AddItemProduct();" />
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 table-responsive">
+                                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                         @*   <th>Batch</th>*@
+                                            <th>Product Name</th>
+                                            <th>Size</th>
+                                            <th>SGST</th>
+                                            <th>CGST </th>
+                                            <th>IGST </th>
+                                            <th>BV</th>
+                                            <th>DP </th>
+                                            <th>MRP </th>
+                                            <th>Quantity</th>
+                                            <th>TotalMRP</th>
+                                          
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblkit"></tbody>
+                                </table>
+                                <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Total  </label>
+                                            @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @maxlength = "10", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Kit Amount  </label>
+                                            @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", @placeholder = "Kit Amount", @maxlength = "10", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                <div class="col-lg-3">
+                                    <br />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" name="Save" value="Save" onclick="return fvalidateform();" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+    <input type="hidden" id="txtquantity" />
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+
+<script>
+    
+    function GetMLMPROdPrice() {
+
+        var value3 = $('#MLMProductID').val();
+
+        $.ajax({
+            url: '/FranchiseAdmin/GetMLMProductdetails', type: 'post', dataType: 'json',
+            data: { 'MLMProductID': value3 }, success: function (data) {
+                $('#Quantity').val('');
+                //$('#TotalAmount').val('');
+                if (data.Response == "1") {
+                    $('#TotalAmount').val(data.MLMPoductName);
+                    
+
+
+                }
+                else {
+                    alert("Invalid ");
+                   
+
+                }
+            }
+
+        });
+
+    }
+    function GetproductDetails() {
+
+        var value3 = $('#ProductID').val();
+       // var batchno = $('#BatchID').find(":selected").text();
+        $.ajax({
+            url: '/FranchiseAdmin/GetProductdetails', type: 'post', dataType: 'json',
+            data: { 'ProductID': value3  }, success: function (data) {
+                $('#Quantity').val('');
+                $('#TotalMRP').val('');
+                //$('#ProductID').val('0');
+                //$('#TotalAmount').val('');
+                if (data.Response == "1") {
+                    $('#MRP').val(data.MRP);
+                    $('#BV').val(data.BV);
+                    $('#IGST').val(data.IGST);
+                    $('#CGST').val(data.CGST);
+                    $('#SGST').val(data.SGST);
+                    $('#ProductName').val(data.ProductName);
+                    $('#Size').val(data.Size);
+                    $('#DP').val(data.DP);
+
+
+                }
+                else {
+                    alert("Invalid Product");
+                    $('#MRP').val('');
+                    $('#BV').val('');
+                    $('#IGST').val('');
+                    $('#CGST').val('');
+                    $('#SGST').val('');
+                    $('#ProductID').val('0');
+                }
+            }
+
+        });
+
+    }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    function getqty() {
+
+        var mrp = $("#MRP").val();
+        var qty = $("#Quantity").val();
+        var total = (Number)(mrp) * (Number)(qty);
+        $("#TotalMRP").val(total);
+
+    }
+    function gettotal(i) {
+        if ((document.getElementById('checkBoxId_ ' + i).checked)) {
+            var mrpp = document.getElementById('mrp ' + i).value;
+            var qty = document.getElementById('txtQty ' + i).value;
+
+
+            var totalmrp = ((Number)(mrpp) * (Number)(qty)).toString();
+
+            var total = $('#Total').val();
+            if (total != "") {
+                var finalamount = (Number)(totalmrp) + (Number)(total);
+                $('#Total').val(finalamount);
+                $('#TotalAmount').val(finalamount);
+            }
+            else {
+                $('#Total').val(totalmrp);
+                $('#TotalAmount').val(totalmrp);
+
+            }
+
+
+        }
+        else {
+            var mrpp = document.getElementById('mrp ' + i).value;
+            var qty = document.getElementById('txtQty ' + i).value;
+            var totalmrp = ((Number)(mrpp) * (Number)(qty)).toString();
+            var total = $('#Total').val();
+            var finalamount = (Number)(total) - (Number)(totalmrp);
+            $('#Total').val(finalamount);
+            $('#TotalAmount').val(finalamount);
+        }
+    }
+    function fvalidateform() {
+
+        $(".errortext").removeClass("errortext");
+
+        if ($('#MLMProductID').val() == '0') {
+            $("#MLMProductID").addClass('errortext');
+            $('#MLMProductID').focus();
+
+            return false;
+        }
+        if ($('#KitName').val() == '') {
+            $("#KitName").addClass('errortext');
+            $('#KitName').focus();
+
+            return false;
+        }
+        if ($('#Total').val() == '') {
+            $("#Total").addClass('errortext');
+            $('#Total').focus();
+
+            return false;
+        }
+        var rows = document.getElementById("example23").getElementsByTagName("tr").length;
+        if ((Number)(rows) <= 1) {
+            alert("Add values in table ");
+            return false;
+        }
+        if ($('#TotalAmount').val() == '') {
+            $("#TotalAmount").addClass('errortext');
+            $('#TotalAmount').focus();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    function AddItemProduct() {
+
+        $(".errortext").removeClass("errortext");
+        
+        if ($('#BatchID').val() == '0') {
+            $("#BatchID").addClass('errortext');
+            $('#BatchID').focus();
+            return false;
+        }
+        if ($('#MLMProductID').val() == '0') {
+            $("#MLMProductID").addClass('errortext');
+            $('#MLMProductID').focus();
+            return false;
+        }
+        if ($('#KitName').val() == '') {
+            $("#KitName").addClass('errortext');
+            $('#KitName').focus();
+            return false;
+        }
+        if ($('#ProductID').val() == '0') {
+            $("#ProductID").addClass('errortext');
+            $('#ProductID').focus();
+            return false;
+        }
+        if ($('#Quantity').val() == '') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+            return false;
+        }
+       
+        var mlmproductid = $('#MLMProductID').val();
+        var mlmProduct = $('#MLMProductID').find(":selected").text();
+        var batchno = $('#BatchID').find(":selected").text();
+        var productid = $('#ProductID').val();
+        var Product = $('#ProductID').find(":selected").text();
+        var MRP = $('#MRP').val();
+        var IGST = $('#IGST').val();
+        var CGST = $('#CGST').val();
+        var SGST = $('#SGST').val();
+        var Quantity = $('#Quantity').val();
+        var Unit = $('#UnitID').val();
+        var totalamt = $('#TotalAmont').val();
+        var Size = $('#Size').val();
+        var BV = $('#BV').val();
+        var DP = $('#DP').val();
+        var TotalMRP = $('#TotalMRP').val();
+
+        var tr = [];
+        var j = 1;
+        $.ajax({
+            url: '/FranchiseAdmin/BindList', type: 'post', dataType: 'json',
+            data: {
+                'ProductID': productid, 'Product': Product, 'MRP': MRP, 'IGST': IGST,
+                'CGST': CGST, 'SGST': SGST, 'Quantity': Quantity,
+                'TotalAmont': totalamt, 'Size': Size,
+                'BV': BV, 'DP': DP, 'TotalMRP': TotalMRP, 'batchno': batchno
+
+            },
+            success: function (data) {
+                $('#tablehideshow').show();
+                $('#tblkit').empty();
+                var totaligst = 0;
+                var totalcgst = 0;
+                var totalsgst = 0;
+                var totalfinalamount = 0;
+                var totalsum = 0;
+                var paidamount = 0;
+                var paidbalance = 0;
+                var balance = 0;
+                var totalperc = 0;
+                for (var i = 0; i < data.lstFranchise.length; i++) {
+                    tr.push('<tr>');
+                    tr.push("<td>" + j + "</td>");
+                    //tr.push("<td><label  >" + data.lstFranchise[i].BatchNo + " </label></td>");
+                    tr.push("<td><label  >" + data.lstFranchise[i].ProductName + " </label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].Size + " </label></td>");
+                    tr.push("<td><label> " + data.lstFranchise[i].SGST + "</label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].CGST + "</label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].IGST + "</label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].BV + " </label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].DP + " </label></td>");
+                    tr.push("<td><label> " + data.lstFranchise[i].MRP + "</label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].Quantity + " </label></td>");
+                    tr.push("<td><label > " + data.lstFranchise[i].TotalMRP + " </label></td>");
+
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].BatchNo + "' id='txtbatchno_ " + i + "' name='txtbatchno_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].ProductID + "' id='txtproductID_ " + i + "' name='txtproductID_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Product + "' id='txtproduct_ " + i + "' name='txtproduct_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].MRP + "' id='txtMrp_ " + i + "' name='txtMrp_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].IGST + "' id='txtIGST_ " + i + "' name='txtIGST_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].CGST + "' id='txtCGST_ " + i + "' name='txtCGST_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].SGST + "' id='txtSGST_ " + i + "' name='txtSGST_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Quantity + "' id='txtPurchaseQty_ " + i + "' name='txtPurchaseQty_ " + i + "'></td>");
+                    tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Size + "' id='Size_ " + i + "' name='Size_ " + i + "'></td>");
+                 
+
+                    tr.push('</tr>');
+
+
+
+                    totalfinalamount = (Number)(data.lstFranchise[i].TotalMRP) + (Number)(totalfinalamount);
+                    //totalsum = (Number)(totalamount) + ((Number)(totalamount) * (Number)(totalperc) / 100);
+                    //paidamount = (Number)($('#Paid').val());
+                     
+                    //$('#TotalFinalAmount').val(totalfinalamount);
+                    //$('#PaidAmount').val(totalfinalamount);
+
+                    //balance = (Number)(totalfinalamount) - (Number)($('#PaidAmount').val());
+                    $('#Total').val(totalfinalamount);
+                    j++;
+
+                }
+                tr.push('<tr style="display:none">');
+                tr.push("<td><input type='hidden' value='" + j + "' id='hdrows' name='hdrows'></td>");
+                tr.push('</tr>');
+                $('#tblkit').append($(tr.join('')));
+
+            }
+
+        });
+
+    }
+</script>
+
+

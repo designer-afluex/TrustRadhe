@@ -1,0 +1,400 @@
+﻿@model TrustRadhe.Models.Home
+
+@{
+    Layout = "~/Views/Shared/_WebisteLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("BookingRequest", "Home", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <br/> <br/>    <br />
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../images/loader.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+
+<div class="registration-page">
+    <div class="auto-container">
+        <!--Checkout Details-->
+        <div class="checkout-form">
+            <form method="post">
+                <div class="row clearfix">
+                    <!--Column-->
+                    <div class="column col-lg-12 col-md-12 col-sm-12">
+                        <p style="color:red">
+                            @TempData["BookingRequest"]
+                    </p>
+                    <div class="row clearfix">
+                        <!--Form Group-->
+                        <!--Form Group-->
+                        <!--Form Group-->
+
+
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Name <sup style="color:red;font-size: 21px;">*</sup></div>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @Placeholder = "Full Name" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Father Name </div>
+                            @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @Placeholder = "Father Name" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Gender</div>
+                            @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.ddlgender, "Value", "Text"))
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Date Of Birth </div>
+                            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", @Placeholder = "Date of Birth", @readonly = "readonly" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Nominee Name</div>
+                            @Html.TextBoxFor(m => m.Nominee, new { @class = "form-control", @Placeholder = "Nominee" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Relation</div>
+                            @Html.TextBoxFor(m => m.Relation, new { @class = "form-control", @Placeholder = "Relation" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Nationality</div>
+                            @Html.TextBoxFor(m => m.Nationality, new { @class = "form-control", @Placeholder = "Nationality" })
+                            @* @Html.ValidationMessageFor(m => m.Email)*@
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Mobile No. <sup style="color:red;font-size: 21px;">*</sup></div>
+                            @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @Placeholder = "Mobile No", @Maxlength = "10", @onkeypress = "return isNumberKey(event);" })
+                            @Html.ValidationMessageFor(m => m.MobileNo)
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <div class="field-label">Address</div>
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @Placeholder = "Address" })
+                            @* @Html.ValidationMessageFor(m => m.Email)*@
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <div class="field-label">Pin Code </div>
+                            @Html.TextBoxFor(m => m.PinCode, new { @class = "form-control", @Placeholder = "PinCode", @Maxlength = "6", @onkeypress = "return isNumberKey(event);", @onchange = "return getstatecity();" })
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <div class="field-label">State </div>
+                            @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State", @Disabled = "disabled" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-4 col-sm-12">
+                            <div class="field-label">State </div>
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control", @Placeholder = "City", @Disabled = "disabled" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Category </div>
+                            @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.ddlcategory, "Value", "Text"))
+
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Cast </div>
+                            @Html.TextBoxFor(m => m.Cast, new { @class = "form-control", @Placeholder = "Cast" })
+
+
+
+
+                        </div>
+                        <!--Form Group-->
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Religion </div>
+                            @Html.DropDownListFor(m => m.Religion, new SelectList(ViewBag.ddlReligion, "Value", "Text"))
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Plot No </div>
+                            @Html.TextAreaFor(m => m.PlotNo, new { @class = "form-control", @Placeholder = "Plot No" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Area </div>
+                            @Html.TextAreaFor(m => m.Area, new { @class = "form-control", @Placeholder = "Area" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Booking Amount </div>
+                            @Html.TextBoxFor(m => m.BookingAmount, new { @class = "form-control", @Placeholder = "Booking Amount", @onkeypress = "return isNumberKey(event);" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Customer Id</div>
+                            @Html.TextBoxFor(m => m.CustomerId, new { @class = "form-control", @Placeholder = "Customer Id" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Associate Name</div>
+                            @Html.TextBoxFor(m => m.AssociateName, new { @class = "form-control", @Placeholder = "AssociateName" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Payment Mode</div>
+                            @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @onchange = "getpaymentdetails();" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12" id="bankname" style="display: none">
+                            Bank Name <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", @placeholder = "Bank Name" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12" id="chequeno" style="display: none">
+                            Transaction No <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.DDChequeNo, new { @class = "form-control", @placeholder = "Transaction No" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12" id="chequdate" style="display: none">
+                            Transaction Date <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.DDChequeDate, new { @class = "form-control", @placeholder = "Transaction Date", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12" id="bankbranch" style="display: none">
+                            Branch <span style="color: red">*</span>
+                            @Html.TextBoxFor(m => m.BankBranch, new { @class = "form-control", @placeholder = "Bank Branch" })
+
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Upload Photo</div>
+                            <input type="file" name="postedFile3" id="ImageB" onchange="readURL3(this)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Adhar No</div>
+                            @Html.TextBoxFor(m => m.AdharNo, new { @class = "form-control", @Placeholder = "Adhar No", @onkeypress = "return isNumberOrDecimal(event);", @maxlength = "16" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-3 col-sm-12">
+                            <div class="field-label">Adhar Front Side Photo</div>
+                            <input type="file" name="postedFile1" id="ImageM" onchange="readURL1(this)" multiple="multiple"/>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-12">
+                            <div class="field-label">Adhar Back Side Photo</div>
+                            <input type="file" name="postedFile4" id="ImageBS" onchange="readURL5(this)" multiple="multiple" />
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Pan Card </div>
+                            @Html.TextBoxFor(m => m.PanCard, new { @class = "form-control", @Placeholder = "Pan Card", @Maxlength = "10", @onchange = "return validatepan(event);" })
+                        </div>
+                        <!--Form Group-->
+                        <div class="form-group col-md-6 col-sm-12">
+                            <div class="field-label">Pan Photo</div>
+                            <input type="file" name="postedFile2" id="ImageG" onchange="readURL2(this)" />
+                        </div>
+                    </div>
+
+                    <!--Form Group-->
+                    <div class="form-group col-md-6 col-sm-12" style="margin-top:36px;">
+                        <div class="pull-left">
+                            <div class="form-group no-margin">
+                                <input type="submit" id="request" onclick="return validate();" class="theme-btn btn-style-one" name="request" value="Request" />
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <!--Column-->
+                </form>
+    </div>
+</div>
+<!--End Checkout Details-->
+
+
+</div>
+<!--End CheckOut Page-->
+<!--Clients Section-->
+<section class="clients-section style-two">
+    <div class="auto-container">
+        <div class="sponsors-outer">
+            <!--Sponsors Carousel-->
+            <ul class="sponsors-carousel owl-carousel owl-theme">
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-1.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-2.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-3.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-4.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-5.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-6.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../Websitecss/images/clients/certi-7.jpg" alt="client"></a>
+                    </figure>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+}
+<script src="../../AssociatePanelcss/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+
+
+    $('#DOB').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1950:2020'
+    });
+
+    $('#DDChequeDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1950:2020'
+    });
+
+    function getpaymentdetails() {
+        debugger;
+        var paymentmode = ($("#PaymentMode option:selected").text());
+        if (paymentmode != "Cash") {
+            bankname.style.display = "block";
+            chequeno.style.display = "block";
+            chequdate.style.display = "block";
+            bankbranch.style.display = "block";
+        }
+        else {
+            bankname.style.display = "none";
+            chequeno.style.display = "none";
+            chequdate.style.display = "none";
+            bankbranch.style.display = "none";
+        }
+    }
+    function getstatecity() {
+        $(".errortext").removeClass("errortext");
+        $.ajax({
+            url: "/Home/GetStateCity",
+            Type: "Get",
+            DataType: "JSON",
+            data: { PinCode: $("#PinCode").val() },
+            success: function (data) {
+                if (data.Result == "1") {
+                    $("#State").val(data.State);
+                    $("#City").val(data.City);
+                }
+                else {
+                    $("#State").val('');
+                    $("#City").val('');
+                    $("#PinCode").val('');
+                    $("#PinCode").addClass('errortext');
+                    $('#PinCode').focus();
+                    alert(data.Result);
+
+                }
+
+
+            }
+
+        });
+    }
+
+    function isNumberOrDecimal(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function readURL2(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readURL5(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readURL3(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function validate() {
+        $(".errortext").removeClass("errortext");
+        if ($('#Name').val() == '') {
+            $("#Name").addClass('errortext');
+            $('#Name').focus();
+            return false;
+        }
+        if ($('#MobileNo').val() == '') {
+            $("#MobileNo").addClass('errortext');
+            $('#MobileNo').focus();
+            return false;
+        }
+
+    }
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+</script>
+<style>
+    .errortext {
+        border: 2px solid red !important;
+        background-color: #c18888 !important;
+    }
+</style>

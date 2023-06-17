@@ -1,0 +1,97 @@
+﻿@model TrustRadhe.Models.Home
+
+@{
+   
+    Layout = "~/Views/Shared/_WebisteLayout.cshtml";
+}
+
+<section class="login-section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="column col-lg-12 col-md-12 col-sm-12">
+                <h2 class="text-center">Login Form</h2>
+                <!-- Login Form -->
+                <div class="login-form">
+                    <!--Login Form-->
+                    @using (Html.BeginForm("FranchiseLoginAction", "Home", FormMethod.Post, new { @id = "signupForm" }))
+                    {
+                        <div class="form-group">
+                            <label>Login Id *</label>
+                            @Html.TextBoxFor(m => m.LoginId, new { @Placeholder = "Login Id", @required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            @Html.PasswordFor(m => m.Password, new {  @Placeholder = "Password", @required = "required" })
+                        
+                        </div>
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <div class="form-group no-margin">
+                                    <p style="color:red"> @TempData["Login"] </p>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <div class="form-group no-margin">
+                                    <input type="submit" id="Login" class="theme-btn btn-style-one" name="Login" value="Sign In">
+
+
+                                  
+                                </div>
+                            </div>
+                        </div>
+                      
+                    }
+                </div>
+                <!--End Login Form -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Clients Section-->
+<section class="clients-section style-two">
+    <div class="auto-container">
+        <div class="sponsors-outer">
+            <!--Sponsors Carousel-->
+            <ul class="sponsors-carousel owl-carousel owl-theme">
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-1.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-2.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-3.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-4.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-5.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-6.jpg" alt="client"></a>
+                    </figure>
+                </li>
+                <li class="slide-item">
+                    <figure class="image-box">
+                        <a href="#"><img src="../../WebsiteCss/images/clients/certi-7.jpg" alt="client"></a>
+                    </figure>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+

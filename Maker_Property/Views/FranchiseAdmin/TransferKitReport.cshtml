@@ -1,0 +1,138 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "TransferKitReport";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Reports
+                </a>
+            </li>
+            <li class="active">
+                Transfer Kit Report
+            </li>
+        </ol>
+    </div>
+
+</div>
+<br />
+@using (Html.BeginForm("TransferKitReport", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Transfer Kit Report
+                    @*  <a href="/FranchiseAdmin/Registration" class="btn btn-sm btn-primary link pull-right">Add New Product</a>*@
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+ 
+                        <div class="col-lg-3">
+                            <label for="inputEmail4" class="col-form-label">Franchise ID </label>
+                            @Html.TextBoxFor(m => m.LoginID, new { @class = "form-control ", @placeholder = "Search by Franchise ID" })
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="inputEmail4" class="col-form-label">From Date </label>
+                            @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control ", @placeholder = "Search by FromDate" })
+
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="inputEmail4" class="col-form-label">To Date</label>
+                            @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control ", @placeholder = "Search by ToDate" })
+
+                        </div>
+                        <div class="col-lg-3">
+                            <br />
+
+                            <input type="submit" id="btnSearch" name="Search" value="Search" class="btn btn-primary " />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Transaction Date</th>
+                                        <th>LoginID</th>
+                                        <th>Franchise Name</th>
+                                        <th>Kit Name </th>
+                                        <th>Kit Amount</th>
+                                        <th>Quantity</th>
+                                        <th>Final Amount</th>
+                                        <th>Narration </th>
+                                        <th>PaymentMode</th>
+                                        <th>TransactionNo</th>
+                                        <th>Bank Transaction Date</th>
+                                        <th>BankName</th>
+                                        <th>BankBranch</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstFranchise != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstFranchise)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.FromDate </td>
+                                                    <td>@Item.LoginID</td>
+                                                    <td>@Item.FranchiseName</td>
+                                                    <td>@Item.KitName</td>
+                                                    <td>@Item.TotalAmount</td>
+                                                    <td>@Item.Quantity</td>
+                                                    <td>@Item.FinalAmount</td>
+                                                    <td>@Item.Narration</td>
+                                                    <td>@Item.PaymentMode</td>
+                                                    <td>@Item.TransactionNo</td>
+                                                    <td>@Item.TransactionDate</td>
+                                                    <td>@Item.BankName</td>
+                                                    <td>@Item.BankBranch</td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+    });
+</script>
+

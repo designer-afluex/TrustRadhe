@@ -1,0 +1,255 @@
+﻿@model TrustRadhe.Models.DashBoard
+@{
+    ViewBag.Title = "GetAllMessages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title"> Message Center</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminDashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> Message List</li>
+                </ol>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+        <!-- Row -->
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Message List</h3>
+                        <div class="card-options">
+                            <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="#" class="card-options-fullscreen" data-bs-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                            <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+
+                                        <th>Message By</th>
+                                        <th>Message</th>
+
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstmessages != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstmessages)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+
+                                                    <td>@Item.MemberName</td>
+                                                    <td>@Item.Message</td>
+
+                                                    <td><a style="cursor:pointer" onclick="reply('@Item.Pk_MessageId','@Item.MemberName','@Item.Fk_UserId');">Reply</a></td>
+
+                                                </tr>
+                                                i++;
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                            </div>
+                        <div class="col-md-6" id="reply" style="display:none">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Reply
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="col-md-12 form-group">
+                                        Message To
+                                        @Html.TextBoxFor(m => m.MessageBy, new { @class = "form-control", @ReadOnly = "true" })
+
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        Message
+                                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+
+                                        <input type="hidden" id="fk_userid" value="" />
+
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <input type="button" value="Send" class="btn btn-success" onclick="savemessage();" />
+
+                                    </div>
+
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                        </div>
+                    </div>
+
+                    @*<div class="row">
+                        <div class="col-sm-12">
+
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="clip-home-3"></i>
+                                    <a href="#">
+                                        Message Center
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    Message List
+                                </li>
+
+                            </ol>
+
+
+                        </div>
+                    </div>
+                    <br />*@
+
+                    @*<div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Message List
+
+
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 table-responsive">
+                                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr No.</th>
+
+                                                        <th>Message By</th>
+                                                        <th>Message</th>
+
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.lstmessages != null)
+                                                        {
+                                                            int i = 1;
+                                                            foreach (var Item in Model.lstmessages)
+                                                            {
+                                                                <tr class="text-left">
+                                                                    <td>@i</td>
+
+                                                                    <td>@Item.MemberName</td>
+                                                                    <td>@Item.Message</td>
+
+                                                                    <td><a style="cursor:pointer" onclick="reply('@Item.Pk_MessageId','@Item.MemberName','@Item.Fk_UserId');">Reply</a></td>
+
+                                                                </tr>
+                                                                i++;
+                                                            }
+
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-6" id="reply" style="display:none">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Reply
+                                                </div>
+                                                <!-- /.panel-heading -->
+                                                <div class="panel-body">
+                                                    <div class="col-md-12 form-group">
+                                                        Message To
+                                                        @Html.TextBoxFor(m => m.MessageBy, new { @class = "form-control", @ReadOnly = "true" })
+
+                                                    </div>
+                                                    <div class="col-md-12 form-group">
+                                                        Message
+                                                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+
+                                                        <input type="hidden" id="fk_userid" value="" />
+
+                                                    </div>
+                                                    <div class="col-md-12 form-group">
+                                                        <input type="button" value="Send" class="btn btn-success" onclick="savemessage();" />
+
+                                                    </div>
+
+                                                </div>
+                                                <!-- /.panel-body -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- content-wrapper ends -->
+                            <!-- partial:../../partials/_footer.html -->
+                            <!-- partial -->
+                        </div>
+                        <!-- main-panel ends -->
+                    </div>*@
+
+
+
+                    <script src="../vendor/jquery/jquery.min.js"></script>
+
+                    <script>
+
+                        function reply(MessageId, message, fk_userid) {
+                            $('#reply').show();
+                            $('#MessageBy').val(message);
+                            $('#fk_userid').val(fk_userid);
+                        }
+                        function savemessage() {
+                            $(".errortext").removeClass("errortext");
+                            if ($('#Message').val() == '') {
+                                $("#Message").addClass('errortext');
+                                $('#Message').focus();
+                                return false;
+                            }
+                            $.ajax({
+                                url: "/AdminReports/SaveMessages",
+                                Type: "Get",
+                                DataType: "JSON",
+                                data: { Message: $("#Message").val(), MessageBy: "Admin", Fk_UserId: $('#fk_userid').val() },
+                                success: function (data) {
+                                    if (data.Result == "1") {
+                                        alert('Message Send Successfully');
+                                        window.location.href = '@Url.Action("GetAllMessages", "AdminReports")';
+                                    }
+                                    else {
+                                        alert(data.Result);
+
+                                    }
+
+
+                                }
+
+                            });
+                        }
+                    </script>
+

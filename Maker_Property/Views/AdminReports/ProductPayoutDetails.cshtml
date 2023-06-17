@@ -1,0 +1,181 @@
+﻿@model TrustRadhe.Models.Reports
+@{
+    ViewBag.Title = "PayoutDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Reports
+                </a>
+            </li>
+            <li class="active">
+                Product Payout Details
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("ProductPayoutDetails", "AdminReports", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Payout Details
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    Payout No
+                                    @Html.TextBoxFor(m => m.PayoutNo, new { @class = "form-control", @onclick = "return isNumberOrDecimal(event);" })
+                                </div>
+                                <div class="col-lg-3">
+                                    Login Id
+                                    @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    Name
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-1">
+                                    Downline
+                                    @Html.CheckBoxFor(m => m.IsDownline)
+                                </div>
+                                <div class="col-md-2" id="divLeg" style="display:none">
+                                    Leg
+                                    @Html.DropDownListFor(m => m.Leg, new SelectList(ViewBag.ddlLeg, "Value", "Text"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>From Date  </label>
+                                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>To Date  </label>
+                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <br />
+                                    <input class="btn btn-success" type="submit" value="Search" name="Search" id="btnSearch" />
+                                </div>
+                            </div>
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th> Login Id</th>
+                                        <th>Name</th>
+                                        <th>Payout No</th>
+                                        <th>Closing Date</th>
+                                        <th>Direct Income</th>
+                                        <th>Harmony </th>
+                                        <th>Direct Leadership Bonus</th>
+                                        <th>Gross Amount</th>
+                                        <th>TDS Amount</th>
+                                        <th>Processing Fee</th>
+                                        <th>Product Wallet</th>
+                                        <th>Net Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lsttopupreport != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lsttopupreport)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.LoginId</td>
+                                                    <td>@Item.DisplayName</td>
+                                                    <td>@Item.PayoutNo</td>
+                                                    <td>@Item.ClosingDate</td>
+                                                    <td>@Item.DirectIncome</td>
+                                                    <td>@Item.BinaryIncome</td>
+                                                    <td>@Item.LeadershipBonus</td>
+                                                    <td>@Item.GrossAmount</td>
+                                                    <td>@Item.TDSAmount</td>
+                                                    <td>@Item.ProcessingFee</td>
+                                                    <td>@Item.ProductWallet</td>
+                                                    <td>@Item.NetAmount</td>
+                                                    <td>
+                                                        <a href="/AdminReports/ProductPayoutReceipt?lid=@Item.EncryptName&pno=@Item.EncryptPayoutNo" class="btn btn-sm btn-primary"target="_blank">Print</a>
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    $(document).ready(function () {
+
+        if ($("#IsDownline").is(':checked')) {
+            $("#divLeg").show();
+        }
+
+        //$('#IsDownline').prop('checked', true);
+        $('#IsDownline').change(function () {
+            if (this.checked) {
+                $("#divLeg").show();
+                //alert('Show');
+            }
+            else {
+                $("#divLeg").hide();
+            }
+
+        });
+    });
+
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+    });
+
+    function isNumberOrDecimal(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>

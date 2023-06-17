@@ -1,0 +1,173 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "RequestList";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../../images/loader.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+<div class="loader" id="divload"></div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Transaction
+                </a>
+            </li>
+            <li class="active">
+                Approve Franchise Request
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+@using (Html.BeginForm("RequestList", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Request List
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.HiddenFor(m => m.Quantity)
+                            @if (TempData["RequestApproved"] != null)
+                            {
+                                <div class="@TempData["Class"]">
+                                    @TempData["RequestApproved"]
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-lg-3">
+                                <label for="inputEmail4" class="col-form-label">Request Code</label>
+                                @Html.TextBoxFor(m => m.RequestCode, new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="inputEmail4" class="col-form-label">Request LoginId</label>
+                                @Html.TextBoxFor(m => m.LoginID, new { @class = "form-control"})
+                            </div>
+                           
+                            <div class="col-lg-3">
+                                <br />
+                                <input type="submit" name="Search" id="Search" value="Search" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Request Code</th>
+                                        <th>Request From</th>
+
+                                        <th>Amount</th>
+                                        <th>Payment Mode</th>
+                                        <th>Document</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstRequest != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstRequest)
+                                            {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td>@Item.RequestCode</td>
+                                                    <td>@Item.RequestFrom</td>
+
+                                                    <td>@Item.TotalAmount</td>
+                                                    <td>@Item.PaymentMode</td>
+                                                    <td><a href="../../@Item.RequestImage" target="_blank"><img src="../../@Item.RequestImage" style="height:50px;width:50px" /></a></td>
+
+
+                                                    <td>
+                                                        <a href="/FranchiseAdmin/GetDetailsRequest?RequestCode=@Item.RequestCode"  class="btn btn-sm btn-success">View Details</a>
+                                                    </td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+   
+    function onQtyChange(apprqty, reqqty, ctr) {
+        if ((Number)(reqqty) < (Number)(apprqty.value)) {
+            alert('Approved Quantity cannot be greater than Requested Quantity.');
+            document.getElementById('txtApproveQty_' + ctr).value = '';
+        }
+        else {
+            $('#Quantity').val(apprqty.value);
+        }
+    }
+
+    function approveRequest(reqid) {
+        //alert("Request ID : " + reqid + "\nQty : " + $('#Quantity').val());
+        var batch = $('#BatchID').find(":selected").text();
+        $.ajax({
+            url: '/FranchiseAdmin/ApproveRequest', type: 'post', dataType: 'json',
+            data: { 'requestID': reqid, 'approveQty': $('#Quantity').val(), 'batch': batch },
+            success: function (data) {
+                $("#divload").css({ 'display': 'none' });
+                window.location.reload();
+            }
+
+        });
+    }
+
+</script>

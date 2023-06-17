@@ -1,0 +1,151 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    ViewBag.Title = "ProductAssociateIncomeReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Payout
+                </a>
+            </li>
+            <li class="active">
+                Daily Income Report
+            </li>
+
+        </ol>
+
+
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("ProductAssociateIncomeReport", "AdminReports", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Income Details
+
+
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-12 table-responsive">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    From Date
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    To Date
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control" })
+                                </div>
+                                <div class="col-lg-3">
+                                    Login ID
+                                    @Html.TextBoxFor(m => m.ToLoginID, new { @class = "form-control" })
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label> Name </label>
+                                        @Html.TextBoxFor(m => m.ToName, new { @class = "form-control"  })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>Status  </label>
+                                        @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.PaidStatus, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <br />
+                                    <input class="btn btn-success" type="submit" value="Search" name="Search" id="btnSearch" />
+                                </div>
+                            </div>
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Date</th>
+                                        <th> LoginID</th>
+                                        <th> Name</th>
+                                        <th>Amount</th>
+                                        <th>Income Type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                            {
+                                if (Model.lsttopupreport != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.lsttopupreport)
+                                    {
+                                    <tr class="text-left">
+                                        <td>@i</td>
+                                        <td>@Item.TransactionDate</td>
+                                        <td>@Item.ToLoginID</td>
+                                        <td>@Item.ToName</td>
+                                        <td>@Item.Amount</td>
+                                        <td>@Item.IncomeType</td>
+                                        <td>@Item.Status</td>
+
+                                    </tr>
+                                        i++;
+                                    }
+
+                                }
+                            }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+
+}
+
+<script src="../..//WebsiteCss/js/jquery.min.js"></script>
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+
+<script>
+
+    $('#FromDate').datepicker({
+       dateFormat: 'dd/mm/yy',
+    });
+
+    $('#ToDate').datepicker({
+       dateFormat: 'dd/mm/yy',
+    });
+
+    function isNumberOrDecimal(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>

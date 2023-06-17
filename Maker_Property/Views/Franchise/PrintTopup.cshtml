@@ -1,0 +1,185 @@
+﻿@model TrustRadhe.Models.Reports
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Tax Invoice</title>
+    <style>
+        table {
+            font-size: 12px;
+            font-family: Calibri;
+        }
+
+            table td {
+                padding: 3px 5px;
+            }
+
+        p {
+            margin: 4px 0;
+        }
+
+        .dark-border td {
+            font-size: 14px;
+        }
+
+        .light-border td {
+            border-bottom: 1px solid #000;
+            font-size: 14px;
+            border-right: 1px solid #000;
+        }
+
+            .light-border td:last-child {
+                border-right: none;
+            }
+    </style>
+</head>
+
+<body>
+    <form action="https://www.graycinherbal.com/PrintPurchaseTaxInnvoice/PrintSaleTaxInnvoice" id="form1" method="post">
+        <table border="1" style="width:100%">
+            <tr>
+                <td colspan="11" style="text-align:center">
+                    <h1>@ViewBag.CompanyName</h1>
+                    <h3>@ViewBag.CompanyAddress</h3>
+                    <h3>Phone : @ViewBag.LandLine</h3>
+                </td>
+                <td colspan="3" style="text-align:right; padding-right:20px">
+                    <img src="~/images/dhara-logo.png" height="150" width="150" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="14" style="text-align:center">
+                    <h3>TAX INVOICE</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    To,<br />
+                    @ViewBag.Name (@ViewBag.Loginid)<br />
+                    @ViewBag.AssociateAddress
+                </td>
+                <td colspan="10">
+                    Invoice No : @ViewBag.OrderNo<br />
+                    Invoice Date : @DateTime.Now.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+            <tr>
+                <td>SNo</td>
+
+                <td colspan="4">Product Name</td>
+                <td colspan="4">HSN Code</td>
+                @*<td colspan="2">Batch No</td>*@
+                <td>SGST</td>
+                <td>CGST</td>
+                <td>IGST</td>
+                <td colspan="2">Qty</td>
+            </tr>
+            @if (Model != null)
+            {
+                if (Model.lsttopupreport != null)
+                {
+                    int i = 1;
+                    foreach (var Item in Model.lsttopupreport)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td colspan="4">@Item.ProductName</td>
+                            <td colspan="4">@Item.HSNCode</td>
+                            @*<td colspan="2">@Item.BatchNo</td>*@
+                            <td>@Item.SGST</td>
+                            <td>@Item.CGST</td>
+                            <td>0</td>
+                            <td colspan="2">@Item.Quantity</td>
+                        </tr>
+                        i++;
+                    }
+                }
+            }
+            <tr>
+                <td colspan="14">
+                    Remarks :
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9"></td>
+                <td colspan="3">Total</td>
+                <td colspan="2">@ViewBag.TotalFinalAmount</td>
+            </tr>
+            <tr>
+                <td rowspan="6" colspan="5">
+                    Tax Summary<br />
+
+                </td>
+                <td colspan="4"></td>
+                <td colspan="3">Less Discount</td>
+                <td colspan="2">0.00</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">Total Sale Value before Tax</td>
+                <td colspan="2">@ViewBag.ValueBeforeTax</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">Added Tax</td>
+                <td colspan="2">@ViewBag.TaxAdded</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">Total Value after Tax</td>
+                <td colspan="2">@ViewBag.TotalFinalAmount</td>
+            </tr>
+            @*<tr>
+                    <td colspan="4"></td>
+                    <td colspan="3">Total Value before Round Off</td>
+                    <td colspan="2">4324.00</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td colspan="3">Round Off</td>
+                    <td colspan="2">0.00</td>
+                </tr>*@
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">
+                    Grand Total :
+                </td>
+                <td colspan="2">
+                    @ViewBag.TotalFinalAmount
+                </td>
+            </tr>
+            <tr>
+                <td colspan="14" style="text-align:right">
+                    Total Value (in Words) : @ViewBag.TotalFinalAmountWords
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    Terms & Conditions :
+                    <ul>
+                        <li>All disputes will be subject to Lucknow jurisdiction</li>
+                        <li>Listed above have been received in order and in saleable condition.</li>
+                        <li>Payment must be made by Cash/ Demand Draft only in favour of Dream Crusher</li>
+                    </ul>
+                </td>
+                <td colspan="5">
+                    <b>Dream Crusher</b>
+                    <br />
+                    Authorised Signatory
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+</body>
+</html>

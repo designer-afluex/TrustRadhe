@@ -1,0 +1,361 @@
+﻿@model TrustRadhe.Models.Franchise
+
+@{
+    ViewBag.Title = "ApproveKitRequest";
+    Layout = "~/Views/Shared/FranchiseMasterLayout.cshtml";
+}
+
+<style>
+    #divload {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background: url("../../images/loader.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+
+    .errortext {
+        border: 1px solid red !important;
+    }
+</style>
+
+<div class="loader" id="divload"></div>
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="clip-home-3"></i>
+                <a href="#">
+                    Kit
+                </a>
+            </li>
+            <li class="active">
+                Approve Kit Request
+            </li>
+        </ol>
+    </div>
+</div>
+
+<br />
+@using (Html.BeginForm("ApproveKitRequest", "FranchiseAdmin", FormMethod.Post, new { @id = "form1", name = "formKYC" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Kit  Request List
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*  @Html.HiddenFor(m => m.Quantity)*@
+                            @if (TempData["KRequestApprovedA"] != null)
+                            {
+                                <div class="@TempData["Class"]">
+                                    @TempData["KRequestApprovedA"]
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Request Code</th>
+                                        <th>Request From</th>
+                                        <th>Kit Name</th>
+                                        <th>Quantity</th>
+                                        <th>Amount</th>
+                                        <th>Payment Mode</th>
+                                        <th>Document</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        if (Model.lstRequest != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var Item in Model.lstRequest)
+                                            {
+                                                <tr class="text-left">
+                                                    <td hidden>@Item.KitID</td>
+                                                    <td hidden>@Item.PK_FranchiseID</td>
+                                                    <td hidden>@Item.LoginID</td>
+                                                    <td>@i</td>
+                                                    <td>@Item.RequestCode</td>
+                                                    <td>@Item.RequestFrom</td>
+                                                    <td>@Item.KitName</td>
+                                                    <td>@Item.Quantity</td>
+                                                    <td>@Item.TotalAmount</td>
+                                                    <td>@Item.PaymentMode</td>
+                                                    <td><a href="../../@Item.RequestImage" target="_blank"><img src="../../@Item.RequestImage" style="height:50px;width:50px" /></a></td>
+                                                    <td>
+                                                        @*<a class="btn btn-sm btn-success" href="/ApproveKitRequest.aspx?fid=@Item.PK_FranchiseID&kid=@Item.KitID&rid=@Item.RequestID&lid=@Item.LoginID&rqty=@Item.Quantity">Approve</a>*@
+                                                        <a class="btn btn-sm btn-success" href="/FranchiseAdmin/KitRequestDetails?fid=@Item.PK_FranchiseID&kid=@Item.EncryptKitID&rid=@Item.EncryptRequestID&lid=@Item.EncryptLoginID&rqty=@Item.EncryptRequestQty">Approve</a>
+                                                        @*<input type="button" class="btn btn-sm btn-success" value="Approve" onclick="openCancelPopup('@Item.RequestID','@Item.KitID','@Item.LoginID','@Item.PK_FranchiseID','@Item.Quantity');" />*@
+                                                    </td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <!-- Popup for Cancel Remark -->
+    <div class="modal fade" id="myModal" role="dialog" style="display: none">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">&times;</button>
+                    <h4 class="modal-title" style="color: red">Approve</h4>
+                </div>
+                <div class="modal-body" style="color: black">
+                    <div class="row">
+                        <div class="col-md-4">
+                            Requested Qty
+                            @Html.TextBoxFor(m => m.ApprovedQuantity, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                Batch &nbsp;<span style="color:red">*</span>
+                                @Html.DropDownListFor(m => m.BatchID, new SelectList(ViewBag.ddlBatch, "Value", "Text"), new { @class = "form-control", @onchange = "return GetAmt();" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                Quantity &nbsp;<span style="color:red">*</span>
+                                @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "Quantity", @onchange = "return GetAmt(this);" })
+                                @Html.HiddenFor(m => m.RequestID)
+                                @Html.HiddenFor(m => m.KitID)
+                                @Html.HiddenFor(m => m.LoginID)
+                                <input type="hidden" id="hdqty" />
+                                <input type="hidden" id="hdreqqty" />
+                                <input type="hidden" id="hdkitid" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Stock</th>
+                                    <th>Quantity </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblData"></tbody>
+                        </table>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-sm btn-success pull-right" onclick="return approveRequest()" value="Approve" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal();">Close</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <!-- Popup for Cancel Remark -->
+}
+
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+    });
+
+    function GetDetails() {
+        //$("#divload").css({ 'display': '' });
+        var fid = $('#PK_FranchiseID').val();
+        var kitid = $('#KitID').val();
+        $.ajax({
+            url: '/FranchiseAdmin/GetProductByKit', type: 'get', dataType: 'json',
+            data: { 'PK_FranchiseID': fid, 'KitID': kitid },
+            success: function (data) {
+                $("#Total").val(data.Total);
+                //$("#divload").css({ 'display': 'none' });
+                $('#tblData').find("tr:not(:first)").remove();
+                if (data.lstFranchise.length > 0) {
+                    for (var i = 0; i < data.lstFranchise.length; i++) {
+
+                        $("#tblData").append('<tr><td id="ProductName' + i + ' " >' + data.lstFranchise[i].ProductName +
+                        '</td><td id="StockID' + i + ' "  >' + data.lstFranchise[i].StockID +
+                        '</td><td id="Quantity' + i + ' " >' + data.lstFranchise[i].Quantity +
+
+                        '</td></tr>')
+                    }
+                }
+            }
+        });
+    }
+
+    function openCancelPopup(RequestID, KitID, LoginID, PK_FranchiseID, ReqQty) {
+        $("#RequestID").val(RequestID);
+        $("#KitID").val(KitID);
+        $("#LoginID").val(LoginID);
+        document.getElementById('hdreqqty').value = ReqQty;
+        document.getElementById('hdkitid').value = KitID;
+        $("#ApprovedQuantity").val(ReqQty);
+
+        $("#myModal").modal('show');
+
+        $.ajax({
+            url: '/FranchiseAdmin/GetProductByKit', type: 'get', dataType: 'json',
+            data: { 'PK_FranchiseID': PK_FranchiseID, 'KitID': KitID },
+            success: function (data) {
+                $("#Total").val(data.Total);
+                //$("#divload").css({ 'display': 'none' });
+                $('#tblData').find("tr:not(:first)").remove();
+                if (data.lstFranchise.length > 0) {
+                    for (var i = 0; i < data.lstFranchise.length; i++) {
+
+                        $("#tblData").append('<tr><td id="ProductName' + i + ' " >' + data.lstFranchise[i].ProductName +
+                        '</td><td id="StockID' + i + ' "  >' + data.lstFranchise[i].StockID +
+                        '</td><td id="Quantity' + i + ' " >' + data.lstFranchise[i].Quantity +
+                        '</td></tr>')
+                    }
+                }
+            }
+        });
+    }
+
+    function closeModal() {
+        $("#myModal").hide();
+        //$('body').removeClass().removeAttr('style'); $('.modal-backdrop').remove();
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function onQtyChange(apprqty, reqqty, ctr) {
+        if ((Number)(reqqty) < (Number)(apprqty.value)) {
+            alert('Approved Quantity cannot be greater than Requested Quantity.');
+            document.getElementById('txtApproveQty_' + ctr).value = '';
+        }
+        else {
+            $('#Quantity').val(apprqty.value);
+        }
+    }
+
+    function approveRequest(reqid) {
+        if ($('#BatchID').val() == '0') {
+            $("#BatchID").addClass('errortext');
+            $('#BatchID').focus();
+            return false;
+        }
+        if ($('#Quantity').val() == '') {
+            $("#Quantity").addClass('errortext');
+            $('#Quantity').focus();
+            return false;
+        }
+
+        $.ajax({
+            url: '/FranchiseAdmin/ApproveRequestKit', type: 'post', dataType: 'json',
+            data: {
+                'requestID': $('#RequestID').val(), 'approveQty': document.getElementById('hdqty').value, 'loginid': $('#LoginID').val(),
+                'kitid': $('#KitID').val(), 'batch': $('#BatchID').find(":selected").text()
+            },
+            success: function (data) {
+                if (data.Result == "3") {
+                    alert("Insufficient Stock");
+                    $("#myModal").hide();
+                }
+                //   $("#divload").css({ 'display': 'none' });
+                window.location.reload();
+            }
+
+        });
+    }
+
+    function GetAmt(i) {
+        if ($("#Quantity").val() != "") {
+
+            var reqQty = document.getElementById('hdreqqty').value;
+            var kitid = document.getElementById('hdkitid').value;
+
+            var kitamt = $("#Total").val();
+            //var qty = i.value;
+            var qty = $("#Quantity").val();
+            document.getElementById('hdqty').value = $("#Quantity").val();
+            //    var batch = $("#BatchID").val();
+            var batch = $('#BatchID').find(":selected").text();
+
+            if ((Number)(qty) > (Number)(reqQty)) {
+                alert("Cannot be greater than requested quantity");
+                //    $("#Quantity").val('');
+                i.value = "";
+                return false;
+            }
+
+            else {
+                var tr = [];
+
+                $.ajax({
+                    url: '/FranchiseAdmin/CheckStock', type: 'get', dataType: 'json',
+                    data: { 'Quantity': qty, 'KitID': kitid, 'BatchID': batch },
+                    success: function (data) {
+                        var j = 1;
+                        $('#tblData').empty();
+                        for (var i = 0; i < data.lstFranchise.length; i++) {
+                            tr.push('<tr>');
+
+                            tr.push("<td>" + data.lstFranchise[i].ProductName + "</td>");
+                            tr.push("<td>" + data.lstFranchise[i].StockID + "</td>");
+                            tr.push("<td>" + data.lstFranchise[i].Quantity + "</td>");
+                            tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].StockID + "' id='StockID " + i + "' name='StockID " + i + "'></td>");
+                            tr.push("<td style='display:none'><input type='hidden' value='" + data.lstFranchise[i].Quantity + "' id='Quantity " + i + "' name='Quantity " + i + "'></td>");
+                            tr.push('</tr>');
+                            j++;
+
+                        }
+                        tr.push('<tr style="display:none">');
+                        tr.push("<td><input type='hidden' value='" + j + "' id='hdRows' name='hdRows'></td>");
+                        tr.push('</tr>');
+                        $('#tblData').append($(tr.join('')));
+                        ////$("#divload").css({ 'display': 'none' });
+                        //$('#tblData').find("tr:not(:first)").remove();
+                        //if (data.lstFranchise.length > 0) {
+                        //    for (var i = 0; i < data.lstFranchise.length; i++) {
+
+                        //        $("#tblData").append('<tr><td id="ProductName' + i + ' " >' + data.lstFranchise[i].ProductName +
+                        //        '</td><td name="StockID" id="StockID' + i + ' "  >' + data.lstFranchise[i].StockID +
+                        //        '</td><td name="Quantity" id="Quantity' + i + ' " >' + data.lstFranchise[i].Quantity +
+                        //        '</td></tr>')
+                        //    }
+
+                        //    '<tr><td><input type="hidden" name="hdRows" id="hdRows' + ' value=' + i + '/></td></tr>';
+                        //}
+                    }
+                });
+            }
+
+        }
+    }
+
+</script>

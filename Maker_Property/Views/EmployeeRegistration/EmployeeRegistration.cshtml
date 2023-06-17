@@ -1,0 +1,271 @@
+﻿@model TrustRadhe.Models.EmployeeRegistrations
+
+@{
+    ViewBag.Title = "EmployeeRegistration";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("EmployeeRegistration", "EmployeeRegistration", FormMethod.Post, new { @id = "form1" }))
+{
+
+    <!--app-content open-->
+    <div class="app-content">
+        <div class="side-app">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Permission</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminDashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee Registration</li>
+                    </ol>
+                </div>
+                <div class="ms-auto pageheader-btn">
+                    <a href="/EmployeeRegistration/EmployeeDetails" class="btn btn-primary btn-icon text-white me-2">
+                        <span>
+                            <i class="fe fe-arrow-left"></i>
+                        </span> Back To List
+                    </a>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span style="color: red">
+                                @TempData["Product"]
+                            </span>
+                            <h3 class="card-title">Employee Registration</h3>
+                            <div class="card-options">
+                                <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                <a href="#" class="card-options-fullscreen" data-bs-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                                <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">User Type <span style="color: red">*</span></label>
+                                    @Html.DropDownListFor(m => m.Fk_UserTypeId, new SelectList(ViewBag.ddlUserType, "Value", "Text"), new { @class = "select2 form-select form -control"})
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Name <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Mobile No. <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @MaxLength = "10", @onkeypress = "return isNumberKey(event);" })
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Email <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Onchange = "checkEmail();" })
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Qualification <span style="color: red">*</span></label>
+                                    @Html.TextBoxFor(m => m.EducationQualififcation, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4 mb-3 mt-2">
+                                    <a class="btn btn-primary" value="Register" onclick="filldata()">Register</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+                    @*<div class="row">
+                            <div class="col-sm-12">
+
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <i class="clip-home-3"></i>
+                                        <a href="#">
+                                            Permission
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        Employee Registration
+                                    </li>
+
+                                </ol>
+
+
+                            </div>
+                        </div>
+                        <br />*@
+                    <!-- /.row -->
+
+    /*@TempData["EmployeeRegistration"]*/
+    @*<div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Employee Registration
+
+
+                    </div>
+                     /.panel-heading
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">User Type <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.DropDownListFor(m => m.Fk_UserTypeId, new SelectList(ViewBag.ddlUserType, "Value", "Text"), new { @class = "form-control" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Name <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.Name, new { @class = "form-control" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Mobile No <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @/*MaxLength*/ = "10", @/*onkeypress*/ = "return isNumberKey(event);" })*/
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Email Id <span style="color: red">*</span></label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.Email, new { @class = "form-control", @/*Onchange*/ = "checkEmail();" })*/
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Qualification </label>
+                                    <div class="col-sm-9">
+                                        @/*Html.TextBoxFor(m => m.EducationQualififcation, new { @class = "form-control" })*/
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="btn btn-success" value="Register" onclick="filldata()">Register</a>
+                                &nbsp;
+                                <a class="btn btn-primary" href="/EmployeeRegistration/EmployeeDetails">Back To List</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+}
+
+
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>
+<script type="text/javascript">
+
+
+    function isNumberKey(evt) {
+        debugger;
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function checkEmail() {
+        debugger;
+
+        if (($("#Email").val() != "")) {
+            if ($("#Email").val()) {
+
+                var email = document.getElementById('Email');
+                var filter = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+
+                if (!filter.test($("#Email").val())) {
+                    alert('Please provide a valid email address');
+                    $("#Email").val('');
+                    $("#Email").focus();
+                    return false;
+                }
+
+
+
+            }
+
+        }
+
+    }
+    function filldata() {
+        debugger;
+
+        var Fk_UserTypeId = $("#Fk_UserTypeId option:selected").val();
+        $(".errortext").removeClass("errortext");
+        if ($("#Fk_UserTypeId").val() == "") {
+            $("#Fk_UserTypeId").addClass('errortext');
+            $("#Fk_UserTypeId").focus();
+            return false;
+        }
+        if ($("#Name").val() == "") {
+            $("#Name").addClass('errortext');
+            $("#Name").focus();
+            return false;
+        }
+
+        if ($("#Mobile").val() == "") {
+            $("#Mobile").addClass('errortext');
+            $("#Mobile").focus();
+            return false;
+        }
+
+
+        if ($("#Email").val() == "") {
+            $("#Email").addClass('errortext');
+            $("#Email").focus();
+            return false;
+        }
+        $.ajax({
+            url: '/EmployeeRegistration/SaveEmployeeRegistration',
+            type: "GET",
+            dataType: "JSON",
+            data: { Name: $("#Name").val(), Mobile: $("#Mobile").val(), Email: $("#Email").val(), Qualification: $("#EducationQualififcation").val(), Fk_UserTypeId: Fk_UserTypeId },
+            success: function (data) {
+                debugger;
+                if (data) {
+
+                    debugger;
+                    $('#Name').html("");
+                    $('#Mobile').html("");
+                    $('#Email').html("");
+
+                    alert(data.Message);
+                    var url = '@Url.Action("EmployeeDetails", "EmployeeRegistration")';
+                    window.location.href = url;
+                }
+
+            }
+        });
+
+    }
+</script>
+
+
