@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitySafalata</RootNamespace>
-    <AssemblyName>UnitySafalata</AssemblyName>
+    <RootNamespace>TrustRadhe</RootNamespace>
+    <AssemblyName>TrustRadhe</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -3551,7 +3551,7 @@
     <Content Include="admin_css\plugins\summernote\font\summernotec360.ttf" />
     <Content Include="admin_css\plugins\summernote\font\summernotec360.woff" />
     <None Include="Properties\PublishProfiles\DreamCrusher.pubxml" />
-    <None Include="Properties\PublishProfiles\Maker_Property.pubxml" />
+    <None Include="Properties\PublishProfiles\TrustRadhe.pubxml" />
     <None Include="Properties\PublishProfiles\MakeWayReality.pubxml" />
     <None Include="Properties\PublishProfiles\SRK.pubxml" />
     <None Include="Properties\PublishProfiles\TrustRadheNew.pubxml" />
