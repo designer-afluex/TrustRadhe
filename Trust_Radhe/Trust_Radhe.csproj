@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitySafalata</RootNamespace>
-    <AssemblyName>UnitySafalata</AssemblyName>
+    <RootNamespace>TrustRadhe</RootNamespace>
+    <AssemblyName>TrustRadhe</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -3658,11 +3659,11 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Transactions\ActivateUser.cshtml" />
-    <Content Include="Views\Transactions\DistributePayment.cshtml" />
-    <Content Include="Views\Transactions\EwalletDeduction.cshtml" />
-    <Content Include="Views\Transactions\PayoutDeduction.cshtml" />
-    <Content Include="Views\Transactions\UpdateMemberLogin.cshtml" />
+    <Content Include="Views\Shared\Transactions\ActivateUser.cshtml" />
+    <Content Include="Views\Shared\Transactions\DistributePayment.cshtml" />
+    <Content Include="Views\Shared\Transactions\EwalletDeduction.cshtml" />
+    <Content Include="Views\Shared\Transactions\PayoutDeduction.cshtml" />
+    <Content Include="Views\Shared\Transactions\UpdateMemberLogin.cshtml" />
     <Content Include="Views\User\AssociateDashBoard.cshtml" />
     <Content Include="Views\User\BinaryTree.cshtml" />
     <Content Include="Views\User\ConfirmRegistration.cshtml" />
@@ -3916,7 +3917,7 @@
     <Content Include="Views\AdminReports\ProductPayoutDetails.cshtml" />
     <Content Include="Views\AdminReports\ProductAssociateIncomeReport.cshtml" />
     <Content Include="Views\AdminReports\ProductPayoutReceipt.cshtml" />
-    <Content Include="Views\Transactions\ProductDistributePayment.cshtml" />
+    <Content Include="Views\Shared\Transactions\ProductDistributePayment.cshtml" />
     <Content Include="Views\AdminReports\ProductBusinessReport.cshtml" />
     <Content Include="Views\UserReports\UnPaidProductIncomes.cshtml" />
     <Content Include="Views\UserReports\ProductPayoutReport.cshtml" />

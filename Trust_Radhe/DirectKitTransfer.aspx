@@ -110,7 +110,7 @@
                                             <div class="col-lg-3">
                                                 <div class="form-group">
                                                     Payment Mode
-                                            <asp:DropDownList ID="ddlPaymentMode" runat="server" CssClass="form-control" onchange="return testChange();">
+                                             <asp:DropDownList ID="ddlPaymentMode" runat="server" CssClass="form-control" onchange="return testChange();">
                                                 <asp:ListItem Value="0" Text="Select Payment Mode"></asp:ListItem>
                                                 <asp:ListItem Value="Cash" Text="Cash"></asp:ListItem>
                                                 <asp:ListItem Value="Cheque" Text="Cheque"></asp:ListItem>
@@ -182,7 +182,6 @@
                     if (data.Result == "yes") {
                         $("#txtFranchiseName").val(data.FranchiseName);
                         $("#hdFranchiseID").val(data.PK_FranchiseID);
-
                     }
                     else {
                         $("#txtLoginID").val('');
@@ -275,5 +274,4 @@
 
     </script>
 </body>
-
 </html>

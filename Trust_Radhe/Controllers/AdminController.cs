@@ -75,10 +75,8 @@ namespace TrustRadhe.Controllers
                     obj.BankName = r["MemberBankName"].ToString();
                     obj.PancardImage = (r["PanImage"].ToString());
                     obj.Pancard = r["PanNumber"].ToString();
-
                     obj.passportNo = r["DocumentNumber"].ToString();
                     obj.PassportImage = r["DocumentImage"].ToString();
-
                     obj.MemberAccNo = r["MemberAccNo"].ToString();
                     obj.BankName = r["MemberBankName"].ToString();
                     obj.BankBranch = r["DocumentNumber"].ToString();
