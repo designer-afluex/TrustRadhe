@@ -535,10 +535,10 @@
                                                                 <div class="form-group col-md-2">
                                                                     <img alt="image" src="/WebsiteCss/images/SRK_Logo.png" style="width: 50px; height: 50px">
                                                                 </div>
+
                                                                 <div class="form-group col-md-8 text-center">
                                                                     <button type="button" class="next-tree" onclick='ClickHere(this)'>
                                                                         <a style="width: 100%; height: 50%; background-color: white;" title="Go Down" class="clip-tree"></a>
-
                                                                     </button>
                                                                     <div class="media-body text-center">
                                                                         <h3 class="mb-0 text-center" id="lblDisplayName">@ViewBag.Fk_UserId</h3>
@@ -548,13 +548,15 @@
                                                                         <p class="mb-0" id="lblstatus"></p>
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="form-group col-md-2">
                                                                     <br />
                                                                     <button type="button" id="close">&times;</button>
                                                                     <img src="../../images/treeicon.jpg" id="userimage" style="width: 50px; height: 50px;border:1px solid" />
-
                                                                 </div>
+
                                                                 <div class="row">
+                                                                   
                                                                     <div class="col-lg-12">
                                                                         <div class="divTable"  style="width: 100%;border: 1px solid #000;">
                                                                             <div class="divTableBody">
@@ -603,7 +605,7 @@
 
                                                                                 </div>
                                                                                 <div class="divTableRow">
-                                                                                    <div class="divTableCell">Spill Details</div>
+                                                                                    <div class="divTableCell">Business  Details</div>
                                                                                     <div data-title="ID" class="LeftBusinessvol divTableCell">0</div>
                                                                                     <div data-title="ID" class="RightBusinessvol divTableCell">0</div>
                                                                                     <div data-title="ID" class="TotalBusinessvol divTableCell">0</div>
@@ -699,7 +701,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -708,17 +709,10 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
 <input type="hidden" id="firtsMemberID" value="@ViewBag.Fk_UserId" />
 
 <script src="../../vendor/jquery/jquery.min.js"></script>
+
 <script type="text/javascript">
     var winHeight = $(window).height();
     var winWidth = $(window).width();
@@ -828,9 +822,7 @@
         else {
         }
         $('#' + obj.id).removeAttr("data-bs-content", $("#member-details").html());
-
     }
-
     if (winWidth > 998) {
         $("#chart").on("mouseover", function () {
             // $("#member-details").addClass('active');
@@ -966,9 +958,6 @@
 
             }
             else {
-
-
-
                 var $child = "";
                 var level = 0;
                 $.each(response, function (i, k) {
@@ -1250,8 +1239,8 @@
                                                                             child = " <li id='level" + i + i1 + i2 + "'><a data-bs-toggle='popover' id='levelLink" + i + i1 + i2 + "' href='" + item3.Href + "' class='from " + cssclass + "' " +
                                                                                         " onmouseover='openPopup(this," + '"' + item3.SponsorId + '"' + "," + '"' + cssclaa + '"' + "," + item3.Fk_UserId + "," + '"' + item3.LoginId + '"' + ", " + '"' + item3.MemberName + '"' + "," + '"' + item3.Leg + '"' + "," + '"' + item3.ParentLoginId + '"' + "," + '"' + item3.JoiningDate + '"' + "," + '"' + item3.ProductName + '"' + "," + '"' + item3.AllLeg1 + '"' + "," + '"' + item3.AllLeg2 + '"' + "," + '"' + item3.PermanentLeg1 + '"' + "," + '"' + item3.PermanentLeg2 + '"' + "," + '"' + item3.InactiveLeft + '"' + "," + '"' + item3.InactiveRight + '"' + "," + '"' + item3.PCountLeg1 + '"' + "," + '"' + item3.PCountLeg2 + '"' + "," + '"' + item3.PaidLeg1 + '"' + "," + '"' + item3.PaidLeg2 + '"' + "," + '"' + item3.BalanceLeft + '"' + "," + '"' + item3.BalanceRight + '"' + "," + '"' + item3.ProfilePic + '"' + "," + '"' + item3.ActivationDate + '"' + "," + '"' + item3.AllBusinessLeft + '"' + "," + '"' + item3.AllBusinessRight + '"' + "," + '"' + item3.ProductRightBusiness + '"' + "," + '"' + item3.ProductLeftBusiness + '"' + ")' " +
                                                                                        " onmouseout='closePopup(this)' href='#' " + clickOption + ">" +
-                                                                                       "<div class='outer-ring " + cssclass + "'><div class='member-img " + cssclass + "'><i class='" + cssclass + "'></i></div></div><span class='name member-name'>" +
-                                                                                       " " + item3.LoginId + "</span> <span class='member-join-time'> " + item3.MemberName + "</span>" +
+                                                                                       "<div class='outer-ring " +cssclass + "'><div class='member-img " + cssclass + "'><i class='" + cssclass + "'></i></div></div><span class='name member-name'>" +
+                                                                                       " " + item3.LoginId + "</span> <span class='member-join-time'>" + item3.MemberName + "</span>" +
                                                                                        "<input type='hidden' id='" + item3.Fk_UserId + "' value='" + item3.Fk_UserId + "' />" +
                                                                                        "</a></li>";
                                                                         }
@@ -1416,7 +1405,6 @@
                 }
             });
             $("#linkGoUp").attr("readonly", false);
-
         }
 
     }

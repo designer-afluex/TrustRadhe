@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="validationCustom01">Package <span style="color: red">*</span></label>
-                                    @Html.DropDownListFor(m => m.Package, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "select2 form-select form-control" })
+                                    @Html.DropDownListFor(m => m.Package, new SelectList(ViewBag.ddlProduct, "Value", "Text"), new { @class = "select2 form-select form-control", @onchange = "return FillAmount();" })
 
                                 </div>
                                 <div class="col-md-4 mb-3">
@@ -261,7 +261,7 @@
     function FillAmount() {
         //$("#Fk_CityId").empty();
         var Productid = "";
-
+        debugger;
         Productid = $('#Package').val();
         if (Productid == "4") {
 
