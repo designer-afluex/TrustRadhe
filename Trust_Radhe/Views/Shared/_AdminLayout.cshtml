@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <!-- META DATA -->
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <!-- FAVICON -->
+    <link rel="shortcut icon" type="image/x-icon" href="/WebsiteCss/images/favicon_icon.png" />
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="/admin_css/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- STYLE CSS -->
+    <link href="/admin_css/css/style.css" rel="stylesheet" />
+    <link href="/admin_css/css/dark-style.css" rel="stylesheet" />
+    <link href="/admin_css/css/skin-modes.css" rel="stylesheet" />
+    <!-- SELECT2 CSS -->
+    <link href="/admin_css/plugins/select2/select2.min.css" rel="stylesheet" />
+    <!-- SIDE-MENU CSS -->
+    <link href="/admin_css/css/sidemenu.css" rel="stylesheet" id="sidemenu-theme">
+
+    <!--C3 CHARTS CSS -->
+    <link href="/admin_css/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+
+    <!-- P-scroll bar css-->
+    <link href="/admin_css/plugins/p-scroll/perfect-scrollbar.css" rel="stylesheet" />
+
+    <!--- FONT-ICONS CSS -->
+    <link href="/admin_css/plugins/icons/icons.css" rel="stylesheet" />
+
+    <!-- SIDEBAR CSS -->
+    <link href="/admin_css/plugins/sidebar/sidebar.css" rel="stylesheet" />
+
+
+    <!-- SELECT2 CSS -->
+    <link href="/admin_css/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <!-- DATA TABLE CSS -->
+    <link href="/admin_css/plugins/datatable/css/dataTables.bootstrap5.css" rel="stylesheet" />
+    <link href="/admin_css/plugins/datatable/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="/admin_css/plugins/datatable/responsive.bootstrap5.css" rel="stylesheet" />
+
+
+    <!-- COLOR SKIN CSS -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="/admin_css/colors/color1.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+
+
+<body class="app sidebar-mini">
+    <!-- GLOBAL-LOADER -->
+    <div id="global-loader">
+        <img src="/admin_css/images/loader.svg" class="loader-img" alt="Loader">
+    </div>
+    <!-- /GLOBAL-LOADER -->
+    <!-- PAGE -->
+    <div class="page">
+        <div class="page-main">
+            <!--APP-SIDEBAR-->
+            <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+            <aside class="app-sidebar">
+                <div class="side-header">
+                    <a class="header-brand1" href="/Admin/AdminDashBoard">
+                        <img src="/WebsiteCss/images/favicon_icon.png" class="header-brand-img light-logo mt-3" alt="logo">
+                        <img src="../WebsiteCss/images/radhekunj_logo.png" class="header-brand-img light-logo1" alt="logo">
+                    </a><!-- LOGO -->
+                </div>
+                <div class="main-sidebar-loggedin">
+                 <div class="app-sidebar__user"> 
+                    <div class="dropdown user-pro-body text-center">
+                      <div class="user-pic"> 
+                        <img src="/admin_css/images/users/8.jpg" alt="user-img" class="rounded-circle mCS_img_loaded">
+                         </div> 
+                     <div class="user-info mb-4">
+                         <h6 class="mb-0 text-dark text-capitalize">@Session["Name"]</h6>
+                        </div> 
+                     </div> 
+                    </div>
+                 </div>
+                @{
+                    Html.RenderAction("Menu", "Home", new { area = "" });
+                }
+
+            </aside>
+            <!--/APP-SIDEBAR-->
+            <!-- Mobile Header -->
+            <div class="app-header header">
+                <div class="container-fluid">
+                    <div class="d-flex">
+                        <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
+                        <a class="header-brand1 d-flex d-md-none" href="">
+                            <img src="/admin_css/images/brand/logo-2.png" class="header-brand-img light-logo" alt="logo">
+                            <img src="../WebsiteCss/images/radhekunj_logo.png" class="header-brand-img light-logo1" alt="logo">
+                        </a><!-- LOGO -->
+                        <div class="d-flex order-lg-2 ms-auto header-right-icons">
+                            <button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon fe fe-more-vertical text-dark"></span>
+                            </button>
+                            <div class="dropdown d-none d-md-flex">
+                                <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                                    <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
+                                    <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
+                                </a>
+                            </div><!-- Theme-Layout -->
+                            <div class="dropdown d-none d-md-flex">
+                                <a class="nav-link icon full-screen-link nav-link-bg">
+                                    <i class="fe fe-minimize fullscreen-button"></i>
+                                </a>
+                            </div><!-- FULL-SCREEN -->
+                            <div class="dropdown d-none d-md-flex profile-1">
+                                <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
+                                    <span>
+                                        <img src="/admin_css/images/users/8.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <div class="drop-heading">
+                                        <div class="text-center">
+                                            <h5 class="text-dark mb-0 text-capitalize">@Session["Name"]</h5>
+                                        </div>
+                                    </div>
+                                    <a class="dropdown-item" href="/Home/Login">
+                                        <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-1 navbar navbar-expand-lg responsive-navbar navbar-dark d-md-none bg-white">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                    <div class="d-flex order-lg-2 ms-auto">
+                        <div class="dropdown d-md-flex">
+                            <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                                <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
+                                <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
+                            </a>
+                        </div><!-- Theme-Layout -->
+                        <div class="dropdown d-md-flex">
+                            <a class="nav-link icon full-screen-link nav-link-bg">
+                                <i class="fe fe-minimize fullscreen-button"></i>
+                            </a>
+                        </div><!-- FULL-SCREEN -->
+                        <div class="dropdown d-md-flex profile-1">
+                            <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
+                                <span>
+                                    <img src="/admin_css/images/users/8.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <div class="drop-heading">
+                                    <div class="text-center">
+                                        <h5 class="text-dark mb-0">@Session["FullName"]</h5>
+                                        <small class="text-muted">Admin</small>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="/Home/Login">
+                                    <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                </a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Mobile Header -->
+        </div>
+        <!--app-content open-->
+                @RenderBody()
+                <!-- FOOTER -->
+                <footer class="footer">
+                    <div class="container">
+                        <div class="row align-items-center flex-row-reverse">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                Copyright © 2023 <a href="/Admin/AdminDashboard">Trust Radhe</a>. Designed and 
+                                developed by <a href="https://afluex.com/" target="blank"> Afluex Multiservices LLP | </a> All rights reserved
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- FOOTER CLOSED -->
+            </div>
+        </div>
+            
+            <!-- JQUERY JS -->
+            <script src="/admin_css/plugins/jquery/jquery.min.js"></script>
+
+            <!-- BOOTSTRAP JS -->
+            <script src="/admin_css/plugins/bootstrap/js/popper.min.js"></script>
+            <script src="/admin_css/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+            <!-- INPUT MASK JS-->
+            <script src="/admin_css/plugins/input-mask/jquery.mask.min.js"></script>
+
+            <!-- SIDE-MENU JS -->
+            <script src="/admin_css/plugins/sidemenu/sidemenu.js"></script>
+
+            <!-- SIDEBAR JS -->
+            <script src="/admin_css/plugins/sidebar/sidebar.js"></script>
+
+            <!-- Perfect SCROLLBAR JS--
+            <script src="/admin_css/plugins/p-scroll/perfect-scrollbar.js"></script>
+            <script src="/admin_css/plugins/p-scroll/pscroll.js"></script>
+            <script src="/admin_css/plugins/p-scroll/pscroll-1.js"></script>
+
+
+            <!-- CHARTJS CHART JS-->
+            <script src="/admin_css/plugins/chart/Chart.bundle.js"></script>
+            <script src="/admin_css/plugins/chart/utils.js"></script>
+
+            <!-- PIETY CHART JS-->
+            <script src="/admin_css/plugins/peitychart/jquery.peity.min.js"></script>
+            <script src="/admin_css/plugins/peitychart/peitychart.init.js"></script>
+
+            <!-- INTERNAL SELECT2 JS -->
+            <script src="/admin_css/plugins/select2/select2.full.min.js"></script>
+    <!-- MULTI SELECT JS-->
+    <script src="/admin_css/plugins/multipleselect/multiple-select.js"></script>
+    <script src="/admin_css/plugins/multipleselect/multi-select.js"></script>
+
+        <!-- DATA TABLE JS-->
+        <script src="/admin_css/plugins/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="/admin_css/plugins/datatable/js/dataTables.bootstrap5.js"></script>
+        @*<script src="/admin_css/plugins/datatable/js/buttons.bootstrap5.min.js"></script>*@
+        <script src="/admin_css/plugins/datatable/dataTables.responsive.min.js"></script>
+        <script src="/admin_css/plugins/datatable/responsive.bootstrap5.min.js"></script>
+        <script src="/admin_css/js/table-data.js"></script>
+            <!-- INDEX JS -->
+            <script src="/admin_css/js/index1.js"></script>
+            <!-- CUSTOM JS-->
+            <script src="/admin_css/js/custom.js"></script>
+
+            <script>
+                jQuery(document).ready(function () {
+                    Main.init();
+                    Index.init();
+                });
+            </script>
+</body>
+
+</html>
+
+
+

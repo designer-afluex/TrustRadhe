@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitySafalata</RootNamespace>
-    <AssemblyName>UnitySafalata</AssemblyName>
+    <RootNamespace>TrustRadhe</RootNamespace>
+    <AssemblyName>TrustRadhe</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -3142,13 +3143,14 @@
     <Content Include="images\RewardImages\AMBASSADOR.jpg" />
     <Content Include="images\RewardImages\BLUEDIAMOND.jpg" />
     <Content Include="images\RewardImages\CROWNDIAMOND.jpg" />
-    <Content Include="images\RewardImages\DIAMOND.jpg" />
-    <Content Include="images\RewardImages\EMERALD.jpg" />
+    <Content Include="images\RewardImages\Diamond.jpg" />
+    <Content Include="images\RewardImages\Emerald.jpg" />
     <Content Include="images\RewardImages\footerlogo.png" />
-    <Content Include="images\RewardImages\Gold.jpg" />
+    <Content Include="images\RewardImages\gold.jpg" />
+    <Content Include="images\RewardImages\Pearl.jpg" />
     <Content Include="images\RewardImages\PLATINUM.jpg" />
     <Content Include="images\RewardImages\ROYALDIAMOND.jpg" />
-    <Content Include="images\RewardImages\Silver.jpg" />
+    <Content Include="images\RewardImages\silver.jpg" />
     <Content Include="images\RewardImages\Star.jpg" />
     <Content Include="images\search-icon.png" />
     <Content Include="images\Success.jpg" />
@@ -3551,7 +3553,7 @@
     <Content Include="admin_css\plugins\summernote\font\summernotec360.ttf" />
     <Content Include="admin_css\plugins\summernote\font\summernotec360.woff" />
     <None Include="Properties\PublishProfiles\DreamCrusher.pubxml" />
-    <None Include="Properties\PublishProfiles\Maker_Property.pubxml" />
+    <None Include="Properties\PublishProfiles\TrustRadhe.pubxml" />
     <None Include="Properties\PublishProfiles\MakeWayReality.pubxml" />
     <None Include="Properties\PublishProfiles\SRK.pubxml" />
     <None Include="Properties\PublishProfiles\TrustRadheNew.pubxml" />
@@ -3704,6 +3706,7 @@
   <ItemGroup>
     <Compile Include="ApproveKitRequest.aspx.cs">
       <DependentUpon>ApproveKitRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ApproveKitRequest.aspx.designer.cs">
       <DependentUpon>ApproveKitRequest.aspx</DependentUpon>
@@ -3738,6 +3741,7 @@
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="DirectKitTransfer.aspx.cs">
       <DependentUpon>DirectKitTransfer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DirectKitTransfer.aspx.designer.cs">
       <DependentUpon>DirectKitTransfer.aspx</DependentUpon>
@@ -3779,6 +3783,7 @@
     <Compile Include="Models\Wallet.cs" />
     <Compile Include="Models\WebService\AgentServices.asmx.cs">
       <DependentUpon>AgentServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
