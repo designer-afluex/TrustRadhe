@@ -298,7 +298,6 @@ namespace TrustRadhe.Controllers
                     obj.DirectIncome = r["DirectIncome"].ToString();
                     obj.GrossIncome = (r["GrossIncome"].ToString());
                     obj.TDS = (r["TDS"].ToString());
-                    obj.Processing = (r["Processing"].ToString());
                     obj.NetIncome = (r["NetIncome"].ToString());
 
                     obj.LeadershipBonus = r["DirectLeaderShipBonus"].ToString();

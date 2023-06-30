@@ -215,7 +215,7 @@ namespace TrustRadhe.Models
                                       new SqlParameter("@DDChequeDate", DDChequeDate) ,
                                       new SqlParameter("@BankBranch", BankBranch) ,
 									  new SqlParameter("@BankName", BankName),
-                                    new SqlParameter("@PlotNumber", PlotNumber),
+                                    //new SqlParameter("@PlotNumber", PlotNumber),
                                     new SqlParameter("@Description", Description) };
             DataSet ds = DBHelper.ExecuteQuery("TopUpByAdmin", para);
             return ds;

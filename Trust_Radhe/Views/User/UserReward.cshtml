@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <div class="section-header-breadcrumb-content">
-                            <h1>Recognition</h1>
+                            <h1>Level Achiever</h1>
                         </div>
                     </div>
 
@@ -35,7 +35,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th>S No.</th>
-                                                            <th>Recognition Badge</th>
+                                                            <th>Level Badge</th>
+                                                            <th>Target</th>
                                                             <th>Status</th>
                                                             <th hidden="hidden">Qualify Date</th>
                                                             <th hidden="hidden">Action</th>
@@ -55,6 +56,7 @@
                                                                             <img src="@Item.RewardImage" height="100" width="100" />
                                                                             <br />@Item.RewardName
                                                                         </td>
+                                                                        <td>@Item.Target Pair</td>
                                                                         <td><label class="@Item.Contact">@Item.Status</label></td>
                                                                         <td hidden="hidden">@Item.QualifyDate</td>
                                                                         <td hidden="hidden">

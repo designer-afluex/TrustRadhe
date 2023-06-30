@@ -80,6 +80,7 @@ namespace TrustRadhe.Controllers
                 {
                     if (ds.Tables[0].Rows[0]["Msg"].ToString() == "1")
                     {
+                        obj.Result = "Yes";
                         TempData["Topup"] = "TopUp Done successfully";
                     }
                     else

@@ -474,6 +474,7 @@ namespace TrustRadhe.Controllers
                     Reports obj = new Reports();
 
                     obj.Status = r["Status"].ToString();
+                    obj.Target = r["Target"].ToString();
                     obj.QualifyDate = r["QualifyDate"].ToString();
                     obj.RewardImage = r["RewardImage"].ToString();
                     obj.RewardName = r["RewardName"].ToString();

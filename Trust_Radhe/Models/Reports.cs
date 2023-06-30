@@ -69,6 +69,7 @@ namespace TrustRadhe.Models
         public string PermanentDate { get; set; }
 
         public string Status { get; set; }
+        public string Target { get; set; }
         public string FromLoginId { get; set; }
 
         public string FromUserName { get; set; }
