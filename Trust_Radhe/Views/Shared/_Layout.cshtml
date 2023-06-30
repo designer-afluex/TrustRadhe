@@ -1,0 +1,498 @@
+﻿<!DOCTYPE html>
+<title>@ViewBag.Title</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>SRK</title>
+    <!-- FAVICON -->
+    <link rel="shortcut icon" type="image/x-icon" href="/WebsiteCss/images/favicon_icon.png" />
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="/admin_css/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- STYLE CSS -->
+    <link href="/admin_css/css/style.css" rel="stylesheet" />
+    <link href="/admin_css/css/dark-style.css" rel="stylesheet" />
+    <link href="/admin_css/css/skin-modes.css" rel="stylesheet" />
+    <!-- SELECT2 CSS -->
+    <link href="/admin_css/plugins/select2/select2.min.css" rel="stylesheet" />
+    <!-- SIDE-MENU CSS -->
+    <link href="/admin_css/css/sidemenu.css" rel="stylesheet" id="sidemenu-theme">
+
+    <!--C3 CHARTS CSS -->
+    <link href="/admin_css/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+
+    <!-- P-scroll bar css-->
+    <link href="/admin_css/plugins/p-scroll/perfect-scrollbar.css" rel="stylesheet" />
+
+    <!--- FONT-ICONS CSS -->
+    <link href="/admin_css/plugins/icons/icons.css" rel="stylesheet" />
+
+    <!-- SIDEBAR CSS -->
+    <link href="/admin_css/plugins/sidebar/sidebar.css" rel="stylesheet" />
+
+
+    <!-- SELECT2 CSS -->
+    <link href="/admin_css/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <!-- DATA TABLE CSS -->
+    <link href="/admin_css/plugins/datatable/css/dataTables.bootstrap5.css" rel="stylesheet" />
+    <link href="/admin_css/plugins/datatable/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="/admin_css/plugins/datatable/responsive.bootstrap5.css" rel="stylesheet" />
+
+
+    <!-- COLOR SKIN CSS -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="/admin_css/colors/color1.css" />
+
+
+</head>
+
+<body class="app sidebar-mini">
+    <div class="loader"></div>
+    <!-- PAGE -->
+    <div class="page">
+        <div class="page-main">
+            <!--APP-SIDEBAR-->
+            <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+            <aside class="app-sidebar">
+                <div class="side-header">
+                    <a class="header-brand1" href="/User/AssociateDashBoard">
+                        <img src="/WebsiteCss/images/favicon_icon.png" class="header-brand-img light-logo mt-3" alt="logo">
+                        <img src="../WebsiteCss/images/radhekunj_logo.png" class="header-brand-img light-logo1" alt="logo">
+                    </a><!-- LOGO -->
+                </div>
+                <div class="main-sidebar-loggedin">
+                    <div class="app-sidebar__user">
+                        <div class="dropdown user-pro-body text-center">
+                            @if (Session["ProfilePic"] == "")
+                            {
+                                <div class="user-pic">
+                                    <img src="/admin_css/images/users/8.jpg" class="rounded-circle mCS_img_loaded" alt="User Image">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="user-pic">
+                                    <img src="@Session["ProfilePic"]" class="rounded-circle mCS_img_loaded" alt="User Image">
+                                </div>
+                            }
+                            <div class="user-info mb-4">
+                                <h6 class="mb-0 text-dark text-capitalize">@Session["Name"]</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="side-menu">
+                    <li><h3>Associate Panel</h3></li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="/User/AssociateDashBoard"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Profile</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li><a href="/User/ViewProfile" class="slide-item">View Profile</a></li>
+                            <li><a href="/KYCDocuments/KYCDocuments" class="slide-item">Upload KYC</a></li>
+                            <li><a href="/Profile/ChangePassword" class="slide-item">Change Password</a></li>
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Team</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li><a href="/User/BinaryTree" class="slide-item">Tree</a></li>
+                            <li><a href="/Downline/DirectList" class="slide-item">Direct</a></li>
+                            <li><a href="/Downline/DownLineList" class="slide-item">Downline</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-credit-card"></i><span class="side-menu__label">Payout</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li><a href="/Wallet/PayoutLedger" class="slide-item">Payout Wallet Ledger</a></li>
+                            <li><a href="/UserReports/UnPaidIncomes" class="slide-item">Unpaid Income</a></li>
+                            <li><a href="/UserReports/PayoutReport" class="slide-item">Payout Report</a></li>
+                            <li><a href="/UserReports/PaidPayoutDetails" class="slide-item">Payout Paid Details</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="/User/UserReward"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Level</span><i class="angle fa fa-angle-right"></i></a>
+                        
+                    </li>
+
+
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li><a href="/UserReports/BusinessReport" class="slide-item">Business Report</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+            <!--/APP-SIDEBAR-->
+            <!-- Mobile Header -->
+            <div class="app-header header">
+                <div class="container-fluid">
+                    <div class="d-flex">
+                        <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
+                        <a class="header-brand1 d-flex d-md-none" href="/User/AssociateDashBoard">
+                            <img src="assets/images/brand/logo-2.png" class="header-brand-img light-logo" alt="logo">
+                            <img src="../WebsiteCss/images/radhekunj_logo.png" class="header-brand-img light-logo1" alt="logo">
+                        </a><!-- LOGO -->
+                        <div class="d-flex order-lg-2 ms-auto header-right-icons">
+                            <button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon fe fe-more-vertical text-dark"></span>
+                            </button>
+                            <div class="dropdown d-none d-md-flex">
+                                <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                                    <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
+                                    <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
+                                </a>
+                            </div><!-- Theme-Layout -->
+                            <div class="dropdown d-none d-md-flex">
+                                <a class="nav-link icon full-screen-link nav-link-bg">
+                                    <i class="fe fe-minimize fullscreen-button"></i>
+                                </a>
+                            </div><!-- FULL-SCREEN -->
+                            <div class="dropdown d-none d-md-flex profile-1">
+                                @if (Session["ProfilePic"] == "")
+                                {
+                                    <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
+                                        <span>
+                                            <img src="/admin_css/images/users/8.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">
+                                        </span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
+                                        <span>
+                                            <img src="@Session["ProfilePic"]" alt="profile-user" class="avatar  profile-user brround cover-image">
+                                        </span>
+                                    </a>
+                                }
+
+
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <div class="drop-heading">
+                                        <div class="text-center">
+                                            <h5 class="text-dark mb-0">@Session["Name"] </h5>
+                                            <small class="text-muted">Joining -  (@Session["JoiningDate"])</small>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-divider m-0"></div>
+                                    <a class="dropdown-item" href="/User/ViewProfile">
+                                        <i class="dropdown-icon fe fe-user"></i> Profile
+                                    </a>
+                                    <a class="dropdown-item" href="/Profile/ChangePassword">
+                                        <i class="dropdown-icon fe fe-mail"></i> Change Password
+                                    </a>
+                                    <a class="dropdown-item" href="/Home/Login">
+                                        <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-1 navbar navbar-expand-lg responsive-navbar navbar-dark d-md-none bg-white">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                    <div class="d-flex order-lg-2 ms-auto">
+                        <div class="dropdown d-md-flex">
+                            <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                                <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
+                                <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
+                            </a>
+                        </div><!-- Theme-Layout -->
+                        <div class="dropdown d-md-flex">
+                            <a class="nav-link icon full-screen-link nav-link-bg">
+                                <i class="fe fe-minimize fullscreen-button"></i>
+                            </a>
+                        </div><!-- FULL-SCREEN -->
+
+                        <div class="dropdown d-md-flex profile-1">
+                            @if (Session["ProfilePic"] == "")
+                            {
+                                <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
+                                    <span>
+                                        <img src="/admin_css/images/users/8.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">
+                                    </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
+                                    <span>
+                                        <img src="@Session["ProfilePic"]" alt="profile-user" class="avatar  profile-user brround cover-image">
+                                    </span>
+                                </a>
+                            }
+
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <div class="drop-heading">
+                                    <div class="text-center">
+                                        <h5 class="text-dark mb-0">@Session["Name"] </h5>
+                                        <small class="text-muted">Joining -  (@Session["JoiningDate"])</small>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider m-0"></div>
+                                <a class="dropdown-item" href="/User/ViewProfile">
+                                    <i class="dropdown-icon fe fe-user"></i> Profile
+                                </a>
+                                <a class="dropdown-item" href="/Profile/ChangePassword">
+                                    <i class="dropdown-icon fe fe-mail"></i> Change Password
+                                </a>
+                                <a class="dropdown-item" href="/Home/Login">
+                                    <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /Mobile Header -->
+            <div class="app-content pb-5">
+                <div class="side-app">
+                    @RenderBody()
+                    </div>
+                </div>
+                </div>
+
+                <!-- FOOTER -->
+                <footer class="footer">
+                    <div class="container">
+                        <div class="row align-items-center flex-row-reverse">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                Copyright © 2023 <a href="/Admin/AdminDashboard">Trust Radhe</a>. Designed and
+                                developed by <a href="https://afluex.com/" target="blank"> Afluex Multiservices LLP | </a> All rights reserved
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- FOOTER CLOSED -->
+
+            </div>
+
+
+            @*<div class="main-wrapper main-wrapper-1">
+            <div class="navbar-bg"></div>*@
+            @*<nav class="navbar navbar-expand-lg main-navbar">
+                <div class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li>
+                            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn">
+                                <i class="fas fa-bars"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <ul class="navbar-nav navbar-right">
+
+
+                    <li class="dropdown">
+                        @if (Session["ProfilePic"]=="")
+                        {
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                @*<img alt="image" src="../assets/img/users/user.png" class="user-img-radious-style">*
+
+                                <img alt="image" src="../assets/img/users/user.png" style="height:30px;width:30px">
+
+                                <span class="d-sm-none d-lg-inline-block"></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <img alt="image" src="@Session["ProfilePic"]" class="user-img-radious-style">
+                                <span class="d-sm-none d-lg-inline-block"></span>
+                            </a>
+                        }
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-title">@Session["Name1"] </div>
+                            <div class="dropdown-title">  Joining -  (@Session["JoiningDate"])</div>
+                            <a href="/User/ViewProfile" class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> Profile
+                            </a>
+
+                            <a href="/Profile/ChangePassword" class="dropdown-item has-icon">
+                                <i class="fas fa-key"></i> Change Password
+                            </a>
+                            @*<a href="#" class="dropdown-item has-icon">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>*
+                            <div class="dropdown-divider"></div>
+                            <a href="/Home/Login" class="dropdown-item has-icon text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>*
+
+            <div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                            <div class="sidebar-brand">
+                                <a href="../../User/AssociateDashBoard">
+                                    @*<center><img alt="image" src="~/WebsiteCss/images/MWR-logo.png" class="header-logo" style="width:50%" /></center>*
+                                    <img alt="image" src="../WebsiteCss/images/radhekunj_logo.png" class="header-logo" style="width: 90px; margin-left:65px ; height:67px" />
+                                    @*<span class="logo-name">Maker Property</span>*
+                                </a>
+                            </div>
+                            <ul class="sidebar-menu">
+                                <li class="dropdown active" style="display: block;">
+                                    <div class="sidebar-profile">
+                                        @if (Session["ProfilePic"] == "")
+                                        {
+                                            <div class="siderbar-profile-pic">
+                                                <img src="../assets/img/users/user.png" class="profile-img-circle box-center" alt="User Image">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="siderbar-profile-pic">
+                                                <img src="@Session["ProfilePic"]" class="profile-img-circle box-center" alt="User Image">
+                                            </div>
+                                        }
+                                        <div class="siderbar-profile-details">
+                                            <div class="siderbar-profile-name"> @Session["Name1"] </div>
+                                            @*<div class="siderbar-profile-position">Manager </div>*
+                                        </div>
+
+                                    </div>
+                                </li>
+                                @*<li class="menu-header">Main</li>*@
+
+            @*<li><a class="nav-link" href="/User/AssociateDashBoard"><i class="fas fa-boxes"></i><span>DashBoard</span></a></li>*@
+
+            @*<li><a class="nav-link" href="/User/Registration"><i class="fas fa-boxes"></i><span>Sign Up</span></a></li>*@
+            @*<li class="dropdown">
+            <a href="#" class="nav-link has-dropdown"><i class="fab fa-atlassian"></i><span>Profile</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/User/ViewProfile">View Profile</a></li>
+                <li><a class="nav-link" href="/KYCDocuments/KYCDocuments">Upload KYC</a></li>
+                <li><a class="nav-link" href="/Profile/ChangePassword">Change Password</a></li>
+                @*<li><a class="nav-link" target="_blank" href="/User/AcceptanceForm">Acceptance Form</a></li>*@
+            @*</ul>
+            </li>*@
+
+
+            @*<li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-envelope-open-text"></i><span>Team</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/User/BinaryTree">Tree</a></li>
+                    <li><a class="nav-link" href="/Downline/DirectList">Direct</a></li>
+                    @*<li><a class="nav-link" href="/Downline/DirectListL2">Direct L2</a></li>*
+                    <li><a class="nav-link" href="/Downline/DownLineList">Downline</a></li>
+                </ul>
+            </li>
+
+            @*<li><a class="nav-link" href="/User/UserReward"><i class="fas fa-boxes"></i><span>Recognition</span></a></li>*
+
+
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown">
+                    <i class="fas fa-shopping-bag"></i><span>
+                        Payout
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/Wallet/PayoutLedger">Payout Wallet Ledger</a></li>
+                    <li><a class="nav-link" href="/UserReports/UnPaidIncomes">Unpaid Income</a></li>
+                    <li><a class="nav-link" href="/UserReports/PayoutReport">Payout Report</a></li>
+                    <li><a class="nav-link" href="/UserReports/PaidPayoutDetails">Payout Paid Details</a></li>
+
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown">
+                    <i class="fas fa-file"></i><span>
+                        Reports
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="/UserReports/BusinessReport">Business Report</a></li>
+                    @*<li><a class="nav-link" href="/UserReports/TopupReport">Product Details</a></li>
+                <li><a class="nav-link" href="/UserReports/DCMIReport">DCMI Reports</a></li>*
+
+                </ul>
+            </li>*@
+            @*<li class="dropdown">
+                                    <a href="#" class="nav-link has-dropdown">
+                                        <i class="fas fa-shopping-bag"></i><span>
+                                            Product Payout
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="nav-link" href="/UserReports/UnPaidProductIncomes">Unpaid Income</a></li>
+                                        <li><a class="nav-link" href="/UserReports/ProductPayoutReport">Payout Report</a></li>
+                                        <li><a class="nav-link" href="/UserReports/ProductBusinessReport">Business Report</a></li>
+
+                                    </ul>
+                                </li>*
+
+
+
+
+                                </ul>
+                    </aside>
+                </div>
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="card">
+                        <div class="card-body">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <!-- General JS Scripts -->
+            <script src="/admin_css/plugins/jquery/jquery.min.js"></script>
+
+            <!-- BOOTSTRAP JS -->
+            <script src="/admin_css/plugins/bootstrap/js/popper.min.js"></script>
+            <script src="/admin_css/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+            <!-- INPUT MASK JS-->
+            <script src="/admin_css/plugins/input-mask/jquery.mask.min.js"></script>
+
+            <!-- SIDE-MENU JS -->
+            <script src="/admin_css/plugins/sidemenu/sidemenu.js"></script>
+
+            <!-- SIDEBAR JS -->
+            <script src="/admin_css/plugins/sidebar/sidebar.js"></script>
+
+        <!-- CHARTJS CHART JS-->
+            <script src="/admin_css/plugins/chart/Chart.bundle.js"></script>
+            <script src="/admin_css/plugins/chart/utils.js"></script>
+
+            <!-- PIETY CHART JS-->
+            <script src="/admin_css/plugins/peitychart/jquery.peity.min.js"></script>
+            <script src="/admin_css/plugins/peitychart/peitychart.init.js"></script>
+
+            <!-- INTERNAL SELECT2 JS -->
+            <script src="/admin_css/plugins/select2/select2.full.min.js"></script>
+            <!-- MULTI SELECT JS-->
+            <script src="/admin_css/plugins/multipleselect/multiple-select.js"></script>
+            <script src="/admin_css/plugins/multipleselect/multi-select.js"></script>
+
+            <!-- DATA TABLE JS-->
+            <script src="/admin_css/plugins/datatable/js/jquery.dataTables.min.js"></script>
+            <script src="/admin_css/plugins/datatable/js/dataTables.bootstrap5.js"></script>
+            @*<script src="/admin_css/plugins/datatable/js/buttons.bootstrap5.min.js"></script>*@
+            <script src="/admin_css/plugins/datatable/dataTables.responsive.min.js"></script>
+            <script src="/admin_css/plugins/datatable/responsive.bootstrap5.min.js"></script>
+            <script src="/admin_css/js/table-data.js"></script>
+            <!-- INDEX JS -->
+            <script src="/admin_css/js/index1.js"></script>
+            <!-- CUSTOM JS-->
+            <script src="/admin_css/js/custom.js"></script>
+
+</body>
+</html>
