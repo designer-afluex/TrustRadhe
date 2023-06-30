@@ -365,6 +365,7 @@
     transition: left .2s ease,width .2s ease;
     width: 270px;
     z-index: 99;
+    overflow-y:scroll;
 }
 
     .app-sidebar::-webkit-scrollbar {
