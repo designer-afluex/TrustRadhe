@@ -79,38 +79,8 @@ namespace TrustRadhe.Controllers
 
             return View(obj);
         }
-        public ActionResult Index2()
-        {
-            return View();
-        }
-        public ActionResult LegalDocuments()
-        {
-            return View();
-        }
-        public ActionResult NewsEvents()
-        {
-            return View();
-        }
-        public ActionResult FAQ()
-        {
-            return View();
-        }
-        public ActionResult DirectSellerTermCondition()
-        {
-            return View();
-        }
-        public ActionResult Downloads()
-        {
-            return View();
-        }
-        public ActionResult Terminations()
-        {
-            return View();
-        }
-        public ActionResult OurBankers()
-        {
-            return View();
-        }
+       
+      
         public ActionResult Login()
         {
             Session.Abandon();
@@ -392,22 +362,22 @@ namespace TrustRadhe.Controllers
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
-        public virtual ActionResult Menu()
-        {
-            Home Menu = null;
+        //public virtual ActionResult Menu()
+        //{
+        //    Home Menu = null;
 
-            if (Session["_Menu"] != null)
-            {
-                Menu = (Home)Session["_Menu"];
-            }
-            else
-            {
+        //    if (Session["_Menu"] != null)
+        //    {
+        //        Menu = (Home)Session["_Menu"];
+        //    }
+        //    else
+        //    {
 
-                Menu = Home.GetMenus(Session["Pk_AdminId"].ToString(), Session["UserTypeName"].ToString()); // pass employee id here
-                Session["_Menu"] = Menu;
-            }
-            return PartialView("_Menu", Menu);
-        }
+        //        Menu = Home.GetMenus(Session["Pk_AdminId"].ToString(), Session["UserTypeName"].ToString()); // pass employee id here
+        //        Session["_Menu"] = Menu;
+        //    }
+        //    return PartialView("_Menu", Menu);
+        //}
 
         #region FranchiseLogin
         public ActionResult FranchiseLogin()
@@ -484,39 +454,13 @@ namespace TrustRadhe.Controllers
         {
             return View();
         }
-        public ActionResult Website()
-        {
-            return View();
-        }
+       
+        
         public ActionResult AboutUs()
         {
             return View();
         }
-        public ActionResult Vission()
-        {
-            return View();
-        }
-        public ActionResult CompanyDesk()
-        {
-            return View();
-        }
-        public ActionResult legal()
-        {
-            return View();
-        }
-        public ActionResult ProductList()
-        {
-            return View();
-        }
-        public ActionResult ProductCategories()
-        {
-            return View();
-        }
-
-        public ActionResult ProductServies()
-        {
-            return View();
-        }
+       
 
         public ActionResult AddProperties()
         {
@@ -547,18 +491,7 @@ namespace TrustRadhe.Controllers
             return View(model);
         }
 
-        public ActionResult Packages()
-        {
-            return View();
-        }
-        public ActionResult Brochure()
-        {
-            return View();
-        }
-        public ActionResult OnePager()
-        {
-            return View();
-        }
+      
         public ActionResult Events()
         {
             return View();
@@ -582,14 +515,7 @@ namespace TrustRadhe.Controllers
 
             return View(model);
         }
-        public ActionResult Ventures()
-        {
-            return View();
-        }
-        public ActionResult News()
-        {
-            return View();
-        }
+       
         public ActionResult ContactUs()
         {
             return View();
