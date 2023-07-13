@@ -1699,9 +1699,9 @@ input:focus::placeholder, textarea:focus::placeholder {
   --clr-body-heading: #1f2126;
   --clr-body-text: #7d7f85;
   --clr-color-blue: #000A30;
-  --clr-theme-primary: #d60007;
-  --clr-theme-primary-dark: #d60007;
-  --clr-theme-primary-soft: #d60007;
+  --clr-theme-primary: #d3526f;
+  --clr-theme-primary-dark: #d3526f;
+  --clr-theme-primary-soft: #d3526f;
   --clr-bg-gray: #F6F6F6;
   --clr-bg-gray-2: #F1F1F1;
   --clr-bg-gray-3: #ECECEC;
@@ -2368,7 +2368,7 @@ input:focus::placeholder, textarea:focus::placeholder {
   height: 100%;
   content: "";
   width: 1370px;
-  background-color: #ad0005;
+  background-color: #d3526f;
   z-index: -1;
   right: 0;
   transform: skew(-30deg);
@@ -10803,7 +10803,7 @@ input:focus::placeholder, textarea:focus::placeholder {
   position: absolute;
   top: 0;
   right: 188px;
-  background: #d60007;
+  background: #d3526f;
   width: 190px;
   height: 180px;
   display: grid;
@@ -10840,7 +10840,7 @@ input:focus::placeholder, textarea:focus::placeholder {
   height: 160px;
   display: grid;
   place-items: center;
-  background: #d60007;
+  background: #d3526f;
 }
 
 .ns-management-content-info h5 {
